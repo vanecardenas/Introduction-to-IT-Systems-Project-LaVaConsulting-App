@@ -1,0 +1,22 @@
+.scoreboardTable {    
+padding: 0;
+margin: auto;
+border-collapse: collapse;
+width: 80%;
+text-align: center;
+color: rgb(90, 127, 228);
+}
+
+.scoreboardTableHeaderRow {color: rgb(6, 12, 37);font-weight: bold;height: 50px; font-size: x-large;}.scoreboardTableBodyRow:nth-child(odd){background-color: rgba(128,
+128, 128, 0.050);}
+#latestUserScore {
+background-color:rgb(150, 225, 65);
+}
+
+.scoreboardTableBodyRow:hover{
+background-color: rgb(205, 209, 219); font-size: larger;
+}
+
+.scoreboardTable tr td {
+height: 25px; font-size: larger;
+}

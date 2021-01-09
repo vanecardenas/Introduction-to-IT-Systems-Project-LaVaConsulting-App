@@ -8,7 +8,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Home - Safe & Surg</title>
+  <title>Welcome</title>
 
   <!-- Bootstrap core CSS -->
   <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -19,7 +19,7 @@
   <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
 
   <!-- Custom styles for this template -->
-  <link href="css/landing-page.min.css" rel="stylesheet">
+  <link href="css/exploring-page.css" rel="stylesheet">
 
 </head>
 
@@ -28,7 +28,7 @@
   <!-- Navigation -->
   <nav class="navbar navbar-light bg-light static-top">
     <div class="container">
-      <a class="navbar-brand" href="#">Welcome to Safe&Surg</a>
+      <a class="navbar-brand" href="#">Safe&Surg</a>
     </div>
   </nav>
 
@@ -38,26 +38,10 @@
     <div class="container">
       <div class="row">
         <div class="col-xl-9 mx-auto">
-          <h1 class="mb-5">Enter your credentials here</h1>
-        </div>
-        <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
-          <form>
-            <div class="form-row">
-              <div class="col-12 col-md-9 mb-2 mb-md-0">
-                <input type="email" class="form-control form-control-lg" placeholder="Institution">
-              </div>
-              <div class="col-12 col-md-9 mb-2 mb-md-0">
-                <input type="email" class="form-control form-control-lg" placeholder="Name">
-              </div>
-              <div class="col-12 col-md-9 mb-2 mb-md-0">
-                <input type="email" class="form-control form-control-lg" placeholder="Password">
-              </div>
-              <br>
-              <div class="col-12 col-md-3">
-                <button type="submit" class="btn btn-block btn-lg btn-primary">Log In</button>
-              </div>
-            </div>
-          </form>
+          <h1 class="mb-5">Welcome<br><br>
+          <i class="fa fa-user-md" aria-hidden="true" style="font-size:100px;color:rgb(101, 209, 191);"></i><br>
+          Dr. Masseneck
+          </h1>
         </div>
       </div>
     </div>
@@ -72,10 +56,17 @@
         <div class="col-lg-4">
           <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
             <div class="features-icons-icon d-flex">
-              <i class="icon-layers m-auto text-primary"></i>
+            <i class="fa fa-user-circle m-auto text-primary"></i>
             </div>
-            <h3>Easy access to the Surgical Database</h3>
-            <p class="lead mb-0">With this application you can store and retrieve the reports and pictures of the different surgeries in your Institution</p>
+            <h3>Patients Database</h3>
+            <p class="lead mb-0">Here you will find all the information about your Patients</p>
+          </div>
+          <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
+            <div class="features-icons-icon d-flex">
+            <i class="fa fa-procedures m-auto text-primary"></i>
+            </div>
+            <h3>Surgeries Database</h3>
+            <p class="lead mb-0">Here you will find all the information about your Surgical Procedures</p>
           </div>
         </div>
         <div class="col-lg-4">
@@ -84,6 +75,36 @@
     </div>
   </section>
 
+  <link rel="stylesheet" type="text/css" href="style_tables_test.css"/>
+  <div class="scoreboard" style="display: block;">
+    <table class="scoreboardTable">
+      <thead class="scoreboardTableHead">
+        <tr class="scoreboardTableHeaderRow">
+          <th>Patient ID</th>
+          <th>Name</th>
+          <th>Procedure</th>
+          <th>Snomed Code</th>
+          <th>Check List</th>
+        </tr>
+      </thead>
+      <tbody class="scoreboardTable-Body"></tbody>
+      <tr class="scoreboardTableBodyRow">
+        <td>1</td>
+        <td>yehong</td>
+        <td>135</td>
+        <td>80.5</td>
+        <td>20.5</td>        
+      </tr>
+      <tr class="scoreboardTableBodyRow">
+        <td>10</td>
+        <td>daniel</td>
+        <td>5</td>
+        <td>6.1</td>
+        <td>50.5</td>
+      </tr>
+    </table>  
+  </div>
+    
   <!-- Image Showcases -->
   <section class="showcase">
     <div class="container-fluid p-0">
