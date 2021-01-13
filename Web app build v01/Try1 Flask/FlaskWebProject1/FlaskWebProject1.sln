@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30717.126
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "FlaskWebProject1", "FlaskWebProject1\FlaskWebProject1.pyproj", "{E5169F75-6B8F-4920-8E20-CED17DE9D53A}"
+EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "FlaskWebProject2", "..\Flask Clean\FlaskWebProject2\FlaskWebProject2.pyproj", "{385345EF-A67E-4680-8202-3D9EFCCE3590}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E5169F75-6B8F-4920-8E20-CED17DE9D53A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E5169F75-6B8F-4920-8E20-CED17DE9D53A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E5169F75-6B8F-4920-8E20-CED17DE9D53A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E5169F75-6B8F-4920-8E20-CED17DE9D53A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{385345EF-A67E-4680-8202-3D9EFCCE3590}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{385345EF-A67E-4680-8202-3D9EFCCE3590}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{385345EF-A67E-4680-8202-3D9EFCCE3590}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{385345EF-A67E-4680-8202-3D9EFCCE3590}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E99B616F-F8EB-4E86-A658-745CD50AB271}
+	EndGlobalSection
+EndGlobal
