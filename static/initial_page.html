@@ -70,29 +70,31 @@
         <div class="container">
             <div class="row">
                 <div class="col-xl-9 mx-auto">
-                    <h1 class="mb-5">Enter your credentials here</h1>
+                    <h1 class="mb-5">Please sign in</h1>
                 </div>
                 <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
-                    <form>
+                    <form action="/user/" enctype="application/x-www-form-urlencoded" method="post">
                         <div class="form-row">
-                            <div class="col-12 col-md-9 mb-2 mb-md-0">
-                                <input type="email" class="form-control form-control-lg" placeholder="Institution">
+                            <div class="col-12 col-md-9 mx-auto" ">
+                                <label for="inputEmail" class="sr-only">Username</label>
+                                <input type="username" name="username" id="inputEmail" class="form-control form-control-lg" placeholder="Username" required autofocus>
+
                             </div>
-                            <div class="col-12 col-md-9 mb-2 mb-md-0">
-                                <input type="email" class="form-control form-control-lg" placeholder="Name">
-                            </div>
-                            <div class="col-12 col-md-9 mb-2 mb-md-0">
-                                <input type="email" class="form-control form-control-lg" placeholder="Password">
+                            <div class="col-12 col-md-9 mx-auto">
+                                <label for="inputPassword" class="sr-only">Password</label>
+                                <input type="password" name="password" id="inputPassword" class="form-control form-control-lg" placeholder="Password" required>
                             </div>
                             <br>
-                            <div class="col-12 col-md-3">
+                            <br>
+                            <br>
+                            <div class="col-12 col-md-4 mx-auto">
                                 <button type="submit" class="btn btn-block btn-lg btn-primary">Log in</button>
                             </div>
                         </div>
                     </form>
                 </div>
+
             </div>
-        </div>
     </header>
 
     <!-- Icons Grid -->
