@@ -17,8 +17,8 @@ from starlette.staticfiles import StaticFiles
 from starlette.templating import Jinja2Templates
 
 app = FastAPI()
-templates = Jinja2Templates(directory="static")
-app.mount('/static', StaticFiles(directory='static', html = True), name='static')
+templates = Jinja2Templates(directory="")
+
 
 @app.post("/user/")
 async def files(

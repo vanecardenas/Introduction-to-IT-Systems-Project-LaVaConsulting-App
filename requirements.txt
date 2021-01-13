@@ -2,3 +2,7 @@ mysqlclient
 mysql-connector-python
 pymysql
 cx_Oracle
+aiofiles
+fastapi
+uvicorn
+python-multipart

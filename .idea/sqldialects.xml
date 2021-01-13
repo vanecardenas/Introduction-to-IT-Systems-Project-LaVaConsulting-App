@@ -2,6 +2,5 @@
 <project version="4">
   <component name="SqlDialectMappings">
     <file url="notebook://C:/Users/larsm/OneDrive/HPI/LaVaConsultants/La-Va-Consulting/it_project.ipynb" dialect="GenericSQL" />
-    <file url="file://$PROJECT_DIR$/surgeries_db.sql" dialect="MySQL" />
   </component>
 </project>
