@@ -92,14 +92,17 @@ header.masthead h1 {
   padding-bottom: 7rem;
 }
 
-.testimonials .testimonial-item {
-  max-width: 18rem;
-}
+    .testimonials .testimonial-item {
+        max-width: 14rem;
+        max-height: 5rem;
+    }
 
-.testimonials .testimonial-item img {
-  max-width: 12rem;
-  box-shadow: 0px 5px 5px 0px #adb5bd;
-}
+        .testimonials .testimonial-item img {
+            max-width: 12rem;
+            max-height: 5rem;
+            box-shadow: 0px 5px 5px 0px #adb5bd;
+        }
+
 
 .call-to-action {
   position: relative;
