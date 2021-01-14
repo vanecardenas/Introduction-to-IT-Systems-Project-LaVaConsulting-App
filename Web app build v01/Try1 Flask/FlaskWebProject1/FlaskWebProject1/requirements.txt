@@ -10,3 +10,5 @@ flask-session
 redis
 flask_redis
 python_dotenv
+flask_wtf
+wtforms

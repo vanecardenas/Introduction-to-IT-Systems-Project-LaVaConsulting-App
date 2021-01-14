@@ -5,19 +5,25 @@ Routes and views for the flask application.
 from datetime import datetime
 from flask import render_template
 from FlaskWebProject1 import app
+#from .forms import LoginForm
 
-@app.route('/')
-@app.route('/initial_page')
+@app.route('/', methods=('GET', 'POST'))
+@app.route('/initial_page',  methods=('GET', 'POST'))
 def initial_page():
+   # form = LoginForm()
+   # if form.validate_on_submit():
+     #   return redirect(url_for("explanatory_page"))
     """Renders the home page."""
     return render_template(
         'initial_page.html',
+        #form=form,
         title='Home Page',
         year=datetime.now().year,
     )
 
 @app.route('/contact')
 def contact():
+    
     """Renders the contact page."""
     return render_template(
         'contact_page.html',
