@@ -3,9 +3,11 @@
 
 
 from os import environ, path
+from dotenv import load_dotenv
 
+basedir = path.abspath(path.dirname(__file__))
+load_dotenv(path.join(basedir, '.env'))
 
-SECRET_KEY = 'vanessa'
 
 
 class Config:
@@ -14,6 +16,12 @@ class Config:
     SESSION_COOKIE_NAME = environ.get('SESSION_COOKIE_NAME')
     STATIC_FOLDER = 'static'
     TEMPLATES_FOLDER = 'templates'
+
+    #### Database config. ####
+
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
+    SQLALCHEMY_DATABASE_URI =  "mysql://root:vanessa@127.0.0.1:3006/surgeries.db"
+    SQLALCHEMY_ECHO = True
 
 
 class ProdConfig(Config):

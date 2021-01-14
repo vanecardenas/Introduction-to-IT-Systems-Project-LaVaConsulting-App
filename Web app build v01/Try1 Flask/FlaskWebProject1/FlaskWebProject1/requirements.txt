@@ -8,3 +8,5 @@ flask-sqlalchemy
 flask-migrate
 flask-session
 redis
+flask_redis
+python_dotenv
