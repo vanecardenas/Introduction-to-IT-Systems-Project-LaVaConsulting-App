@@ -1,1 +1,10 @@
 Flask~=1.1
+mysqlclient
+mysql-connector-python
+pymysql
+cx_Oracle
+flask_mysqldb
+flask-sqlalchemy
+flask-migrate
+flask-session
+redis
