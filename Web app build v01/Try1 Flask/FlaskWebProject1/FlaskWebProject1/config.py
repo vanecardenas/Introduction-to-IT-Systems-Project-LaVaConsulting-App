@@ -24,7 +24,7 @@ class Config:
     #### Database config. ####
 
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    SQLALCHEMY_DATABASE_URI =  "mysql+mysqlconnector://root:vanessa@127.0.0.1:3006/surgeries.db"
+    SQLALCHEMY_DATABASE_URI =  "mysql://root:vanessa@127.0.0.1/surgeries_db"
     SQLALCHEMY_ECHO = True
 
 
