@@ -106,3 +106,5 @@ def exploring_page():
         title='Home Page',
         year=datetime.now().year,
     )
+
+

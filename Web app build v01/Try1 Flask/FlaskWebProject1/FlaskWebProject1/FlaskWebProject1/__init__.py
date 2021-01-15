@@ -7,8 +7,8 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_redis import FlaskRedis
 import mysql.connector
 from config import Config
-from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
+from sqlalchemy.dialects.mysql import LONGBLOB, LONGTEXT
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -19,7 +19,6 @@ migrate = Migrate(app, db)
 
 
 
-app = Flask(__name__)
 
 # Using a production configuration
 #app.config.from_object('config.ProdConfig')

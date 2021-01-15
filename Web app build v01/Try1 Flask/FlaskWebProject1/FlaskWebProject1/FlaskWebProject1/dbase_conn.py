@@ -1,3 +1,5 @@
+#THis file is currently not needed but was used to try out a lot of databse stuff. Future routes could be stored here. 
+
 from flask import Flask, render_template, request
 from flask_mysqldb import MySQL
 import mysql.connector
@@ -19,11 +21,21 @@ from FlaskWebProject1 import app
 app.config.from_object('config.Config')
 
 db = SQLAlchemy(app)
+from FlaskWebProject1.models import Department
+
+#db.session.query(Department).filter(Department.id_department==1).all() works
 
 
-
-
-
+@app.route('/test_db')
+def test1():
+    try:
+            test = db.session.query(Department).all()
+            print(test) #Look in console to see if database connection works
+               
+        
+            return '<h1>Database connection succesful!</h1>'
+    except:
+        return '<h1>Database connection not correctly established!</h1>'
 
 
 
