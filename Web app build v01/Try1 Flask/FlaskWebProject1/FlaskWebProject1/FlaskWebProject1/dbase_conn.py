@@ -11,16 +11,18 @@ import pymysql
 import mysql.connector
 from mysql.connector import Error
 import cx_Oracle
+from werkzeug.security import generate_password_hash, check_password_hash
+from .models import db, Doctor
+from FlaskWebProject1 import app
+
+
 #import sqlacodegen
 
 #What we should do in an ideal world: connect to sqlalchemy, read out the database using sqlacodegen and then use flask-sqlalchemy to do all the magic 
 
 #flask-sqlacodegen "mysql://root:vanessa@127.0.0.1/surgeries_db" --outfile "models.py"
 
-from FlaskWebProject1 import app
-app.config.from_object('config.Config')
 
-db = SQLAlchemy(app)
 from FlaskWebProject1.models import Department
 
 #db.session.query(Department).filter(Department.id_department==1).all() works
@@ -37,7 +39,25 @@ def test1():
     except:
         return '<h1>Database connection not correctly established!</h1>'
 
+#Set passwords of already existing users 
 
+@app.route('/setpw')
+def setpw():
+    try:
+            db.session.query(Doctor).all()
+            pw = generate_password_hash("eisenbahn",method='sha256')
+            print(pw)
+            db.session.query(Doctor).update({Doctor.password: pw})
+            db.session.commit()
+            
+
+
+            
+               
+        
+            return '<h1>Update passwords seems to have worked. Check MySQL!</h1>'
+    except:
+        return '<h1>Database connection not correctly established!</h1>'
 
 
 

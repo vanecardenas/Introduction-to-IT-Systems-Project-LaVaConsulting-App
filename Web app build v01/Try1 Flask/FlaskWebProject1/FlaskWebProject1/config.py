@@ -14,12 +14,13 @@ class Config:
     """Base config."""
     #SECRET_KEY = environ.get('SECRET_KEY')
     SECRET_KEY = 'vanessa'
-    SESSION_COOKIE_NAME = environ.get('SESSION_COOKIE_NAME')
+    SESSION_COOKIE_NAME = "SAFENSURG"
     STATIC_FOLDER = 'static'
     TEMPLATES_FOLDER = 'templates'
     FLASK_ENV = 'development'
     DEBUG = True
     TESTING = True
+    FLASK_APP = 'runserver.py'
 
     #### Database config. ####
 

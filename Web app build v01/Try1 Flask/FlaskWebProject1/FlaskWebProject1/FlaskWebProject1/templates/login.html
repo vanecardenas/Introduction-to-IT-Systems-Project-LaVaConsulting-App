@@ -1,0 +1,291 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/static/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/static/favicon/favicon-32x32.png"/>
+    <link rel="icon" type="image/png" sizes="16x16" href="/static/favicon/favicon-16x16.png"/>
+    <link rel="manifest" href="/static/favicon/site.webmanifest"/>
+    <link rel="mask-icon" href="/staticfavicon/safari-pinned-tab.svg" color="#5bbad5" />
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+
+    <title>Log in</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
+
+    <!-- Custom fonts for this template -->
+    <link href="/static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet"/>
+    <link href="/static/vendor/simple-line-icons/css/simple-line-icons.css" rel="stylesheet" type="text/css"/>
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css"/>
+
+    <!-- Custom styles for this template -->
+    <link href="/static/css/landing-page.css" rel="stylesheet"/>
+
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href={{ url_for('initial_page') }}>Safe&Surg</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-item nav-link active" href="{{ url_for('login') }}">Log In <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        Lava Consultans
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{{ url_for('contact') }}">Contact us </a>
+                        <a class="dropdown-item" href="{{ url_for('about') }}">About us and our mission </a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{{ url_for('impressum') }}"> Legal notice / Disclaimer </a>
+                    </div>
+                </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
+        </div>
+    </nav>
+
+    <!-- Masthead -->
+    <header class="masthead text-white text-center">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-9 mx-auto">
+                    <h1 class="mb-5">Please sign in</h1>
+                </div>
+            </div>
+            <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
+                <div class="form-wrapper">
+
+                    {% for message in get_flashed_messages() %}
+
+                    {% endfor %}
+                    <div class="col-12 col-md-9 mx-auto">
+                    <form method="POST" action="/login">
+                        {{ form.csrf_token }}
+                        
+                            <fieldset class="username">
+                                {{ form.username.label }}
+                                {{ form.username(placeholder='chirurguwe') }}
+                                {% if form.username.errors %}
+                                <ul class="errors">
+                                    {% for error in form.username.errors %}
+                                    <li>{{ error }}</li>{% endfor %}
+                                </ul>
+                                {% endif %}
+                            </fieldset>
+                        </div>
+
+                            <fieldset class="password">
+                                {{ form.password.label }}
+                                {{ form.password(placeholder ='Enter Password') }}
+                                {% if form.password.errors %}
+                                <ul class="errors">
+                                    {% for error in form.password.errors %}
+                                    <li>{{ error }}</li>{% endfor %}
+                                </ul>
+                                {% endif %}
+                            </fieldset>
+
+                            <div class="submit-button">
+                                {{ form.submit }}
+                            </div>
+
+                            <div class="login-signup">
+                                <span>Don't have an account yet? <br> Need help? <br></span>
+                                <a href="{{ url_for('contact') }}">Request a sign up.</a>
+                            </div>
+
+                    </form>
+                </div>
+            </div>
+                <!--<div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
+            <form action="{{ url_for('exploring_page') }}" enctype="application/x-www-form-urlencoded" method="post">
+                <div class="form-row">
+                    <div class="col-12 col-md-9 mx-auto">
+                        <label for="inputEmail" class="sr-only">Username</label>
+                        <input type="username" name="username" id="inputEmail" class="form-control form-control-lg" placeholder="Username" required autofocus>
+
+                    </div>
+                    <div class="col-12 col-md-9 mx-auto">
+                        <label for="inputPassword" class="sr-only">Password</label>
+                        <input type="password" name="password" id="inputPassword" class="form-control form-control-lg" placeholder="Password" required>
+                    </div>
+                    <br>
+                    <br>
+                    <br>
+                    <div class="col-12 col-md-4 mx-auto">
+                        <button type="submit" class="btn btn-block btn-lg btn-primary">Log in</button>
+                    </div>
+                </div>
+            </form>
+        </div>-->
+
+            </div>
+        </div>
+    </header>
+
+    <!-- Icons Grid -->
+    <section class="features-icons bg-light text-center">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4">
+                </div>
+                <div class="col-lg-4">
+                    <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
+                        <div class="features-icons-icon d-flex">
+                            <i class="icon-layers m-auto text-primary"></i>
+                        </div>
+                        <h3>Easy access to the Surgical Database</h3>
+                        <p class="lead mb-0">With this application you can store and retrieve the reports and pictures of the different surgeries in your Institution</p>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Image Showcases -->
+    <section class="showcase">
+        <div class="container-fluid p-0">
+            <div class="row no-gutters">
+
+                <div class="col-lg-6 order-lg-2 text-white showcase-img" style="background-image: url('/static/img/surgeries.jpg');"></div>
+                <div class="col-lg-6 order-lg-1 my-auto showcase-text">
+                    <h2>Access to the Surgical Database</h2>
+                    <p class="lead mb-0">Just enter your name and password given by your Institution to access the Surgical Database</p>
+                </div>
+            </div>
+            <div class="row no-gutters">
+                <div class="col-lg-6 text-white showcase-img" style="background-image: url('/static/img/surgeries2.jpg');"></div>
+                <div class="col-lg-6 my-auto showcase-text">
+                    <h2>Store and retrieve your surgical pictures and reports</h2>
+                    <p class="lead mb-0">When you have access to the Database, you will also be able to store your surgical reports as well as retrieve the information, not only yours but also of your collegues</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials text-center bg-light">
+        <div class="container">
+            <h2 class="mb-5">Our Partners</h2>
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="testimonial-item mx-auto mb-5 mb-lg-0">
+                        <a href="https://www.who.int/">
+                            <img src="/static/img/partners-3.jpg" alt="World Health Organization">
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="testimonial-item mx-auto mb-5 mb-lg-0">
+                        <a href="https://www.rki.de/DE/Home/homepage_node.html">
+                            <img src="/static/img/partners-2.jpg" alt="Robert Koch-Institut">
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="testimonial-item mx-auto mb-5 mb-lg-0">
+                        <a href="https://www.mountsinai.org/">
+                            <img src="/static/img/partners-4.jpg" alt="Mount Sinai">
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="testimonial-item mx-auto mb-5 mb-lg-0">
+                        <a href="https://hpi.de/">
+                            <img src="/static/img/partners-5.jpg" alt="HPI">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="call-to-action text-white text-center">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-9 mx-auto">
+                </div>
+                <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
+                    <form>
+                        <div class="form-row">
+                            <div class="col-12 col-md-9 mb-2 mb-md-0">
+                            </div>
+                            <div class="col-12 col-md-3">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer bg-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 h-100 text-center text-lg-left my-auto">
+                    <ul class="list-inline mb-2">
+                        <li class="list-inline-item">
+                            <a href="{{ url_for('about') }}">About</a>
+                        </li>
+                        <li class="list-inline-item">&sdot;</li>
+                        <li class="list-inline-item">
+                            <a href="{{ url_for('contact') }}">Contact</a>
+                        </li>
+                        <li class="list-inline-item">&sdot;</li>
+                        <li class="list-inline-item">
+                            <a href="{{ url_for('impressum') }}">Disclaimer</a>
+                        </li>
+                    </ul>
+                    <p class="text-muted small mb-4 mb-lg-0">&copy; LaVa Consulting 2021. All Rights Reserved.</p>
+                </div>
+                <div class="col-lg-6 h-100 text-center text-lg-right my-auto">
+                    <ul class="list-inline mb-0">
+                        <li class="list-inline-item mr-3">
+                            <a href="#">
+                                <i class="fab fa-facebook fa-2x fa-fw"></i>
+                            </a>
+                        </li>
+                        <li class="list-inline-item mr-3">
+                            <a href="#">
+                                <i class="fab fa-twitter-square fa-2x fa-fw"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="/static/vendor/jquery/jquery.min.js"></script>
+    <script src="/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>

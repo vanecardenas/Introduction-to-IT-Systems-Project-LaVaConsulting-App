@@ -3,8 +3,9 @@ Routes and views for the flask application.
 """
 
 from datetime import datetime
-from flask import render_template
+from flask import render_template, flash, redirect, request, session, url_for
 from FlaskWebProject1 import app
+from flask_login import current_user, login_required 
 #from .forms import LoginForm
 
 @app.route('/', methods=('GET', 'POST'))
@@ -44,10 +45,12 @@ def about():
 
 
 @app.route('/add_new')
+@login_required
 def add_new():
     """Renders the addnew page."""
     return render_template(
         'add_new.html',
+        current_user=current_user,
         title='Add New Surgery/Patient',
         year=datetime.now().year,
     )
@@ -66,10 +69,12 @@ def impressum():
 
 
 @app.route('/user_dpt')
+@login_required
 def user_dpt():
     """Renders the department page."""
     return render_template(
         'user_dpt.html',
+        current_user=current_user,
         title='User Department',
         year=datetime.now().year,
     )
@@ -77,10 +82,12 @@ def user_dpt():
 
 
 @app.route('/user_patients')
+@login_required
 def user_patients():
     """Renders the My Patients page."""
     return render_template(
         'user_patients.html',
+        current_user=current_user,
         title='My Patients',
         year=datetime.now().year,
     )
@@ -88,10 +95,12 @@ def user_patients():
 
 
 @app.route('/user_surgeries')
+@login_required
 def user_surgeries():
     """Renders the My Surgerires page."""
     return render_template(
         'user_surgeries.html',
+        current_user=current_user,
         title='My Surgeries',
         year=datetime.now().year,
     )
@@ -99,10 +108,12 @@ def user_surgeries():
 
 
 @app.route('/exploring_page')
+@login_required
 def exploring_page():
     """Renders the another page."""
     return render_template(
         'exploring_page.html',
+        current_user=current_user,
         title='Home Page',
         year=datetime.now().year,
     )

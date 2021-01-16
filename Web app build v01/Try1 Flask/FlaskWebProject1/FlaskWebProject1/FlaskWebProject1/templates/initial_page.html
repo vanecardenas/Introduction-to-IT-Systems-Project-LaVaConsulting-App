@@ -43,7 +43,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-item nav-link active" href="i{{ url_for('initial_page') }}">Log In <span class="sr-only">(current)</span></a>
+                    <a class="nav-item nav-link active" href="{{ url_for('login') }}">Log In <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -70,51 +70,45 @@
         <div class="container">
             <div class="row">
                 <div class="col-xl-9 mx-auto">
-                    <h1 class="mb-5">Please sign in</h1>
+                    <h1 class="mb-5">
+                        Welcome<br><br>
+                        <i class="fa fa-user-md" aria-hidden="true" style="font-size:100px;color:rgb(101, 209, 191);"></i><br>
+                        To Safe&Surg
+                        <!--We could also work with queries here - and probably should. Something like title and last name from the doctors table. -->
+                    </h1>
                 </div>
-                <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
-                    <form action="{{ url_for('exploring_page') }}" enctype="application/x-www-form-urlencoded" method="post">
-                        <div class="form-row">
-                            <div class="col-12 col-md-9 mx-auto" >
-                                <label for="inputEmail" class="sr-only">Username</label>
-                                <input type="username" name="username" id="inputEmail" class="form-control form-control-lg" placeholder="Username" required autofocus>
-
-                            </div>
-                            <div class="col-12 col-md-9 mx-auto">
-                                <label for="inputPassword" class="sr-only">Password</label>
-                                <input type="password" name="password" id="inputPassword" class="form-control form-control-lg" placeholder="Password" required>
-                            </div>
-                            <br>
-                            <br>
-                            <br>
-                            <div class="col-12 col-md-4 mx-auto">
-                                <button type="submit" class="btn btn-block btn-lg btn-primary">Log in</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-
             </div>
         </div>
     </header>
 
-    <!-- Icons Grid -->
+    <!-- Header -->
     <section class="features-icons bg-light text-center">
         <div class="container">
             <div class="row">
-                <div class="col-lg-4">
+                <div class="col-lg-6">
+                    <a href="{{ url_for('login') }}">
+                        <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
+                            <div class="features-icons-icon d-flex">
+                                <i class="fa fa-sign-in-alt m-auto text-primary"></i>
+                            </div>
+                            <h3>Log in to Safe&Surg here</h3>
+                            <p class="lead mb-0">Log in to Safe&Surg here</p>
+                        </div>
+                    </a>
+
                 </div>
-                <div class="col-lg-4">
+                <div class="col-lg-6">
+
                     <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
                         <div class="features-icons-icon d-flex">
-                            <i class="icon-layers m-auto text-primary"></i>
+                            <i class="fa fa-user-plus m-auto text-primary"></i>
                         </div>
-                        <h3>Easy access to the Surgical Database</h3>
-                        <p class="lead mb-0">With this application you can store and retrieve the reports and pictures of the different surgeries in your Institution</p>
+                        <h3>Request a new SignUp for Safe&Surg here </h3>
+                        <p class="lead mb-0"> Request a new Usert SignUp for Safe&Surg here </p>
                     </div>
+
                 </div>
-                <div class="col-lg-4">
-                </div>
+
             </div>
         </div>
     </section>

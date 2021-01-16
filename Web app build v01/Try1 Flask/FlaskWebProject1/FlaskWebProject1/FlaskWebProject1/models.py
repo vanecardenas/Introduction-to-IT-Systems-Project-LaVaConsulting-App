@@ -5,17 +5,21 @@ from sqlalchemy.orm import relationship
 from sqlalchemy.dialects.mysql import LONGBLOB, LONGTEXT
 from sqlalchemy.ext.declarative import declarative_base
 from flask_sqlalchemy import SQLAlchemy
-from flask import Flask
+from flask import Flask, flash, redirect
 from config import Config
 
+from flask_login import UserMixin
+from werkzeug.security import generate_password_hash, check_password_hash
+from FlaskWebProject1 import app
+from FlaskWebProject1 import db
 
 
-Base = declarative_base()
-metadata = Base.metadata
+#Base = declarative_base()
+#metadata = Base.metadata
 
-app = Flask(__name__)
-app.config.from_object(Config)
-db = SQLAlchemy(app)
+#app = Flask(__name__)
+#app.config.from_object(Config)
+#db = SQLAlchemy(app)
 
 class Department(db.Model):
     __tablename__ = 'departments'
@@ -57,7 +61,7 @@ class Side(db.Model):
         return '<Side %r>' % self.namde.side
 
 
-class Doctor(db.Model):
+class Doctor(UserMixin, db.Model):
     __tablename__ = 'doctors'
     __table_args__ = {'comment': 'List of operating doctors '}
 
@@ -67,9 +71,27 @@ class Doctor(db.Model):
     last_name = db.Column(db.String(45))
     id_department = db.Column(db.ForeignKey('departments.id_department'), index=True)
     username = db.Column(db.String(45))
-    password = db.Column(db.String(128))
+    password = db.Column(db.String(200),
+        primary_key=False,
+        unique=False,
+        nullable=False)
 
     department = db.relationship('Department')
+    def get_id(self):
+           return (self.id_doctor)
+
+    def set_password(self, password):
+        """Create hashed password."""
+        self.password = generate_password_hash(
+            password,
+            method='sha256'
+        )
+
+    def check_password(self, password):
+        """Check hashed password."""
+        return check_password_hash(self.password, password)
+
+
 
     def __repr__(self):
         return '<Doctor %r>' % self.last_name
