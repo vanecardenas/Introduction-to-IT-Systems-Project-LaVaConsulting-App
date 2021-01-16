@@ -45,6 +45,6 @@ from flask_login import logout_user
 @app.route("/logout")
 @login_required
 def logout():
-    """User log-out logic."""
+    """User log-out."""
     logout_user()
     return redirect(url_for('initial_page'))

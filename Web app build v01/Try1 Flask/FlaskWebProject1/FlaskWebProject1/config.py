@@ -12,7 +12,7 @@ load_dotenv(path.join(basedir, '.env'))
 
 class Config:
     """Base config."""
-    #SECRET_KEY = environ.get('SECRET_KEY')
+   
     SECRET_KEY = 'vanessa'
     SESSION_COOKIE_NAME = "SAFENSURG"
     STATIC_FOLDER = 'static'
