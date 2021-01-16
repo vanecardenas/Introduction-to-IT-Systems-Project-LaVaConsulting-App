@@ -23,21 +23,45 @@ def initial_page():
     )
 
 @app.route('/contact')
+@login_required
 def contact():
     
     """Renders the contact page."""
     return render_template(
         'contact_page.html',
+        current_user=current_user,
         title='Contact',
         year=datetime.now().year,
         message='Your contact page.'
     )
 
+@app.route('/logout_contact')
+def logout_contact():
+    """Renders the logged out contact page."""
+    return render_template(
+        'logout_contact_page.html',
+        title='Contact us',
+        year=datetime.now().year,
+        message='Your application description page.'
+    )
+
 @app.route('/about')
+@login_required
 def about():
     """Renders the about page."""
     return render_template(
         'about.html',
+        current_user=current_user,
+        title='About',
+        year=datetime.now().year,
+        message='Your application description page.'
+    )
+
+@app.route('/logout_about')
+def logout_about():
+    """Renders the about page."""
+    return render_template(
+        'logout_about.html',
         title='About',
         year=datetime.now().year,
         message='Your application description page.'
@@ -58,12 +82,24 @@ def add_new():
 
 
 @app.route('/impressum')
+@login_required
 def impressum():
     """Renders the disclaimer page."""
     return render_template(
         'impressum.html',
+        current_user=current_user,
         title='Disclaimer',
         year=datetime.now().year,
+    )
+
+@app.route('/logout_impressum')
+def logout_impressum():
+    """Renders the logged out impressum page."""
+    return render_template(
+        'logout_impressum.html',
+        title='Disclaimer',
+        year=datetime.now().year,
+        message='Your application description page.'
     )
 
 
