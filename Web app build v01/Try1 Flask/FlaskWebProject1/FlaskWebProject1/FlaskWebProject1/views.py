@@ -143,14 +143,18 @@ def user_surgeries():
 
 
 
+
+
 @app.route('/exploring_page')
 @login_required
 def exploring_page():
+
     """Renders the another page."""
     return render_template(
         'exploring_page.html',
         current_user=current_user,
-        title='Home Page',
+        d_title = session["title"][0] ,
+        doc_name = session["last_name"][0] ,
         year=datetime.now().year,
     )
 

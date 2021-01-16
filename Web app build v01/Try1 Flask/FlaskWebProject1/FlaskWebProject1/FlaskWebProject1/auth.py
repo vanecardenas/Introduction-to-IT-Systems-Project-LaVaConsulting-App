@@ -27,6 +27,10 @@ def login():
     # Validate login attempt
     if form.validate_on_submit():
         doctor = Doctor.query.filter_by(username=form.username.data).first()
+        session["title"]=  db.session.query(Doctor.title).filter_by(username=form.username.data).first()
+        session["last_name"]=  db.session.query(Doctor.last_name).filter_by(username=form.username.data).first()
+        session["id_dep"]=  db.session.query(Doctor.id_department).filter_by(username=form.username.data).first()
+        session["id_doc"]=  db.session.query(Doctor.id_doctor).filter_by(username=form.username.data).first()
         if doctor and doctor.check_password(password=form.password.data):
             login_user(doctor)
             next_page = request.args.get('next')
@@ -35,7 +39,7 @@ def login():
         return redirect(url_for('login'))
     return render_template(
         'login.html',
-        form=form)
+          form=form)
 
 
 from flask_login import logout_user
