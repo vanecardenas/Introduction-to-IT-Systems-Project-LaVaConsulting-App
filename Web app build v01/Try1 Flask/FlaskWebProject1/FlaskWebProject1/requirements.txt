@@ -4,8 +4,8 @@ mysql-connector-python
 pymysql
 cx_Oracle
 flask_mysqldb
-flask-sqlalchemy
-flask-migrate
+flask_sqlalchemy
+flask_migrate
 flask-session
 redis
 flask_redis
@@ -14,3 +14,5 @@ flask_wtf
 wtforms
 flask_login
 werkzeug
+flask_table
+os
