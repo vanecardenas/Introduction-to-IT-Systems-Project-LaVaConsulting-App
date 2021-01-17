@@ -35,7 +35,7 @@
 
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="exploring_page.html">Safe&Surg</a>
+        <a class="navbar-brand" href="{{ url_for('exploring_page') }} l">Safe&Surg</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -89,7 +89,7 @@
             <div class="row">
                 <div class="col-xl-9 mx-auto">
                     <h1 class="mb-5">
-                        Welcome <br><br> Dr. Masanneck<br><br>
+                        Welcome <br><br>{{d_title}} {{doc_name}} <br><br>
                         <i class="fa fa-user-md" aria-hidden="true" style="font-size:100px;color:rgb(101, 209, 191);"></i><br>
                         <br> Add new entries
                         <!--We could also work with queries here - and probably should. Something like title and last name from the doctors table. -->

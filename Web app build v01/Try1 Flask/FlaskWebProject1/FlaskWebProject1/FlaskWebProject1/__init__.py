@@ -51,6 +51,7 @@ import FlaskWebProject1.forms
 import FlaskWebProject1.views
 import FlaskWebProject1.auth
 import FlaskWebProject1.dbase_conn
+import FlaskWebProject1.tables
 
 
 

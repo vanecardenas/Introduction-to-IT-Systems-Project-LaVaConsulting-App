@@ -6,6 +6,10 @@ from datetime import datetime
 from flask import render_template, flash, redirect, request, session, url_for
 from FlaskWebProject1 import app
 from flask_login import current_user, login_required 
+from FlaskWebProject1.tables import ResultsDep, ResultsDepItems, ResultsDoc, ResultsDocItems  
+from FlaskWebProject1.models import OperationsTakenPlace
+from flask_sqlalchemy import SQLAlchemy
+from . import db
 #from .forms import LoginForm
 
 @app.route('/', methods=('GET', 'POST'))
@@ -30,6 +34,9 @@ def contact():
     return render_template(
         'contact_page.html',
         current_user=current_user,
+        doc_dept =   session["depname"][0],
+        d_title = session["title"][0] ,
+        doc_name = session["last_name"][0],
         title='Contact',
         year=datetime.now().year,
         message='Your contact page.'
@@ -75,6 +82,9 @@ def add_new():
     return render_template(
         'add_new.html',
         current_user=current_user,
+        doc_dept =   session["depname"][0],
+        d_title = session["title"][0] ,
+        doc_name = session["last_name"][0],
         title='Add New Surgery/Patient',
         year=datetime.now().year,
     )
@@ -92,6 +102,9 @@ def impressum():
         year=datetime.now().year,
     )
 
+
+
+
 @app.route('/logout_impressum')
 def logout_impressum():
     """Renders the logged out impressum page."""
@@ -108,8 +121,15 @@ def logout_impressum():
 @login_required
 def user_dpt():
     """Renders the department page."""
+    #items = db.session.query(OperationsTakenPlace).all()
+    #table = ResultsDep(items)
+
     return render_template(
         'user_dpt.html',
+        doc_dept =   session["depname"][0],
+        d_title = session["title"][0] ,
+        doc_name = session["last_name"][0],
+        #table=table,
         current_user=current_user,
         title='User Department',
         year=datetime.now().year,
@@ -120,11 +140,20 @@ def user_dpt():
 @app.route('/user_patients')
 @login_required
 def user_patients():
+    #Builds table#
+    items = db.session.query(OperationsTakenPlace).filter_by(id_doctor = session["id_doc"][0]).all()
+
+    table = ResultsDoc(items)
+    #table = ResultsDep(items)
     """Renders the My Patients page."""
     return render_template(
         'user_patients.html',
         current_user=current_user,
+        doc_dept =   session["depname"][0],
+        d_title = session["title"][0] ,
+        doc_name = session["last_name"][0],
         title='My Patients',
+        table=table,
         year=datetime.now().year,
     )
 
@@ -137,20 +166,27 @@ def user_surgeries():
     return render_template(
         'user_surgeries.html',
         current_user=current_user,
+        doc_dept =   session["depname"][0],
+        d_title = session["title"][0] ,
+        doc_name = session["last_name"][0],
         title='My Surgeries',
         year=datetime.now().year,
     )
 
 
 
+
+
 @app.route('/exploring_page')
 @login_required
 def exploring_page():
+
     """Renders the another page."""
     return render_template(
         'exploring_page.html',
         current_user=current_user,
-        title='Home Page',
+        d_title = session["title"][0] ,
+        doc_name = session["last_name"][0] ,
         year=datetime.now().year,
     )
 

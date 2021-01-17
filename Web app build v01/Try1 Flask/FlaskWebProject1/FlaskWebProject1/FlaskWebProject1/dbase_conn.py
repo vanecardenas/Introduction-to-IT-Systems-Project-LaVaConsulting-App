@@ -1,6 +1,6 @@
 #THis file is currently not needed but was used to try out a lot of databse stuff. Future routes could be stored here. 
 
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, session
 from flask_mysqldb import MySQL
 import mysql.connector
 from flask_sqlalchemy import SQLAlchemy
@@ -29,7 +29,7 @@ from FlaskWebProject1.models import Department
 
 
 @app.route('/test_db')
-def test1():
+def test():
     try:
             test = db.session.query(Department).all()
             print(test) #Look in console to see if database connection works
@@ -39,7 +39,32 @@ def test1():
     except:
         return '<h1>Database connection not correctly established!</h1>'
 
+
+@app.route('/test_db2')
+def test2():
+    try:
+            test =  db.engine.execute("SELECT * FROM surgeries_db.postop_procedure")
+            type(test) #Look in console to see if database connection works
+               
+        
+            return '<h1>Database connection succesful!</h1>'
+    except:
+        return '<h1>Database connection not correctly established!</h1>'
+
+
+
 #Set passwords of already existing users 
+
+@app.route('/test_db1')
+def test1():
+    try:
+            session["name"] = db.session.query(Doctor.last_name).filter_by(username="masannecklar").first()
+            print(session["name"][0]) #Look in console to see if database connection works
+               
+        
+            return '<h1>Database connection succesful!</h1>'
+    except:
+        return '<h1>Database connection not correctly established!</h1>'
 
 @app.route('/setpw')
 def setpw():
