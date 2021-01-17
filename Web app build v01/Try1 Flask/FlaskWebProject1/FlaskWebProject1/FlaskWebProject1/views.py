@@ -30,6 +30,9 @@ def contact():
     return render_template(
         'contact_page.html',
         current_user=current_user,
+        doc_dept =   session["depname"][0],
+        d_title = session["title"][0] ,
+        doc_name = session["last_name"][0],
         title='Contact',
         year=datetime.now().year,
         message='Your contact page.'
@@ -75,6 +78,9 @@ def add_new():
     return render_template(
         'add_new.html',
         current_user=current_user,
+        doc_dept =   session["depname"][0],
+        d_title = session["title"][0] ,
+        doc_name = session["last_name"][0],
         title='Add New Surgery/Patient',
         year=datetime.now().year,
     )
@@ -110,6 +116,9 @@ def user_dpt():
     """Renders the department page."""
     return render_template(
         'user_dpt.html',
+        doc_dept =   session["depname"][0],
+        d_title = session["title"][0] ,
+        doc_name = session["last_name"][0],
         current_user=current_user,
         title='User Department',
         year=datetime.now().year,
@@ -124,6 +133,9 @@ def user_patients():
     return render_template(
         'user_patients.html',
         current_user=current_user,
+        doc_dept =   session["depname"][0],
+        d_title = session["title"][0] ,
+        doc_name = session["last_name"][0],
         title='My Patients',
         year=datetime.now().year,
     )
@@ -137,6 +149,9 @@ def user_surgeries():
     return render_template(
         'user_surgeries.html',
         current_user=current_user,
+        doc_dept =   session["depname"][0],
+        d_title = session["title"][0] ,
+        doc_name = session["last_name"][0],
         title='My Surgeries',
         year=datetime.now().year,
     )
