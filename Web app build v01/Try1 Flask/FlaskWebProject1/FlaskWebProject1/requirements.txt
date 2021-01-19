@@ -15,4 +15,3 @@ wtforms
 flask_login
 werkzeug
 flask_table
-os
