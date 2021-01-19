@@ -2,6 +2,10 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, TextField, SubmitField, PasswordField, SelectField
 from wtforms.fields.html5 import DateField
 from wtforms.validators  import (DataRequired, Length, Optional, EqualTo, InputRequired)
+from wtforms.ext.sqlalchemy.fields import QuerySelectField
+from .models import db, Doctor, Department, Insurance
+from sqlalchemy.sql.expression import func
+from flask_sqlalchemy import SQLAlchemy
 
 
 class SignupForm(FlaskForm):
@@ -75,11 +79,13 @@ class PatientAddForm(FlaskForm):
        validators=[InputRequired()]
        )
     
-    id_insurance = SelectField(
-        "Insurance", choices=[(1,"Barmer"),(2,"DAK Gesundheit"), (3, "Techniker Krankenkasse"), (4, "AOK Bayern"), (5, "Barmenia"),
-                               (6, "Ottonova Health"), (7, "Selbstzahler"), (8, "DBK"), (9, "Hanseatische Krankenkasse"), (10, "IKK classic")],
-       validators=[InputRequired()]
-       )
+    #The following works but can be automated with databse queries!
+    #id_insurance = SelectField(
+    #    "Insurance", choices=[(1,"Barmer"),(2,"DAK Gesundheit"), (3, "Techniker Krankenkasse"), (4, "AOK Bayern"), (5, "Barmenia"),
+    #                           (6, "Ottonova Health"), (7, "Selbstzahler"), (8, "DBK"), (9, "Hanseatische Krankenkasse"), (10, "IKK classic")],
+    #   validators=[InputRequired()]
+    #   )
+    id_insurance=QuerySelectField('Insurance',query_factory=lambda:Insurance.query,get_label="name")
    
     
       
