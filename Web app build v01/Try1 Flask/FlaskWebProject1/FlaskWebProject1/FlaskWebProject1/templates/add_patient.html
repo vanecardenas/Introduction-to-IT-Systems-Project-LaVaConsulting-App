@@ -89,26 +89,126 @@
             <div class="row">
                 <div class="col-xl-9 mx-auto">
                     <h1 class="mb-5">
-                        Welcome <br><br>{{d_title}} {{doc_name}} <br />
-                        {% with messages = get_flashed_messages() %}
-                        {% if messages %}
-                        <ul class=flashes>
-                            {% for message in messages %}
-                            <li>{{ message }}</li>
-                            {% endfor %}
-                        </ul>
-                        {% endif %}
-                        {% endwith %}
-                        {% block body %}{% endblock %}
-                        {{add_message}}<br><br>
+                        Welcome <br>{{d_title}} {{doc_name}} <br><br>
                         <i class="fa fa-user-md" aria-hidden="true" style="font-size:100px;color:rgb(101, 209, 191);"></i><br>
                         <br> Add new entries
                         <!--We could also work with queries here - and probably should. Something like title and last name from the doctors table. -->
                     </h1>
                 </div>
             </div>
-        </div>
-    </header>
+            <div class="col-md-2 col-lg-8 col-xl-7 mx-auto">
+                {% block content %}
+                <div class="form-wrapper">
+
+
+                    {% for message in get_flashed_messages() %}
+                    <div class="alert alert-warning">
+                        <button type="button"
+                                class="close"
+                                data-dismiss="alert">
+                            x
+                        </button>
+                        {{ message }}
+                    </div>
+                    {% endfor %}
+
+
+
+                    <form method="POST" action="/addpatient">
+                        {{ form.csrf_token }}
+
+                        <div class="col-12 col-md-9 mx-auto">
+                            <div class="d-flex flex-column">
+
+                                <div class="p-2">
+                                    <fieldset class="first_name">
+                                        {{ form.first_name.label }}
+                                        <div class="align-self-start">
+                                            {{ form.first_name(placeholder='Maximiliane') }}
+                                        </div>
+                                        {% if form.first_name.errors %}
+                                        <ul class="errors">
+                                            {% for error in form.first_name.errors %}
+                                            <li>{{ error }}</li>{% endfor %}
+                                        </ul>
+                                        {% endif %}
+                                    </fieldset>
+                                </div>
+
+                                <div class="p-2">
+
+                                    <fieldset class="last_name">
+                                        {{ form.last_name.label }}
+                                        <div class="align-self-start">
+                                            {{ form.last_name(placeholder='Musterfrau') }}
+                                        </div>
+                                        {% if form.last_name.errors %}
+                                        <ul class="errors">
+                                            {% for error in form.last_name.errors %}
+                                            <li>{{ error }}</li>{% endfor %}
+                                        </ul>
+                                        {% endif %}
+                                    </fieldset>
+                                </div>
+                                <div class="p-2">
+                                    <fieldset class="date_birth">
+                                        {{ form.date_birth.label }}
+                                        <div class="align-self-start">
+                                            {{ form.date_birth }}
+                                        </div>
+                                        {% if form.date_birth.errors %}
+                                        <ul class="errors">
+                                            {% for error in form.date_birth.errors %}
+                                            <li>{{ error }}</li>{% endfor %}
+                                        </ul>
+                                        {% endif %}
+                                    </fieldset>
+                                </div>
+                                <div class="p-2">
+                                    <div class="p-2">
+                                        <fieldset class="gender">
+                                            {{ form.gender.label }}
+                                            <div class="align-self-start">
+                                                {{ form.gender }}
+                                            </div>
+                                            {% if form.gender.errors %}
+                                            <ul class="errors">
+                                                {% for error in form.gender.errors %}
+                                                <li>{{ error }}</li>{% endfor %}
+                                            </ul>
+                                            {% endif %}
+                                        </fieldset>
+                                    </div>
+                                    <div class="p-2">
+
+
+
+                                        <fieldset class="id_insurance">
+                                            {{ form.id_insurance.label }}
+                                            <div class="align-self-start">
+
+                                                {{ form.id_insurance(placeholder='Insurance') }}
+                                            </div>
+                                            {% if form.id_insurance.errors %}
+                                            <ul class="errors">
+                                                {% for error in form.id_insurance.errors %}
+                                                <li>{{ error }}</li>{% endfor %}
+                                            </ul>
+                                            {% endif %}
+                                        </fieldset>
+                                        <br />
+
+                                        <div class="submit-button">
+                                            {{ form.submit }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                    </form>
+                    {% endblock %}
+                </div>
+            </div>
+</header>
 
     <!-- Header -->
     <section class="features-icons bg-light text-center">
@@ -126,15 +226,15 @@
 
                 </div>
                 <div class="col-lg-6">
-                    <a href="{{ url_for('addpatient') }}">
-                        <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
-                            <div class="features-icons-icon d-flex">
-                                <i class="fa fa-plus-circle m-auto text-primary"></i>
-                            </div>
-                            <h3>Add a new Patient</h3>
-                            <p class="lead mb-0"> Enter the data of a new patient here </p>
+
+                    <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
+                        <div class="features-icons-icon d-flex">
+                            <i class="fa fa-plus-circle m-auto text-primary"></i>
                         </div>
-                    </a>
+                        <h3>Add a new Patient</h3>
+                        <p class="lead mb-0"> Enter the data of a new patient here </p>
+                    </div>
+
                 </div>
 
             </div>

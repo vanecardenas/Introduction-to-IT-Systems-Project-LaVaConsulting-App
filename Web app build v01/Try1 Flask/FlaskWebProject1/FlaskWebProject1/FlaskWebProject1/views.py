@@ -14,13 +14,18 @@ from . import db
 
 @app.route('/', methods=('GET', 'POST'))
 @app.route('/initial_page',  methods=('GET', 'POST'))
+
+
 def initial_page():
+    if True:
+        session["add_message"]=  " "
    # form = LoginForm()
    # if form.validate_on_submit():
      #   return redirect(url_for("explanatory_page"))
     """Renders the home page."""
     return render_template(
         'initial_page.html',
+        
         #form=form,
         title='Home Page',
         year=datetime.now().year,
@@ -74,20 +79,6 @@ def logout_about():
         message='Your application description page.'
     )
 
-
-@app.route('/add_new')
-@login_required
-def add_new():
-    """Renders the addnew page."""
-    return render_template(
-        'add_new.html',
-        current_user=current_user,
-        doc_dept =   session["depname"][0],
-        d_title = session["title"][0] ,
-        doc_name = session["last_name"][0],
-        title='Add New Surgery/Patient',
-        year=datetime.now().year,
-    )
 
 
 
