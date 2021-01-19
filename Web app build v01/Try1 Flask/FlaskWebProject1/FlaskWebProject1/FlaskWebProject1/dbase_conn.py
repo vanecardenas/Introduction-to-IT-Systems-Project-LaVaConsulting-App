@@ -14,6 +14,7 @@ import cx_Oracle
 from werkzeug.security import generate_password_hash, check_password_hash
 from .models import db, Doctor
 from FlaskWebProject1 import app
+from sqlalchemy.sql.expression import func
 
 
 #import sqlacodegen
@@ -31,11 +32,14 @@ from FlaskWebProject1.models import Department
 @app.route('/test_db')
 def test():
     try:
-            test = db.session.query(Department).all()
-            print(test) #Look in console to see if database connection works
+            test = db.session.query(func.max(Doctor.id_doctor)).scalar()
+            print(type(test))
+            print(test)
+
+            
                
         
-            return '<h1>Database connection succesful!</h1>'
+            return  '<h1>Database connection succesful!</h1>'
     except:
         return '<h1>Database connection not correctly established!</h1>'
 

@@ -190,4 +190,12 @@ def exploring_page():
         year=datetime.now().year,
     )
 
+@app.route('/signup_success')
 
+def signup_success():
+
+    """Renders the another page."""
+    return render_template(
+        'signup_success.html',
+         year=datetime.now().year,
+    )

@@ -16,7 +16,7 @@
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="theme-color" content="#ffffff">
 
-    <title>Log in</title>
+    <title>Sign Up to Safe&Surg</title>
 
     <!-- Bootstrap core CSS -->
     <link href="/static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
@@ -70,53 +70,129 @@
         <div class="container">
             <div class="row">
                 <div class="col-xl-9 mx-auto">
-                    <h1 class="mb-5">Please sign in</h1>
+                    <h1 class="mb-5">Request to be Signed Up</h1>
                 </div>
             </div>
             <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
+                {% block content %}
                 <div class="form-wrapper">
 
+                    
                     {% for message in get_flashed_messages() %}
-
+                    <div class="alert alert-warning">
+                        <button type="button"
+                                class="close"
+                                data-dismiss="alert">
+                            x
+                        </button>
+                        {{ message }}
+                    </div>
                     {% endfor %}
-                    <div class="col-12 col-md-9 mx-auto">
-                    <form method="POST" action="/login">
+
+                    
+
+                    <form method="POST" action="/signup">
                         {{ form.csrf_token }}
-                        
-                            <fieldset class="username">
-                                {{ form.username.label }}
-                                {{ form.username(placeholder='chirurguwe') }}
-                                {% if form.username.errors %}
-                                <ul class="errors">
-                                    {% for error in form.username.errors %}
-                                    <li>{{ error }}</li>{% endfor %}
-                                </ul>
-                                {% endif %}
-                            </fieldset>
+
+                        <div class="col-12 col-md-9 mx-auto">
+                            <div class="d-flex flex-column">
+                                <div class="p-2">
+
+                                    <fieldset class="title">
+                                        {{ form.title.label }}
+                                        <div class="align-self-start">
+                                            {{ form.title(placeholder='Prof. Dr. med.', default =" ") }}
+                                        </div>
+
+                                            {% if form.title.errors %}
+                                            <ul class="errors">
+                                                {% for error in form.title.errors %}
+                                                <li>{{ error }}</li>{% endfor %}
+                                            </ul>
+                                            {% endif %}
+                                    </fieldset>
+                                </div>
+                                <div class="p-2">
+                                    <fieldset class="first_name">
+                                        {{ form.first_name.label }}
+                                        <div class="align-self-start">
+                                            {{ form.first_name(placeholder='Maximiliane') }}
+                                        </div>
+                                            {% if form.first_name.errors %}
+                                            <ul class="errors">
+                                                {% for error in form.first_name.errors %}
+                                                <li>{{ error }}</li>{% endfor %}
+                                            </ul>
+                                            {% endif %}
+                                    </fieldset>
+                                </div>
+
+                                <div class="p-2">
+
+                                    <fieldset class="last_name">
+                                        {{ form.last_name.label }}
+                                        <div class="align-self-start">
+                                            {{ form.last_name(placeholder='Musterfrau') }}
+                                        </div>
+                                            {% if form.last_name.errors %}
+                                            <ul class="errors">
+                                                {% for error in form.last_name.errors %}
+                                                <li>{{ error }}</li>{% endfor %}
+                                            </ul>
+                                            {% endif %}
+                                    </fieldset>
+                                </div>
+                                <div class="p-2">
+                                    <fieldset class="department">
+                                        {{ form.department.label }}
+                                        <div class="align-self-start">
+                                            {{ form.department }}
+                                        </div>
+                                            {% if form.department.errors %}
+                                            <ul class="errors">
+                                                {% for error in form.department.errors %}
+                                                <li>{{ error }}</li>{% endfor %}
+                                            </ul>
+                                            {% endif %}
+                                    </fieldset>
+                                </div>
+                                <div class="p-2">
+
+                                    <fieldset class="username">
+                                        {{ form.username.label }}
+                                        <div class="align-self-start">
+                                            
+                                            {{ form.username(placeholder='musterfraumax') }}
+                                        </div>
+                                        {% if form.username.errors %}
+                                        <ul class="errors">
+                                            {% for error in form.username.errors %}
+                                            <li>{{ error }}</li>{% endfor %}
+                                        </ul>
+                                        {% endif %}
+                                    </fieldset>
+                                    <br />
+
+                                    <div class="submit-button">
+                                        {{ form.submit }}
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-
-                            <fieldset class="password">
-                                {{ form.password.label }}
-                                {{ form.password(placeholder ='Enter Password') }}
-                                {% if form.password.errors %}
-                                <ul class="errors">
-                                    {% for error in form.password.errors %}
-                                    <li>{{ error }}</li>{% endfor %}
-                                </ul>
-                                {% endif %}
-                            </fieldset>
-
-                            <div class="submit-button">
-                                {{ form.submit }}
-                            </div>
-
-                            <div class="login-signup">
-                                <span>Don't have an account yet? <br> Need help? <br></span>
-                                <a href="{{ url_for('signup') }}">Request a sign up.</a>
-                            </div>
-
                     </form>
+
+
+
+                    <div class="login-signup">
+                        <div>
+                            <span>Already have an account?</span>
+                            <a href="{{ url_for('login') }}">Log in.</a>
+                        </div>
+                    </div>
                 </div>
+
+                {% endblock %}
+            </div>
             </div>
                 <!--<div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
             <form action="{{ url_for('exploring_page') }}" enctype="application/x-www-form-urlencoded" method="post">
