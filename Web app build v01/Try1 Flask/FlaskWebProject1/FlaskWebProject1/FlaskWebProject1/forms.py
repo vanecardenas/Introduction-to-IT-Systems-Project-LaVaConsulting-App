@@ -90,5 +90,10 @@ class PatientAddForm(FlaskForm):
     
       
     submit = SubmitField('Add new patient')
+
+    def edit_patient(request, id_insurance):
+        insurance = Insurance.objects.get(pk=id_insurance)
+        form = PatientAddForm(obj=article)
+        form.id_insurance.queryset = Insurance.objects.filter(author=request.user)
     
   

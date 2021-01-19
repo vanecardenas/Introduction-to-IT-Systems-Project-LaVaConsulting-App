@@ -59,7 +59,7 @@ def addpatient():
                 last_name=form.last_name.data,
                 date_birth=form.date_birth.data,
                 gender= form.gender.data,
-                id_insurance=int(form.id_insurance.data)
+                id_insurance= form.id_insurance.data.id_insurance
             )
             
             db.session.add(new_patient)
