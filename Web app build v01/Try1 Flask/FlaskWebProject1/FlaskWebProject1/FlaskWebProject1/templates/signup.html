@@ -50,10 +50,10 @@
                         Lava Consultans
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="{{ url_for('contact') }}">Contact us </a>
-                        <a class="dropdown-item" href="{{ url_for('about') }}">About us and our mission </a>
+                        <a class="dropdown-item" href="{{ url_for('logout_contact') }}">Contact us </a>
+                        <a class="dropdown-item" href="{{ url_for('logout_about') }}">About us and our mission </a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="{{ url_for('impressum') }}"> Legal notice / Disclaimer </a>
+                        <a class="dropdown-item" href="{{ url_for('logout_impressum') }}"> Legal notice / Disclaimer </a>
                     </div>
                 </li>
             </ul>
@@ -77,7 +77,7 @@
                 {% block content %}
                 <div class="form-wrapper">
 
-                    
+
                     {% for message in get_flashed_messages() %}
                     <div class="alert alert-warning">
                         <button type="button"
@@ -89,7 +89,7 @@
                     </div>
                     {% endfor %}
 
-                    
+
 
                     <form method="POST" action="/signup">
                         {{ form.csrf_token }}
@@ -104,12 +104,12 @@
                                             {{ form.title(placeholder='Prof. Dr. med.', default =" ") }}
                                         </div>
 
-                                            {% if form.title.errors %}
-                                            <ul class="errors">
-                                                {% for error in form.title.errors %}
-                                                <li>{{ error }}</li>{% endfor %}
-                                            </ul>
-                                            {% endif %}
+                                        {% if form.title.errors %}
+                                        <ul class="errors">
+                                            {% for error in form.title.errors %}
+                                            <li>{{ error }}</li>{% endfor %}
+                                        </ul>
+                                        {% endif %}
                                     </fieldset>
                                 </div>
                                 <div class="p-2">
@@ -118,12 +118,12 @@
                                         <div class="align-self-start">
                                             {{ form.first_name(placeholder='Maximiliane') }}
                                         </div>
-                                            {% if form.first_name.errors %}
-                                            <ul class="errors">
-                                                {% for error in form.first_name.errors %}
-                                                <li>{{ error }}</li>{% endfor %}
-                                            </ul>
-                                            {% endif %}
+                                        {% if form.first_name.errors %}
+                                        <ul class="errors">
+                                            {% for error in form.first_name.errors %}
+                                            <li>{{ error }}</li>{% endfor %}
+                                        </ul>
+                                        {% endif %}
                                     </fieldset>
                                 </div>
 
@@ -134,12 +134,12 @@
                                         <div class="align-self-start">
                                             {{ form.last_name(placeholder='Musterfrau') }}
                                         </div>
-                                            {% if form.last_name.errors %}
-                                            <ul class="errors">
-                                                {% for error in form.last_name.errors %}
-                                                <li>{{ error }}</li>{% endfor %}
-                                            </ul>
-                                            {% endif %}
+                                        {% if form.last_name.errors %}
+                                        <ul class="errors">
+                                            {% for error in form.last_name.errors %}
+                                            <li>{{ error }}</li>{% endfor %}
+                                        </ul>
+                                        {% endif %}
                                     </fieldset>
                                 </div>
                                 <div class="p-2">
@@ -148,12 +148,12 @@
                                         <div class="align-self-start">
                                             {{ form.department }}
                                         </div>
-                                            {% if form.department.errors %}
-                                            <ul class="errors">
-                                                {% for error in form.department.errors %}
-                                                <li>{{ error }}</li>{% endfor %}
-                                            </ul>
-                                            {% endif %}
+                                        {% if form.department.errors %}
+                                        <ul class="errors">
+                                            {% for error in form.department.errors %}
+                                            <li>{{ error }}</li>{% endfor %}
+                                        </ul>
+                                        {% endif %}
                                     </fieldset>
                                 </div>
                                 <div class="p-2">
@@ -161,7 +161,7 @@
                                     <fieldset class="username">
                                         {{ form.username.label }}
                                         <div class="align-self-start">
-                                            
+
                                             {{ form.username(placeholder='musterfraumax') }}
                                         </div>
                                         {% if form.username.errors %}
@@ -193,8 +193,8 @@
 
                 {% endblock %}
             </div>
-            </div>
-                <!--<div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
+        </div>
+        <!--<div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
             <form action="{{ url_for('exploring_page') }}" enctype="application/x-www-form-urlencoded" method="post">
                 <div class="form-row">
                     <div class="col-12 col-md-9 mx-auto">
@@ -215,8 +215,7 @@
                 </div>
             </form>
         </div>-->
-
-            </div>
+        </div>
         </div>
     </header>
 
@@ -319,6 +318,15 @@
             </div>
         </div>
     </section>
+
+    <div class="container mx-auto">
+        <div class="row mb-4 mx-auto">
+            <div class="col-md-3 p-1 mx-auto">
+                <img src="/static/img/logo2.png" class="img-fluid mx-auto d-block" alt="Responsive image">
+            </div>
+        </div>
+
+    </div>
 
     <!-- Footer -->
     <footer class="footer bg-light">
