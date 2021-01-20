@@ -103,7 +103,7 @@
                         {{add_message}}<br><br>
                         <i class="fa fa-user-md" aria-hidden="true" style="font-size:100px;color:rgb(101, 209, 191);"></i><br>
                         <br> Add new entries
-                        <!--We could also work with queries here - and probably should. Something like title and last name from the doctors table. -->
+                       
                     </h1>
                 </div>
             </div>
@@ -137,12 +137,12 @@
                     </a>
                 </div>
             </div>
-            <br /> <br /> 
+            <br /> <br />
             <div class="row">
 
                 <div class="col-lg-6">
-                    <!--<a href="{{ url_for('add_insurance') }}">-->
-                    
+                    <a href="{{ url_for('add_surgproc') }}">
+
                     <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
                         <div class="features-icons-icon d-flex">
                             <i class="fa fa-cut m-auto text-primary"></i>
@@ -150,7 +150,7 @@
                         <h3>Add Surgical Procedures here </h3>
                         <p class="lead mb-0"> Did you acquire new skills? Is your team missing surgical procedures? Add new here! </p>
                     </div>
-                    <!--</a>-->
+                    </a>
                 </div>
 
 
@@ -167,40 +167,12 @@
                 </div>
 
             </div>
+
         </div>
     </section>
 
 
-    <!-- Functionality *ADD NEW*(yet to be build) -->
-    <link rel="stylesheet" type="text/css" href="/static/style_tables_test.css" />
-    <div class="scoreboard" style="display: block;">
-        <table class="scoreboardTable">
-            <thead class="scoreboardTableHead">
-                <tr class="scoreboardTableHeaderRow">
-                    <th>Patient ID</th>
-                    <th>Name</th>
-                    <th>Procedure</th>
-                    <th>Snomed Code</th>
-                    <th>Check List</th>
-                </tr>
-            </thead>
-            <tbody class="scoreboardTable-Body"></tbody>
-            <tr class="scoreboardTableBodyRow">
-                <td>1</td>
-                <td>Dennis Kipping</td>
-                <td>Trauma cx1</td>
-                <td>123456</td>
-                <td>Available</td>
-            </tr>
-            <tr class="scoreboardTableBodyRow">
-                <td>2</td>
-                <td>Connie Cardenas</td>
-                <td>Trauma cx2</td>
-                <td>678910</td>
-                <td>Not Available</td>
-            </tr>
-        </table>
-    </div>
+
 
 
     <!-- Testimonials -->
@@ -236,6 +208,17 @@
                         </a>
                     </div>
                 </div>
+            </div>
+            <br /> <br />
+            <div class="container mx-auto">
+                <div class="row mb-4 mx-auto">
+
+                    <div class="col-md-3 p-1 mx-auto">
+                        <img src="/static/img/logo2.png" class="img-fluid mx-auto d-block" alt="Responsive image">
+                    </div>
+
+                </div>
+
             </div>
         </div>
     </section>

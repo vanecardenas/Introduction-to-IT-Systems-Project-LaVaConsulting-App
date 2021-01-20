@@ -1,6 +1,6 @@
 from flask import Blueprint, redirect, render_template, flash, request, session, url_for
-from .forms import PatientAddForm, InsuranceAddForm
-from .models import db, Doctor, Department, Patient, Insurance
+from .forms import PatientAddForm, InsuranceAddForm, SurgProcAddForm
+from .models import db, Doctor, Department, Patient, Insurance, SurgeryProcedure
 from . import login_manager
 from FlaskWebProject1 import app
 from flask_login import current_user, login_required
@@ -123,5 +123,41 @@ def add_insurance():
     )
 
 
+@app.route('/add_surgproc', methods=['GET', 'POST'])
+@login_required
+def add_surgproc():
+    """
+    Page for adding another surgical procedure.
+
+      """
+    form = SurgProcAddForm()
+    
+    if form.validate_on_submit():
+        existing_insurance = SurgeryProcedure.query.filter_by(name=form.name.data).first()
+        if existing_insurance is None:
+             new_surgproc = SurgeryProcedure(
+                name=form.name.data,
+                snomed_code = form.snomed_code.data,
+                typical_dpt_id =  session["id_dep"][0])
+            
+             db.session.add(new_surgproc)
+             db.session.commit() 
+
+             flash('Surgical Procedure was successfully added!')
+             return redirect(url_for('add_new', add_message= "Surgical Procedure successfully added!",**request.args))
+        flash('This Surgical Procedure already exists!.')
+        ...
+        
+    return render_template(
+        'add_surgproc.html',
+        current_user=current_user,
+        doc_dept =   session["depname"][0],
+        d_title = session["title"][0] ,
+        doc_name = session["last_name"][0],
+        title='Create an Account.',
+        form=form,
+        template='Add insurance',
+        body="Add another insurance."
+    )
 
 

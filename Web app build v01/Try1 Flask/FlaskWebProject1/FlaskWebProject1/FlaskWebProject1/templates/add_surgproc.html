@@ -16,7 +16,7 @@
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="theme-color" content="#ffffff">
 
-    <title>Safe&Surg - Add new patients to your Safe&Surg </title>
+    <title>Safe&Surg - Add a SUrgical Procedure to  Safe&Surg </title>
 
     <!-- Bootstrap core CSS -->
     <link href="/static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -90,21 +90,18 @@
                 <div class="col-xl-9 mx-auto">
                     <h1 class="mb-5">
                         Welcome <br>{{d_title}} {{doc_name}} <br><br>
-                        {% with messages = get_flashed_messages() %}
-                        {% if messages %}
-                        <ul class=flashes>
-                            {% for message in messages %}
-                            <li>{{ message }}</li>
-                            {% endfor %}
-                        </ul>
-                        {% endif %}
-                        {% endwith %}
-                        {% block body %}{% endblock %}
-                        {{add_message}}<br><br>
                         <i class="fa fa-user-md" aria-hidden="true" style="font-size:100px;color:rgb(101, 209, 191);"></i><br>
-                        <br> Add new Patients
+                        <br> Add a new Surgical Procedure
                         <!--We could also work with queries here - and probably should. Something like title and last name from the doctors table. -->
                     </h1>
+                    <br />
+                    <h4 class="mb-5">
+                        Dear {{d_title}} {{doc_name}}, as a member of the {{doc_dept}} department your added procedure will be automatically assigned to {{doc_dept}}! <i class="fa fa-hospital" aria-hidden="true" style="font-size:62px;color:rgb(101, 209, 191);"></i><br>
+
+
+
+                        <!--We could also work with queries here - and probably should. Something like title and last name from the doctors table. -->
+                    </h4>
                 </div>
             </div>
             <div class="col-md-2 col-lg-8 col-xl-7 mx-auto">
@@ -125,103 +122,60 @@
 
 
 
-                    <form method="POST" action="/addpatient">
+                    <form method="POST" action="/add_surgproc">
                         {{ form.csrf_token }}
 
                         <div class="col-12 col-md-9 mx-auto">
                             <div class="d-flex flex-column">
 
+
                                 <div class="p-2">
-                                    <fieldset class="first_name">
-                                        {{ form.first_name.label }}
+
+
+                                    <fieldset class="snomed_code">
+                                        {{ form.snomed_code.label }}
                                         <div class="align-self-start">
-                                            {{ form.first_name(placeholder='Maximiliane') }}
+
+                                            {{ form.snomed_code(placeholder='110473004') }}
                                         </div>
-                                        {% if form.first_name.errors %}
+                                        {% if form.snomed_code.errors %}
                                         <ul class="errors">
-                                            {% for error in form.first_name.errors %}
+                                            {% for error in form.snomed_code.errors %}
+                                            <li>{{ error }}</li>{% endfor %}
+                                        </ul>
+                                        {% endif %}
+                                    </fieldset>
+                                    <span>Don't know the SNOMED code? <br> <a target="_blank" rel="noopener noreferrer" href="https://athena.ohdsi.org/search-terms/terms?vocabulary=SNOMED&query=Cataract+surgery&boosts&page=1"> Search here! </a> <br></span>
+                                </div>
+
+                                <br />
+
+                                <div class="p-2">
+                                    <fieldset class="name">
+                                        {{ form.name.label }}
+                                        <div class="align-self-start">
+                                            {{ form.name(placeholder='Cataract surgery') }}
+                                        </div>
+                                        {% if form.name.errors %}
+                                        <ul class="errors">
+                                            {% for error in form.name.errors %}
                                             <li>{{ error }}</li>{% endfor %}
                                         </ul>
                                         {% endif %}
                                     </fieldset>
                                 </div>
+                                <br />
 
-                                <div class="p-2">
-
-                                    <fieldset class="last_name">
-                                        {{ form.last_name.label }}
-                                        <div class="align-self-start">
-                                            {{ form.last_name(placeholder='Musterfrau') }}
-                                        </div>
-                                        {% if form.last_name.errors %}
-                                        <ul class="errors">
-                                            {% for error in form.last_name.errors %}
-                                            <li>{{ error }}</li>{% endfor %}
-                                        </ul>
-                                        {% endif %}
-                                    </fieldset>
-                                </div>
-                                <div class="p-2">
-                                    <fieldset class="date_birth">
-                                        {{ form.date_birth.label }}
-                                        <div class="align-self-start">
-                                            {{ form.date_birth }}
-                                        </div>
-                                        {% if form.date_birth.errors %}
-                                        <ul class="errors">
-                                            {% for error in form.date_birth.errors %}
-                                            <li>{{ error }}</li>{% endfor %}
-                                        </ul>
-                                        {% endif %}
-                                    </fieldset>
-                                </div>
-                                <div class="p-2">
-                                    <div class="p-2">
-                                        <fieldset class="gender">
-                                            {{ form.gender.label }}
-                                            <div class="align-self-start">
-                                                {{ form.gender }}
-                                            </div>
-                                            {% if form.gender.errors %}
-                                            <ul class="errors">
-                                                {% for error in form.gender.errors %}
-                                                <li>{{ error }}</li>{% endfor %}
-                                            </ul>
-                                            {% endif %}
-                                        </fieldset>
-                                    </div>
-                                    <div class="p-2">
-
-
-
-                                        <fieldset class="id_insurance">
-                                            {{ form.id_insurance.label }}
-                                            <div class="align-self-start">
-
-                                                {{ form.id_insurance(placeholder='Insurance') }}
-                                                <br /> <span>Can't find Insurance? <br></span>
-                                                <a href="{{ url_for('add_insurance') }}">Add it here.</a>
-                                            </div>
-                                            {% if form.id_insurance.errors %}
-                                            <ul class="errors">
-                                                {% for error in form.id_insurance.errors %}
-                                                <li>{{ error }}</li>{% endfor %}
-                                            </ul>
-                                            {% endif %}
-                                        </fieldset>
-                                        <br />
-
-                                        <div class="submit-button">
-                                            {{ form.submit }}
-                                        </div>
-                                    </div>
+                                <div class="submit-button">
+                                    {{ form.submit }}
                                 </div>
                             </div>
                         </div>
-                    </form>
-                    {% endblock %}
                 </div>
+                </form>
+                {% endblock %}
             </div>
+        </div>
         </div>
     </header>
 
@@ -337,6 +291,7 @@
             </div>
         </div>
     </section>
+
 
     <!-- Call to Action -->
     <section class="call-to-action text-white text-center">

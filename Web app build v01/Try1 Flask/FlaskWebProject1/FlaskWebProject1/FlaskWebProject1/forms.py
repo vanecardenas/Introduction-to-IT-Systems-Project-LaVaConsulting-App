@@ -1,9 +1,9 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, TextField, SubmitField, PasswordField, SelectField
 from wtforms.fields.html5 import DateField
-from wtforms.validators  import (DataRequired, Length, Optional, EqualTo, InputRequired)
+from wtforms.validators  import (DataRequired, Length, Optional, EqualTo, InputRequired, Regexp)
 from wtforms.ext.sqlalchemy.fields import QuerySelectField
-from .models import db, Doctor, Department, Insurance
+from .models import db, Doctor, Department, Insurance, SurgeryProcedure
 from sqlalchemy.sql.expression import func
 from flask_sqlalchemy import SQLAlchemy
 
@@ -95,9 +95,6 @@ class PatientAddForm(FlaskForm):
 
 
 
-
-
-
 class InsuranceAddForm(FlaskForm):
     """Doctor Sign-up Form."""
     
@@ -110,5 +107,24 @@ class InsuranceAddForm(FlaskForm):
     
       
     submit = SubmitField('Add Insurance')
+
+
+class SurgProcAddForm(FlaskForm):
+    """Doctor Sign-up Form."""
+    
+    #typical_dpt_id=QuerySelectField('Insurance',query_factory=lambda:Insurance.query.order_by(Insurance.name),get_label="name")
+
+    snomed_code = StringField(
+        'Enter SNOMED Code Procedure',
+        validators=[
+            Regexp(regex ="^[0-9]*$")])
+   
+    name = StringField(
+        'Enter the Name of your new Procedure',
+        validators=[
+            DataRequired()])
+    
+      
+    submit = SubmitField('Add Surgical Procedure')
     
   
