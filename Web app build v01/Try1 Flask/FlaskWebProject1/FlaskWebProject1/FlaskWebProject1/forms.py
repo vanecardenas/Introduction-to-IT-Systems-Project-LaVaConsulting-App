@@ -85,15 +85,30 @@ class PatientAddForm(FlaskForm):
     #                           (6, "Ottonova Health"), (7, "Selbstzahler"), (8, "DBK"), (9, "Hanseatische Krankenkasse"), (10, "IKK classic")],
     #   validators=[InputRequired()]
     #   )
-    id_insurance=QuerySelectField('Insurance',query_factory=lambda:Insurance.query,get_label="name")
+    id_insurance=QuerySelectField('Insurance',query_factory=lambda:Insurance.query.order_by(Insurance.name),get_label="name")
    
     
       
     submit = SubmitField('Add new patient')
 
-    def edit_patient(request, id_insurance):
-        insurance = Insurance.objects.get(pk=id_insurance)
-        form = PatientAddForm(obj=article)
-        form.id_insurance.queryset = Insurance.objects.filter(author=request.user)
+    
+
+
+
+
+
+
+class InsuranceAddForm(FlaskForm):
+    """Doctor Sign-up Form."""
+    
+    id_insurance=QuerySelectField('Here you can check again whether Insurance is in the system',query_factory=lambda:Insurance.query.order_by(Insurance.name),get_label="name", allow_blank = True)
+   
+    name = StringField(
+        'Enter a new Insurance',
+        validators=[
+            DataRequired()])
+    
+      
+    submit = SubmitField('Add Insurance')
     
   

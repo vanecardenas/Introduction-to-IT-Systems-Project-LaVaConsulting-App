@@ -1,5 +1,5 @@
 from flask import Blueprint, redirect, render_template, flash, request, session, url_for
-from .forms import PatientAddForm
+from .forms import PatientAddForm, InsuranceAddForm
 from .models import db, Doctor, Department, Patient, Insurance
 from . import login_manager
 from FlaskWebProject1 import app
@@ -41,9 +41,9 @@ def reset_cookie():
 
 
 
-@app.route('/addpatient', methods=['GET', 'POST'])
+@app.route('/add_patient', methods=['GET', 'POST'])
 @login_required
-def addpatient():
+def add_patient():
     """
     Page for adding a user.
 
@@ -52,9 +52,9 @@ def addpatient():
     
     if form.validate_on_submit():
             
-            #pid = db.session.query(func.max(Patient.id_patient)).scalar() +1
+            pid = db.session.query(func.max(Patient.id_patient)).scalar() +1
             new_patient = Patient(
-                #id_patient = pid,
+                id_patient = pid,
                 first_name=form.first_name.data,
                 last_name=form.last_name.data,
                 date_birth=form.date_birth.data,
@@ -73,8 +73,55 @@ def addpatient():
         
     return render_template(
         'add_patient.html',
+        current_user=current_user,
+        doc_dept =   session["depname"][0],
+        d_title = session["title"][0] ,
+        doc_name = session["last_name"][0],
         title='Create an Account.',
         form=form,
         template='signup-page',
         body="Sign up for a user account."
     )
+
+
+
+@app.route('/add_insurance', methods=['GET', 'POST'])
+@login_required
+def add_insurance():
+    """
+    Page for adding another insurance.
+
+      """
+    form = InsuranceAddForm()
+    
+    if form.validate_on_submit():
+        existing_insurance = Insurance.query.filter_by(name=form.name.data).first()
+        if existing_insurance is None:
+             n_iid = db.session.query(func.max(Insurance.id_insurance)).scalar() +1
+             new_insurance = Insurance(
+                name=form.name.data,
+                id_insurance = n_iid)
+            
+             db.session.add(new_insurance)
+             db.session.commit() 
+
+             flash('Insurance was successfully added!')
+             return redirect(url_for('add_patient', add_message= "Insurance successfully added!",**request.args))
+        flash('This insurance already exists!.')
+        ...
+        
+    return render_template(
+        'add_insurance.html',
+        current_user=current_user,
+        doc_dept =   session["depname"][0],
+        d_title = session["title"][0] ,
+        doc_name = session["last_name"][0],
+        title='Create an Account.',
+        form=form,
+        template='Add insurance',
+        body="Add another insurance."
+    )
+
+
+
+

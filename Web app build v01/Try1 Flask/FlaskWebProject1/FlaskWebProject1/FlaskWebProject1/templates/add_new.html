@@ -126,13 +126,42 @@
 
                 </div>
                 <div class="col-lg-6">
-                    <a href="{{ url_for('addpatient') }}">
+                    <a href="{{ url_for('add_patient') }}">
                         <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
                             <div class="features-icons-icon d-flex">
                                 <i class="fa fa-plus-circle m-auto text-primary"></i>
                             </div>
                             <h3>Add a new Patient</h3>
                             <p class="lead mb-0"> Enter the data of a new patient here </p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <br /> <br /> 
+            <div class="row">
+
+                <div class="col-lg-6">
+                    <!--<a href="{{ url_for('add_insurance') }}">-->
+                    
+                    <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
+                        <div class="features-icons-icon d-flex">
+                            <i class="fa fa-cut m-auto text-primary"></i>
+                        </div>
+                        <h3>Add Surgical Procedures here </h3>
+                        <p class="lead mb-0"> Did you acquire new skills? Is your team missing surgical procedures? Add new here! </p>
+                    </div>
+                    <!--</a>-->
+                </div>
+
+
+                <div class="col-lg-6">
+                    <a href="{{ url_for('add_insurance') }}">
+                        <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
+                            <div class="features-icons-icon d-flex">
+                                <i class="fa fa-book-medical m-auto text-primary"></i>
+                            </div>
+                            <h3>Add an Insurance here </h3>
+                            <p class="lead mb-0"> Add an Insurance to the database </p>
                         </div>
                     </a>
                 </div>

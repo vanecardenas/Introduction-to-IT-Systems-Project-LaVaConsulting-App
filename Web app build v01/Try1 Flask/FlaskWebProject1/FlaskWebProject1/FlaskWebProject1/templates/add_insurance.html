@@ -16,7 +16,7 @@
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="theme-color" content="#ffffff">
 
-    <title>Safe&Surg - Add new patients to your Safe&Surg </title>
+    <title>Safe&Surg - Add an Insurance to your Safe&Surg </title>
 
     <!-- Bootstrap core CSS -->
     <link href="/static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -90,19 +90,8 @@
                 <div class="col-xl-9 mx-auto">
                     <h1 class="mb-5">
                         Welcome <br>{{d_title}} {{doc_name}} <br><br>
-                        {% with messages = get_flashed_messages() %}
-                        {% if messages %}
-                        <ul class=flashes>
-                            {% for message in messages %}
-                            <li>{{ message }}</li>
-                            {% endfor %}
-                        </ul>
-                        {% endif %}
-                        {% endwith %}
-                        {% block body %}{% endblock %}
-                        {{add_message}}<br><br>
                         <i class="fa fa-user-md" aria-hidden="true" style="font-size:100px;color:rgb(101, 209, 191);"></i><br>
-                        <br> Add new Patients
+                        <br> Add a new Insurance
                         <!--We could also work with queries here - and probably should. Something like title and last name from the doctors table. -->
                     </h1>
                 </div>
@@ -125,99 +114,54 @@
 
 
 
-                    <form method="POST" action="/addpatient">
+                    <form method="POST" action="/add_insurance">
                         {{ form.csrf_token }}
 
                         <div class="col-12 col-md-9 mx-auto">
                             <div class="d-flex flex-column">
 
+
                                 <div class="p-2">
-                                    <fieldset class="first_name">
-                                        {{ form.first_name.label }}
+
+                                    <fieldset class="id_insurance">
+                                        {{ form.id_insurance.label }}
                                         <div class="align-self-start">
-                                            {{ form.first_name(placeholder='Maximiliane') }}
+
+                                            {{ form.id_insurance(placeholder='Insurance') }}
                                         </div>
-                                        {% if form.first_name.errors %}
+                                        {% if form.id_insurance.errors %}
                                         <ul class="errors">
-                                            {% for error in form.first_name.errors %}
+                                            {% for error in form.id_insurance.errors %}
                                             <li>{{ error }}</li>{% endfor %}
                                         </ul>
                                         {% endif %}
                                     </fieldset>
                                 </div>
 
-                                <div class="p-2">
+                                    <br />
 
-                                    <fieldset class="last_name">
-                                        {{ form.last_name.label }}
-                                        <div class="align-self-start">
-                                            {{ form.last_name(placeholder='Musterfrau') }}
-                                        </div>
-                                        {% if form.last_name.errors %}
-                                        <ul class="errors">
-                                            {% for error in form.last_name.errors %}
-                                            <li>{{ error }}</li>{% endfor %}
-                                        </ul>
-                                        {% endif %}
-                                    </fieldset>
-                                </div>
-                                <div class="p-2">
-                                    <fieldset class="date_birth">
-                                        {{ form.date_birth.label }}
-                                        <div class="align-self-start">
-                                            {{ form.date_birth }}
-                                        </div>
-                                        {% if form.date_birth.errors %}
-                                        <ul class="errors">
-                                            {% for error in form.date_birth.errors %}
-                                            <li>{{ error }}</li>{% endfor %}
-                                        </ul>
-                                        {% endif %}
-                                    </fieldset>
-                                </div>
-                                <div class="p-2">
                                     <div class="p-2">
-                                        <fieldset class="gender">
-                                            {{ form.gender.label }}
+                                        <fieldset class="name">
+                                            {{ form.name.label }}
                                             <div class="align-self-start">
-                                                {{ form.gender }}
+                                                {{ form.name(placeholder='Techniker Krankenkasse') }}
                                             </div>
-                                            {% if form.gender.errors %}
+                                            {% if form.name.errors %}
                                             <ul class="errors">
-                                                {% for error in form.gender.errors %}
+                                                {% for error in form.name.errors %}
                                                 <li>{{ error }}</li>{% endfor %}
                                             </ul>
                                             {% endif %}
                                         </fieldset>
                                     </div>
-                                    <div class="p-2">
+                                    <br />
 
-
-
-                                        <fieldset class="id_insurance">
-                                            {{ form.id_insurance.label }}
-                                            <div class="align-self-start">
-
-                                                {{ form.id_insurance(placeholder='Insurance') }}
-                                                <br /> <span>Can't find Insurance? <br></span>
-                                                <a href="{{ url_for('add_insurance') }}">Add it here.</a>
-                                            </div>
-                                            {% if form.id_insurance.errors %}
-                                            <ul class="errors">
-                                                {% for error in form.id_insurance.errors %}
-                                                <li>{{ error }}</li>{% endfor %}
-                                            </ul>
-                                            {% endif %}
-                                        </fieldset>
-                                        <br />
-
-                                        <div class="submit-button">
-                                            {{ form.submit }}
-                                        </div>
+                                    <div class="submit-button">
+                                        {{ form.submit }}
                                     </div>
+                                </div>
                                 </div>
                             </div>
-                        </div>
                     </form>
                     {% endblock %}
                 </div>

@@ -12,7 +12,7 @@ import mysql.connector
 from mysql.connector import Error
 import cx_Oracle
 from werkzeug.security import generate_password_hash, check_password_hash
-from .models import db, Doctor
+from .models import db, Doctor, Insurance
 from FlaskWebProject1 import app
 from sqlalchemy.sql.expression import func
 
@@ -62,11 +62,15 @@ def test2():
 @app.route('/test_db1')
 def test1():
     try:
-            session["name"] = db.session.query(Doctor.last_name).filter_by(username="masannecklar").first()
-            print(session["name"][0]) #Look in console to see if database connection works
+             new_insurance = Insurance(
+                name="Sack Gasse",
+                id_insurance = 11)
+            
+             db.session.add(new_insurance)
+             db.session.commit() 
                
         
-            return '<h1>Database connection succesful!</h1>'
+             return '<h1>Database connection succesful!</h1>'
     except:
         return '<h1>Database connection not correctly established!</h1>'
 
