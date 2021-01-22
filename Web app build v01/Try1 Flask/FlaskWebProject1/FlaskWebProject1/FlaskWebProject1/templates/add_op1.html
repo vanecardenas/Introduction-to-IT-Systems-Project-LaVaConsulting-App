@@ -16,7 +16,7 @@
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="theme-color" content="#ffffff">
 
-    <title>Safe&Surg - Add new patients to your Safe&Surg </title>
+    <title>Safe&Surg - Add an Operation -  Safe&Surg </title>
 
     <!-- Bootstrap core CSS -->
     <link href="/static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -89,24 +89,107 @@
             <div class="row">
                 <div class="col-xl-9 mx-auto">
                     <h1 class="mb-5">
-                        Welcome <br><br>{{d_title}} {{doc_name}} <br />
-                        {% with messages = get_flashed_messages() %}
-                        {% if messages %}
-                        <ul class=flashes>
-                            {% for message in messages %}
-                            <li>{{ message }}</li>
-                            {% endfor %}
-                        </ul>
-                        {% endif %}
-                        {% endwith %}
-                        {% block body %}{% endblock %}
-                        {{add_message}}<br><br>
+                        Welcome <br>{{d_title}} {{doc_name}} <br><br>
                         <i class="fa fa-user-md" aria-hidden="true" style="font-size:100px;color:rgb(101, 209, 191);"></i><br>
-                        <br> Add new entries
-                       
+                        <br> Add a new Operation
+                        <!--We could also work with queries here - and probably should. Something like title and last name from the doctors table. -->
                     </h1>
+                    <br />
+                    <h4 class="mb-5">
+                        Dear {{d_title}} {{doc_name}}, here you can add a new entry of an operation! <i class="fa fa-plus-circle" aria-hidden="true" style="font-size:62px;color:rgb(101, 209, 191);"></i><br>
+
+
+
+                        <!--We could also work with queries here - and probably should. Something like title and last name from the doctors table. -->
+                    </h4>
                 </div>
             </div>
+            <div class="col-md-2 col-lg-8 col-xl-7 mx-auto">
+                {% block content %}
+                <div class="form-wrapper">
+
+
+                    {% for message in get_flashed_messages() %}
+                    <div class="alert alert-warning">
+                        <button type="button"
+                                class="close"
+                                data-dismiss="alert">
+                            x
+                        </button>
+                        {{ message }}
+                    </div>
+                    {% endfor %}
+
+
+
+                    <form method="POST" action="/add_optakenplace1">
+                        {{ form.csrf_token }}
+
+                        <div class="col-12 col-md-9 mx-auto">
+                            <div class="d-flex flex-column">
+
+
+                                <div class="p-2">
+                                    <fieldset class="last_name">
+                                        {{ form.last_name.label }}
+                                        <div class="align-self-start">
+                                            {{ form.last_name(placeholder='Choose Patient') }}
+                                            <br /> <span>Can't find Patient? <br></span>
+                                            <a href="{{ url_for('add_patient') }}">Add him/her here.</a>
+                                        </div>
+                                        {% if form.last_name.errors %}
+                                        <ul class="errors">
+                                            {% for error in form.last_name.errors %}
+                                            <li>{{ error }}</li>{% endfor %}
+                                        </ul>
+                                        {% endif %}
+                                    </fieldset>
+                                </div>
+
+
+                                <div class="p-2">
+                                    <fieldset class="snomed_code">
+                                        {{ form.snomed_code.label }}
+                                        <div class="align-self-start">
+                                            {{ form.snomed_code(placeholder='Choose Surgical Procedure') }}
+                                            <br /> <span>Can't find Surgical Procedure? <br></span>
+                                            <a href="{{ url_for('add_surgproc') }}">Add it here.</a>
+                                        </div>
+                                        {% if form.snomed_code.errors %}
+                                        <ul class="errors">
+                                            {% for error in form.snomed_code.errors %}
+                                            <li>{{ error }}</li>{% endfor %}
+                                        </ul>
+                                        {% endif %}
+                                    </fieldset>
+                                </div>
+
+                                <div class="p-2">
+                                    <fieldset class="id_side">
+                                        {{ form.id_side.label }}
+                                        <div class="align-self-start">
+                                            {{ form.id_side(placeholder='Choose Side') }}
+                                        </div>
+                                        {% if form.id_side.errors %}
+                                        <ul class="errors">
+                                            {% for error in form.id_side.errors %}
+                                            <li>{{ error }}</li>{% endfor %}
+                                        </ul>
+                                        {% endif %}
+                                    </fieldset>
+                                </div>
+                                <br />
+
+                                <div class="submit-button">
+                                    {{ form.submit }}
+                                </div>
+                            </div>
+                        </div>
+                </div>
+                </form>
+                {% endblock %}
+            </div>
+        </div>
         </div>
     </header>
 
@@ -145,13 +228,13 @@
                 <div class="col-lg-6">
                     <a href="{{ url_for('add_surgproc') }}">
 
-                    <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
-                        <div class="features-icons-icon d-flex">
-                            <i class="fa fa-cut m-auto text-primary"></i>
+                        <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
+                            <div class="features-icons-icon d-flex">
+                                <i class="fa fa-cut m-auto text-primary"></i>
+                            </div>
+                            <h3>Add Surgical Procedures here </h3>
+                            <p class="lead mb-0"> Did you acquire new skills? Is your team missing surgical procedures? Add new here! </p>
                         </div>
-                        <h3>Add Surgical Procedures here </h3>
-                        <p class="lead mb-0"> Did you acquire new skills? Is your team missing surgical procedures? Add new here! </p>
-                    </div>
                     </a>
                 </div>
 
@@ -172,7 +255,6 @@
 
         </div>
     </section>
-
 
 
 

@@ -1,5 +1,5 @@
 from flask import Blueprint, redirect, render_template, flash, request, session, url_for
-from .forms import PatientAddForm, InsuranceAddForm, SurgProcAddForm
+from .forms import PatientAddForm, InsuranceAddForm, SurgProcAddForm, OpTakenPlaceAddForm, OpTakenPlaceSearchForm
 from .models import db, Doctor, Department, Patient, Insurance, SurgeryProcedure
 from . import login_manager
 from FlaskWebProject1 import app
@@ -161,3 +161,82 @@ def add_surgproc():
     )
 
 
+@app.route('/add_optakenplace0', methods=['GET', 'POST'])
+@login_required
+def add_optakenplace0():
+    """
+    First Search Page for adding a surgery.
+
+      """
+
+    form = OpTakenPlaceSearchForm()
+
+    if form.validate_on_submit():
+        session["search_name"] = form.search_name.data
+        session["search_date"] = form.search_date.data
+
+
+        #flash('Surgical Procedure was successfully added!')
+        return redirect(url_for('add_optakenplace1', add_message= "Surgical Procedure successfully added!",**request.args))
+        
+    
+        
+    return render_template(
+        'add_op0.html',
+        current_user=current_user,
+        doc_dept =   session["depname"][0],
+        d_title = session["title"][0] ,
+        doc_name = session["last_name"][0],
+        title='Create an Account.',
+        form=form,
+        template='Add insurance',
+        body="Add another insurance."
+    )
+
+
+@app.route('/add_optakenplace1', methods=['GET', 'POST'])
+@login_required
+def add_optakenplace1():
+    """
+    Page for adding another surgical procedure.
+
+      """
+
+    form = OpTakenPlaceAddForm()
+
+    form.last_name.query_factory=lambda:Patient.query.order_by(Patient.last_name)
+
+    if session["search_name"] != "" and session["search_date"] == "":
+        form.last_name.query_factory=lambda:Patient.query.filter_by(last_name= session["search_name"]).order_by(Patient.last_name)
+        flash("Searched patients by name!")
+        resnum  = Patient.query.filter_by(last_name= session["search_name"]).count()
+        flash("Number of results: "+ str(resnum))
+        
+
+    if session["search_date"] != "":
+        form.last_name.query_factory=lambda:Patient.query.filter_by(date_birth= session["search_date"]).order_by(Patient.last_name)
+        flash("Searched patients by birthday!")
+        resnum = Patient.query.filter_by(date_birth= session["search_date"]).count()
+        flash("Number of results: "+ str(resnum))
+
+    if session["search_date"] == "" and session["search_name"] == "" :
+
+        flash("No input - all patients are shown!")
+
+    if form.validate_on_submit():
+        session["search_name"] = form.search_name.data
+        return redirect(url_for('add_optakenplace1', add_message= "Surgical Procedure successfully added!",**request.args))
+        
+    
+        
+    return render_template(
+        'add_op1.html',
+        current_user=current_user,
+        doc_dept =   session["depname"][0],
+        d_title = session["title"][0] ,
+        doc_name = session["last_name"][0],
+        title='Create an Account.',
+        form=form,
+        template='Add insurance',
+        body="Add another insurance."
+    )

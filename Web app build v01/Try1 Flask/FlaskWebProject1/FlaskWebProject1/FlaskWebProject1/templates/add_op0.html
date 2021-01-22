@@ -16,7 +16,7 @@
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="theme-color" content="#ffffff">
 
-    <title>Safe&Surg - Add new patients to your Safe&Surg </title>
+    <title>Safe&Surg - Add an Operation -  Safe&Surg </title>
 
     <!-- Bootstrap core CSS -->
     <link href="/static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -89,24 +89,96 @@
             <div class="row">
                 <div class="col-xl-9 mx-auto">
                     <h1 class="mb-5">
-                        Welcome <br><br>{{d_title}} {{doc_name}} <br />
-                        {% with messages = get_flashed_messages() %}
-                        {% if messages %}
-                        <ul class=flashes>
-                            {% for message in messages %}
-                            <li>{{ message }}</li>
-                            {% endfor %}
-                        </ul>
-                        {% endif %}
-                        {% endwith %}
-                        {% block body %}{% endblock %}
-                        {{add_message}}<br><br>
+                        Welcome <br>{{d_title}} {{doc_name}} <br><br>
                         <i class="fa fa-user-md" aria-hidden="true" style="font-size:100px;color:rgb(101, 209, 191);"></i><br>
-                        <br> Add new entries
-                       
+                        <br> Add a new Operation
                     </h1>
+                    <br />
+                    <h4 class="mb-5">
+                        Dear {{d_title}} {{doc_name}}, search for the patient to operate on. If you want the whole list of patients, do not enter anything! <i class="fa fa-plus-circle" aria-hidden="true" style="font-size:62px;color:rgb(101, 209, 191);"></i><br>
+
+
+
+                    </h4>
                 </div>
             </div>
+            <div class="col-md-2 col-lg-8 col-xl-7 mx-auto">
+                {% block content %}
+                <div class="form-wrapper">
+
+
+                    {% for message in get_flashed_messages() %}
+                    <div class="alert alert-warning">
+                        <button type="button"
+                                class="close"
+                                data-dismiss="alert">
+                            x
+                        </button>
+                        {{ message }}
+                    </div>
+                    {% endfor %}
+
+
+
+                    <form method="POST" action="/add_optakenplace0">
+                        {{ form.csrf_token }}
+
+                        <div class="col-12 col-md-9 mx-auto">
+                            <div class="d-flex flex-column">
+
+
+                                <div class="p-2">
+                                    <fieldset class="search_name">
+                                        {{ form.search_name.label }}
+                                        <div class="align-self-start">
+                                            {{ form.search_name(placeholder='Mustermann') }}
+
+                                        </div>
+                                        {% if form.search_name.errors %}
+                                        <ul class="errors">
+                                            {% for error in form.search_name.errors %}
+                                            <li>{{ error }}</li>{% endfor %}
+                                        </ul>
+                                        {% endif %}
+                                    </fieldset>
+                                </div>
+                                <br>
+
+                                <div class="p-2">
+                                    <fieldset class="search_date">
+                                        {{ form.search_date.label }}
+                                        <div class="align-self-start">
+                                            {{ form.search_date(placeholder = "1994-02-24") }}
+
+
+                                        </div>
+                                        {% if form.search_date.errors %}
+                                        <ul class="errors">
+                                            {% for error in form.search_date.errors %}
+                                            <li>{{ error }}</li>{% endfor %}
+                                        </ul>
+                                        {% endif %}
+                                    </fieldset>
+                                    <span>If you enter a birthday, the name field will be ignored. <br> </span>
+                                </div>
+
+
+
+
+                                <br />
+
+                                <div class="submit-button">
+                                    {{ form.submit }}
+                                </div>
+                            </div>
+                            <h4 class="mb-5">
+                            </h4>
+                        </div>
+                </div>
+                </form>
+                {% endblock %}
+            </div>
+        </div>
         </div>
     </header>
 
@@ -145,13 +217,13 @@
                 <div class="col-lg-6">
                     <a href="{{ url_for('add_surgproc') }}">
 
-                    <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
-                        <div class="features-icons-icon d-flex">
-                            <i class="fa fa-cut m-auto text-primary"></i>
+                        <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
+                            <div class="features-icons-icon d-flex">
+                                <i class="fa fa-cut m-auto text-primary"></i>
+                            </div>
+                            <h3>Add Surgical Procedures here </h3>
+                            <p class="lead mb-0"> Did you acquire new skills? Is your team missing surgical procedures? Add new here! </p>
                         </div>
-                        <h3>Add Surgical Procedures here </h3>
-                        <p class="lead mb-0"> Did you acquire new skills? Is your team missing surgical procedures? Add new here! </p>
-                    </div>
                     </a>
                 </div>
 

@@ -2,10 +2,12 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, TextField, SubmitField, PasswordField, SelectField
 from wtforms.fields.html5 import DateField
 from wtforms.validators  import (DataRequired, Length, Optional, EqualTo, InputRequired, Regexp)
-from wtforms.ext.sqlalchemy.fields import QuerySelectField
-from .models import db, Doctor, Department, Insurance, SurgeryProcedure
+from wtforms.ext.sqlalchemy.fields import QuerySelectField, QuerySelectMultipleField
+from .models import db, Doctor, Department, Insurance, SurgeryProcedure, Patient, Side
 from sqlalchemy.sql.expression import func
 from flask_sqlalchemy import SQLAlchemy
+from flask import session
+from datetime import datetime
 
 
 class SignupForm(FlaskForm):
@@ -39,7 +41,7 @@ class SignupForm(FlaskForm):
     submit = SubmitField('Apply to Register')
 
 class LoginForm(FlaskForm):
-    """User Log-in Form."""
+    """User/Doctor Log-in Form."""
     username = StringField(
         'Username',
         validators=[
@@ -60,7 +62,7 @@ class LoginForm(FlaskForm):
 
 
 class PatientAddForm(FlaskForm):
-    """Doctor Sign-up Form."""
+    """Add  Patients Form."""
     first_name = StringField(
         'First Name',
         validators=[DataRequired()]
@@ -96,7 +98,7 @@ class PatientAddForm(FlaskForm):
 
 
 class InsuranceAddForm(FlaskForm):
-    """Doctor Sign-up Form."""
+    """Add Insurnaces Form."""
     
     id_insurance=QuerySelectField('Here you can check again whether Insurance is in the system',query_factory=lambda:Insurance.query.order_by(Insurance.name),get_label="name", allow_blank = True)
    
@@ -110,7 +112,7 @@ class InsuranceAddForm(FlaskForm):
 
 
 class SurgProcAddForm(FlaskForm):
-    """Doctor Sign-up Form."""
+    """Surgical Procedures Add Form."""
     
     #typical_dpt_id=QuerySelectField('Insurance',query_factory=lambda:Insurance.query.order_by(Insurance.name),get_label="name")
 
@@ -127,4 +129,44 @@ class SurgProcAddForm(FlaskForm):
       
     submit = SubmitField('Add Surgical Procedure')
     
+
+class NullableDateField(DateField):
+    """Native WTForms DateField throws error for empty dates.
+    Let's fix this so that we could have DateField nullable."""
+    def process_formdata(self, valuelist):
+        if valuelist:
+            date_str = ' '.join(valuelist).strip()
+            if date_str == '':
+                self.data = None
+                return
+            try:
+                self.data = datetime.datetime.strptime(date_str, self.format).date()
+            except ValueError:
+                self.data = None
+                raise ValueError(self.gettext('Not a valid date value'))
+
+class OpTakenPlaceSearchForm(FlaskForm):
+    """Operations Taken Place Form."""
+
+    search_name=StringField('If known, put in the last name of the Patient')
+
+    search_date=StringField('Alternatively, try to search for the birthday here',
+                            validators=[Regexp(regex ="^[0-9\-]*$")])
+   
+      
+    submit = SubmitField('Proceed')
+
   
+class OpTakenPlaceAddForm(FlaskForm):
+    """Operations Taken Place Form."""
+
+    last_name=QuerySelectField('Choose your Patient', get_label="searchname", allow_blank = False)
+
+    snomed_code=QuerySelectField('Select the performed Surgical Procedure. Only Procedures of your department are displayed here.', query_factory=lambda:SurgeryProcedure.query.filter_by(typical_dpt_id = session["id_dep"][0]).order_by(SurgeryProcedure.name), get_label="name", allow_blank = False)
+   
+    id_side=QuerySelectField('Which side was operated on?', query_factory=lambda:Side.query.order_by(Side.id_side), get_label="name_side", allow_blank = False)
+    
+      
+    submit = SubmitField('Proceed')
+
+

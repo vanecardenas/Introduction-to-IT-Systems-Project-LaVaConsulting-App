@@ -1,12 +1,14 @@
 # coding: utf-8
 import sqlalchemy
+from sqlalchemy.sql import func
 from sqlalchemy import Column, Date, ForeignKey, Integer, String
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import relationship, column_property
 from sqlalchemy.dialects.mysql import LONGBLOB, LONGTEXT
 from sqlalchemy.ext.declarative import declarative_base
 from flask_sqlalchemy import SQLAlchemy
 from flask import Flask, flash, redirect
 from config import Config
+from datetime import datetime
 
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -108,6 +110,9 @@ class Patient(db.Model):
     date_birth = db.Column(db.Date)
     gender = db.Column(db.String(45))
     id_insurance = db.Column(db.ForeignKey('insurances.id_insurance'), index=True)
+    searchname= column_property(last_name +", "+ first_name)
+                               #", *" + (date_birth).strftime
+                               
 
     insurance = db.relationship('Insurance')
     def __repr__(self):
