@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, TextField, SubmitField, PasswordField, SelectField
+from wtforms import StringField, TextField, SubmitField, PasswordField, SelectField, BooleanField
 from wtforms.fields.html5 import DateField
 from wtforms.validators  import (DataRequired, Length, Optional, EqualTo, InputRequired, Regexp)
 from wtforms.ext.sqlalchemy.fields import QuerySelectField, QuerySelectMultipleField
@@ -146,7 +146,7 @@ class NullableDateField(DateField):
                 raise ValueError(self.gettext('Not a valid date value'))
 
 class OpTakenPlaceSearchForm(FlaskForm):
-    """Operations Taken Place Form."""
+    """Search Mask"""
 
     search_name=StringField('If known, put in the last name of the Patient')
 
@@ -160,13 +160,29 @@ class OpTakenPlaceSearchForm(FlaskForm):
 class OpTakenPlaceAddForm(FlaskForm):
     """Operations Taken Place Form."""
 
-    last_name=QuerySelectField('Choose your Patient', get_label="searchname", allow_blank = False)
+    last_name = QuerySelectField('Choose your Patient', get_label="searchname", allow_blank = False)
 
-    snomed_code=QuerySelectField('Select the performed Surgical Procedure. Only Procedures of your department are displayed here.', query_factory=lambda:SurgeryProcedure.query.filter_by(typical_dpt_id = session["id_dep"][0]).order_by(SurgeryProcedure.name), get_label="name", allow_blank = False)
+    snomed_code = QuerySelectField('Select the performed Surgical Procedure. Only Procedures of your department are displayed here.', query_factory=lambda:SurgeryProcedure.query.filter_by(typical_dpt_id = session["id_dep"][0]).order_by(SurgeryProcedure.name), get_label="name", allow_blank = False)
    
-    id_side=QuerySelectField('Which side was operated on?', query_factory=lambda:Side.query.order_by(Side.id_side), get_label="name_side", allow_blank = False)
+    id_side = QuerySelectField('Which side was operated on?', query_factory=lambda:Side.query, get_label="name_side", allow_blank = False)
     
       
+    submit = SubmitField('Proceed')
+
+
+
+class WHOChecklistForm(FlaskForm):
+    """Boolean Form implementing the WHO Security Checklist."""
+    ###BEFORE the surgery ####
+
+    ident = BooleanField("Has the patient confirmed his/her identity, site, procedure, and consent?")
+
+    ###During surgery###
+
+
+    ###After surgery###
+
+          
     submit = SubmitField('Proceed')
 
 

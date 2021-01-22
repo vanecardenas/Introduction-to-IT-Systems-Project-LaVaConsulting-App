@@ -92,103 +92,16 @@
                         Welcome <br>{{d_title}} {{doc_name}} <br><br>
                         <i class="fa fa-user-md" aria-hidden="true" style="font-size:100px;color:rgb(101, 209, 191);"></i><br>
                         <br> Add a new Operation
-                        <!--We could also work with queries here - and probably should. Something like title and last name from the doctors table. -->
                     </h1>
                     <br />
                     <h4 class="mb-5">
-                        Dear {{d_title}} {{doc_name}}, here you can add a new entry of an operation! <i class="fa fa-plus-circle" aria-hidden="true" style="font-size:62px;color:rgb(101, 209, 191);"></i><br>
+                        Dear {{d_title}} {{doc_name}}, please go through the WHO Checklist Procedure in the indicated order before, during and after the surgery! <br /> 
+                        If you do not want to use this functionality, press "Skip Checklist" on the bottom of the page. Skipping the WHO Checklist will be noted and is in the responsibility of the treating physician. <br /><i class="fa fa-plus-circle" aria-hidden="true" style="font-size:62px;color:rgb(101, 209, 191);"></i><br>
 
 
 
-                        <!--We could also work with queries here - and probably should. Something like title and last name from the doctors table. -->
                     </h4>
                 </div>
-            </div>
-            <div class="col-md-2 col-lg-8 col-xl-7 mx-auto">
-                {% block content %}
-                <div class="form-wrapper">
-
-
-                    {% for message in get_flashed_messages() %}
-                    <div class="alert alert-warning">
-                        <button type="button"
-                                class="close"
-                                data-dismiss="alert">
-                            x
-                        </button>
-                        {{ message }}
-                    </div>
-                    {% endfor %}
-
-
-
-                    <form method="POST" action="/add_optakenplace1">
-                        {{ form.csrf_token }}
-
-                        <div class="col-12 col-md-9 mx-auto">
-                            <div class="d-flex flex-column">
-
-
-                                <div class="p-2">
-                                    <fieldset class="last_name">
-                                        {{ form.last_name.label }}
-                                        <div class="align-self-start">
-                                            {{ form.last_name(placeholder='Choose Patient') }}
-                                            <br /> <span>Can't find Patient? <br></span>
-                                            <a href="{{ url_for('add_patient') }}">Add him/her here.</a>
-                                        </div>
-                                        {% if form.last_name.errors %}
-                                        <ul class="errors">
-                                            {% for error in form.last_name.errors %}
-                                            <li>{{ error }}</li>{% endfor %}
-                                        </ul>
-                                        {% endif %}
-                                    </fieldset>
-                                </div>
-
-
-                                <div class="p-2">
-                                    <fieldset class="snomed_code">
-                                        {{ form.snomed_code.label }}
-                                        <div class="align-self-start">
-                                            {{ form.snomed_code(placeholder='Choose Surgical Procedure') }}
-                                            <br /> <span>Can't find Surgical Procedure? <br></span>
-                                            <a href="{{ url_for('add_surgproc') }}">Add it here.</a>
-                                        </div>
-                                        {% if form.snomed_code.errors %}
-                                        <ul class="errors">
-                                            {% for error in form.snomed_code.errors %}
-                                            <li>{{ error }}</li>{% endfor %}
-                                        </ul>
-                                        {% endif %}
-                                    </fieldset>
-                                </div>
-
-                                <div class="p-2">
-                                    <fieldset class="id_side">
-                                        {{ form.id_side.label }}
-                                        <div class="align-self-start">
-                                            {{ form.id_side(placeholder='Side') }}
-                                        </div>
-                                        {% if form.id_side.errors %}
-                                        <ul class="errors">
-                                            {% for error in form.id_side.errors %}
-                                            <li>{{ error }}</li>{% endfor %}
-                                        </ul>
-                                        {% endif %}
-                                    </fieldset>
-                                </div>
-
-
-
-                                <div class="submit-button">
-                                    {{ form.submit }}
-                                </div>
-                            </div>
-                        </div>
-                </div>
-                </form>
-                {% endblock %}
             </div>
         </div>
         </div>
@@ -197,64 +110,66 @@
     <!-- Header -->
     <section class="features-icons bg-light text-center">
         <div class="container">
-            <div class="row">
-                <div class="col-lg-6">
-                    <a href="{{ url_for('add_optakenplace0') }}">
+            
 
-                        <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
-                            <div class="features-icons-icon d-flex">
-                                <i class="fa fa-plus-circle m-auto text-primary"></i>
-                            </div>
-                            <h3>Add a new Surgery</h3>
-                            <p class="lead mb-0">Enter the data, safety checks, reports and pictures for a surgery here</p>
-                        </div>
-                    </a>
 
-                </div>
-                <div class="col-lg-6">
-                    <a href="{{ url_for('add_patient') }}">
-                        <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
-                            <div class="features-icons-icon d-flex">
-                                <i class="fa fa-plus-circle m-auto text-primary"></i>
-                            </div>
-                            <h3>Add a new Patient</h3>
-                            <p class="lead mb-0"> Enter the data of a new patient here </p>
+            <h3>Before Operation </h3>
+
+               
+
+                <h6> To be filled out with at least nurse and anaethesiologist</h6>
+                <div class="col-lg-4 mx-auto">
+                    {% block content %}
+                    <div class="form-wrapper">
+
+
+                        {% for message in get_flashed_messages() %}
+                        <div class="alert alert-warning">
+                            <button type="button"
+                                    class="close"
+                                    data-dismiss="alert">
+                                x
+                            </button>
+                            {{ message }}
                         </div>
-                    </a>
+                        {% endfor %}
+
+
+
+                        <form method="POST" action="/add_optakenplace2">
+                            {{ form.csrf_token }}
+
+                            <div class="col-4 col-md-9 mx-auto">
+                                <div class="d-flex flex-column">
+
+
+                                    <div class="p-2">
+                                        <fieldset class="ident">
+                                            {{ form.ident.label }}
+                                            <div class="align-self-start">
+                                                {{ form.ident }}
+                                            </div>
+                                            {% if form.ident.errors %}
+                                            <ul class="errors">
+                                                {% for error in form.ident.errors %}
+                                                <li>{{ error }}</li>{% endfor %}
+                                            </ul>
+                                            {% endif %}
+                                        </fieldset>
+                                    </div>
+
+
+
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    
+                    {% endblock %}
+
                 </div>
             </div>
-            <br /> <br />
-            <div class="row">
-
-                <div class="col-lg-6">
-                    <a href="{{ url_for('add_surgproc') }}">
-
-                        <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
-                            <div class="features-icons-icon d-flex">
-                                <i class="fa fa-cut m-auto text-primary"></i>
-                            </div>
-                            <h3>Add Surgical Procedures here </h3>
-                            <p class="lead mb-0"> Did you acquire new skills? Is your team missing surgical procedures? Add new here! </p>
-                        </div>
-                    </a>
-                </div>
-
-
-                <div class="col-lg-6">
-                    <a href="{{ url_for('add_insurance') }}">
-                        <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
-                            <div class="features-icons-icon d-flex">
-                                <i class="fa fa-book-medical m-auto text-primary"></i>
-                            </div>
-                            <h3>Add an Insurance here </h3>
-                            <p class="lead mb-0"> Add an Insurance to the database </p>
-                        </div>
-                    </a>
-                </div>
-
-            </div>
-
-        </div>
+        
     </section>
 
 

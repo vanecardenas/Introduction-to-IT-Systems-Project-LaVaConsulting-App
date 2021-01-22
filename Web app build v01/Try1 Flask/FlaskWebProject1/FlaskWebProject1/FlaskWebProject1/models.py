@@ -41,7 +41,7 @@ class Insurance(db.Model):
 
 
     def __repr__(self):
-        return '<Insurance %r>' % self.name
+        return '<Insurance %r>' % self.insurance
 
 
 class PostopProcedure(db.Model):
@@ -61,7 +61,7 @@ class Side(db.Model):
     name_side = db.Column(db.String(45))
 
     def __repr__(self):
-        return '<Side %r>' % self.namde.side
+        return '<Side %r>' % self.side
 
 
 class Doctor(UserMixin, db.Model):
@@ -111,7 +111,6 @@ class Patient(db.Model):
     gender = db.Column(db.String(45))
     id_insurance = db.Column(db.ForeignKey('insurances.id_insurance'), index=True)
     searchname= column_property(last_name +", "+ first_name)
-                               #", *" + (date_birth).strftime
                                
 
     insurance = db.relationship('Insurance')

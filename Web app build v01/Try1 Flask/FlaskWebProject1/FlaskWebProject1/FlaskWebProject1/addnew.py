@@ -1,6 +1,6 @@
 from flask import Blueprint, redirect, render_template, flash, request, session, url_for
-from .forms import PatientAddForm, InsuranceAddForm, SurgProcAddForm, OpTakenPlaceAddForm, OpTakenPlaceSearchForm
-from .models import db, Doctor, Department, Patient, Insurance, SurgeryProcedure
+from .forms import PatientAddForm, InsuranceAddForm, SurgProcAddForm, OpTakenPlaceAddForm, OpTakenPlaceSearchForm, WHOChecklistForm
+from .models import db, Doctor, Department, Patient, Insurance, SurgeryProcedure, Side
 from . import login_manager
 from FlaskWebProject1 import app
 from flask_login import current_user, login_required
@@ -224,8 +224,13 @@ def add_optakenplace1():
         flash("No input - all patients are shown!")
 
     if form.validate_on_submit():
-        session["search_name"] = form.search_name.data
-        return redirect(url_for('add_optakenplace1', add_message= "Surgical Procedure successfully added!",**request.args))
+        session["newop_last_name"] = form.last_name.data.last_name
+        session["newop_snomed_code"] = form.snomed_code.data.snomed_code
+        session["newop_id_side"] = form.id_side.data.id_side
+        session.pop('_flashes', None)
+
+
+        return redirect(url_for('add_optakenplace2', **request.args))
         
     
         
@@ -237,6 +242,36 @@ def add_optakenplace1():
         doc_name = session["last_name"][0],
         title='Create an Account.',
         form=form,
-        template='Add insurance',
-        body="Add another insurance."
+    )
+
+
+@app.route('/add_optakenplace2', methods=['GET', 'POST'])
+@login_required
+def add_optakenplace2():
+    """
+    Page for checking the WHO checklist.
+
+      """
+
+    form = WHOChecklistForm()
+
+    
+
+    if form.validate_on_submit():
+
+
+
+
+        return redirect(url_for('add_optakenplace2', add_message= "Surgical Procedure successfully added!",**request.args))
+        
+    
+        
+    return render_template(
+        'add_op2.html',
+        current_user=current_user,
+        doc_dept =   session["depname"][0],
+        d_title = session["title"][0] ,
+        doc_name = session["last_name"][0],
+        title='Create an Account.',
+        form=form,
     )
