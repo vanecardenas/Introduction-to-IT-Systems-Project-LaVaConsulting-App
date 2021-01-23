@@ -262,7 +262,7 @@ def add_optakenplace2():
 
 
 
-        return redirect(url_for('add_optakenplace2', add_message= "Surgical Procedure successfully added!",**request.args))
+        return redirect(url_for('add_optakenplace2', **request.args))
         
     
         

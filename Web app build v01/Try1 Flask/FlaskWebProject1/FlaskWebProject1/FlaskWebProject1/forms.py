@@ -177,12 +177,66 @@ class WHOChecklistForm(FlaskForm):
 
     ident = BooleanField("Has the patient confirmed his/her identity, site, procedure, and consent?")
 
+    marked = SelectField("Is the operation site marked?", choices=[("Yes","Yes"),("Not applicable","Not applicable")], validators=[InputRequired()])
+
+    medcheck = BooleanField("Is the anaesthesia machine and medication check complete?")
+
+    pulsoxy = BooleanField("Is the pulse oximeter on the patient and functioning?")
+
+    allergy = SelectField("Does the patient have a known allergy?", choices=[("No","No"),("Yes","Yes")], validators=[InputRequired()])
+
+    diffairway =  SelectField("Does the patient have a difficult airway or aspiration risk?", choices=[("No","No"),("Yes","Yes, and equipment/assistance available")], validators=[InputRequired()])
+
+    riskblood = SelectField("Does the patient have a risk of >500ml blood loss (7ml/kg in children)?", choices=[("No","No"),("Yes","Yes, and two IVs/central access and fluids planned")], validators=[InputRequired()])
+
     ###During surgery###
+    intro = BooleanField("Confirm all team members have introduced themselves by name and role.")
+
+    patient = BooleanField("Confirm the patient’s name, procedure, and where the incision will be made.")
+
+    antibiot = SelectField("Has antibiotic prophylaxis been given within the last 60 minutes?", choices=[("Not applicable","Not applicable"),("Yes","Yes")], validators=[InputRequired()])
+
+                #Questions to surgeon:
+    steps = BooleanField("What are the critical or non-routine steps?")
+
+    time = BooleanField("How long will the case take?")
+
+    bloodloss = BooleanField("What is the anticipated bloodloss?")
+
+                #Questions to anaesthesist:
+    speccons = BooleanField("Anaesthesiologist: \n Are there any patient-specific concerns?")
+
+                #Questions to nurse team: 
+
+    sterile = BooleanField("Nursing Team: \n Has sterility (including indicator results) been confirmed?")
+
+    equipment = BooleanField("Nursing Team: \n Are there equipment issues or any concerns?")
+
+    imaging = BooleanField("Is essential imaging displayed?")
 
 
-    ###After surgery###
+    ###Before patient leaves operating room###
+
+                #Nur confirms verbally#
+
+    procname = BooleanField("The name of the procedure")
+
+    instruments = BooleanField("Completion of instrument, sponge and needle counts")
+
+    specimen = BooleanField("Specimen labelling (read specimen labels aloud, including patient name)")
+
+    equipment = BooleanField("Whether there are any equipment problems to be addressed")
+
+
+    # Among surgeon, anesthesist and nurse:
+
+    concerns = BooleanField("What are the key concerns for recovery and management of this patient?")
+
+
+
+
 
           
-    submit = SubmitField('Proceed')
+    submit = SubmitField('Proceed to post-OP documentation')
 
 

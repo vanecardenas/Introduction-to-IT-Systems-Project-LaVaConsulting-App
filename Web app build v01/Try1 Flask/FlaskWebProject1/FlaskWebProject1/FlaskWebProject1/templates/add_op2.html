@@ -110,36 +110,37 @@
     <!-- Header -->
     <section class="features-icons bg-light text-center">
         <div class="container">
-            
+
 
 
             <h3>Before Operation </h3>
 
-               
-
-                <h6> To be filled out with at least nurse and anaethesiologist</h6>
-                <div class="col-lg-4 mx-auto">
-                    {% block content %}
-                    <div class="form-wrapper">
 
 
-                        {% for message in get_flashed_messages() %}
-                        <div class="alert alert-warning">
-                            <button type="button"
-                                    class="close"
-                                    data-dismiss="alert">
-                                x
-                            </button>
-                            {{ message }}
-                        </div>
-                        {% endfor %}
+            <h6> To be discussed by at least nurse and anaethesiologist</h6>
+            <div class="col-lg-12 mx-auto">
+                {% block content %}
+                <div class="form-wrapper">
+
+
+                    {% for message in get_flashed_messages() %}
+                    <div class="alert alert-warning">
+                        <button type="button"
+                                class="close"
+                                data-dismiss="alert">
+                            x
+                        </button>
+                        {{ message }}
+                    </div>
+                    {% endfor %}
 
 
 
-                        <form method="POST" action="/add_optakenplace2">
-                            {{ form.csrf_token }}
+                    <form method="POST" action="/add_optakenplace2">
+                        {{ form.csrf_token }}
 
-                            <div class="col-4 col-md-9 mx-auto">
+                        <div class="row">
+                            <div class="col-md-4 mx-auto mt-auto">
                                 <div class="d-flex flex-column">
 
 
@@ -157,18 +158,527 @@
                                             {% endif %}
                                         </fieldset>
                                     </div>
+                                </div>
+                            </div>
 
+                            <div class="col-md-4 mx-auto mt-auto">
+                                <div class="d-flex flex-column">
 
+                                    <div class="p-2">
+                                        <fieldset class="marked">
+                                            {{ form.marked.label }}
+                                            <div class="align-self-start">
+                                                {{ form.marked }}
+                                            </div>
+                                            {% if form.marked.errors %}
+                                            <ul class="errors">
+                                                {% for error in form.marked.errors %}
+                                                <li>{{ error }}</li>{% endfor %}
+                                            </ul>
+                                            {% endif %}
+                                        </fieldset>
+                                    </div>
 
                                 </div>
                             </div>
-                        </form>
-                    </div>
-                    
-                    {% endblock %}
 
+                            <div class="col-md-4 mx-auto mt-auto">
+                                <div class="d-flex flex-column">
+
+
+                                    <div class="p-2">
+                                        <fieldset class="medcheck">
+                                            {{ form.medcheck.label }}
+                                            <div class="align-self-start">
+                                                {{ form.medcheck }}
+                                            </div>
+                                            {% if form.medcheck.errors %}
+                                            <ul class="errors">
+                                                {% for error in form.medcheck.errors %}
+                                                <li>{{ error }}</li>{% endfor %}
+                                            </ul>
+                                            {% endif %}
+                                        </fieldset>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4 mx-auto mt-auto">
+                                <div class="d-flex flex-column">
+
+
+                                    <div class="p-2">
+                                        <fieldset class="allergy">
+                                            {{ form.allergy.label }}
+                                            <div class="align-self-start">
+                                                {{ form.allergy }}
+                                            </div>
+                                            {% if form.allergy.errors %}
+                                            <ul class="errors">
+                                                {% for error in form.allergy.errors %}
+                                                <li>{{ error }}</li>{% endfor %}
+                                            </ul>
+                                            {% endif %}
+                                        </fieldset>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 mx-auto mt-auto">
+                                <div class="d-flex flex-column">
+
+
+                                    <div class="p-2">
+                                        <fieldset class="diffairway">
+                                            {{ form.diffairway.label }}
+                                            <div class="align-self-start">
+                                                {{ form.diffairway(placeholder = "Choose answer") }}
+                                            </div>
+                                            {% if form.diffairway.errors %}
+                                            <ul class="errors">
+                                                {% for error in form.diffairway.errors %}
+                                                <li>{{ error }}</li>{% endfor %}
+                                            </ul>
+                                            {% endif %}
+                                        </fieldset>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 mx-auto mt-auto">
+                                <div class="d-flex flex-column">
+
+
+                                    <div class="p-2">
+                                        <fieldset class="riskblood">
+                                            {{ form.riskblood.label }}
+                                            <div class="align-self-start">
+                                                {{ form.riskblood }}
+                                            </div>
+                                            {% if form.riskblood.errors %}
+                                            <ul class="errors">
+                                                {% for error in form.riskblood.errors %}
+                                                <li>{{ error }}</li>{% endfor %}
+                                            </ul>
+                                            {% endif %}
+                                        </fieldset>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 mx-auto mt-auto">
+                                <div class="d-flex flex-column">
+
+
+                                    <div class="p-2">
+                                        <fieldset class="pulsoxy">
+                                            {{ form.pulsoxy.label }}
+                                            <div class="align-self-start">
+                                                {{ form.pulsoxy }}
+                                            </div>
+                                            {% if form.pulsoxy.errors %}
+                                            <ul class="errors">
+                                                {% for error in form.pulsoxy.errors %}
+                                                <li>{{ error }}</li>{% endfor %}
+                                            </ul>
+                                            {% endif %}
+                                        </fieldset>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <br />
+
+                        <h3>During Operation </h3>
+
+
+
+                        <h6> To be discussed by at least surgeon, nurse and anaethesiologist</h6>
+
+                        <div class="row">
+                            <div class="col-md-4 mx-auto mt-auto">
+                                <div class="d-flex flex-column">
+
+
+                                    <div class="p-2">
+                                        <fieldset class="intro">
+                                            {{ form.intro.label }}
+                                            <div class="align-self-start">
+                                                {{ form.intro }}
+                                            </div>
+                                            {% if form.intro.errors %}
+                                            <ul class="errors">
+                                                {% for error in form.intro.errors %}
+                                                <li>{{ error }}</li>{% endfor %}
+                                            </ul>
+                                            {% endif %}
+                                        </fieldset>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 mx-auto mt-auto">
+                                <div class="d-flex flex-column">
+
+
+                                    <div class="p-2">
+                                        <fieldset class="patient">
+                                            {{ form.patient.label }}
+                                            <div class="align-self-start">
+                                                {{ form.patient }}
+                                            </div>
+                                            {% if form.patient.errors %}
+                                            <ul class="errors">
+                                                {% for error in form.patient.errors %}
+                                                <li>{{ error }}</li>{% endfor %}
+                                            </ul>
+                                            {% endif %}
+                                        </fieldset>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 mx-auto mt-auto">
+                                <div class="d-flex flex-column">
+
+
+                                    <div class="p-2">
+                                        <fieldset class="antibiot">
+                                            {{ form.antibiot.label }}
+                                            <div class="align-self-start">
+                                                {{ form.antibiot }}
+                                            </div>
+                                            {% if form.antibiot.errors %}
+                                            <ul class="errors">
+                                                {% for error in form.antibiot.errors %}
+                                                <li>{{ error }}</li>{% endfor %}
+                                            </ul>
+                                            {% endif %}
+                                        </fieldset>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 mx-auto mt-auto">
+                                <div class="d-flex flex-column">
+
+
+                                    <div class="p-2">
+                                        <fieldset class="imaging">
+                                            {{ form.imaging.label }}
+                                            <div class="align-self-start">
+                                                {{ form.imaging }}
+                                            </div>
+                                            {% if form.imaging.errors %}
+                                            <ul class="errors">
+                                                {% for error in form.imaging.errors %}
+                                                <li>{{ error }}</li>{% endfor %}
+                                            </ul>
+                                            {% endif %}
+                                        </fieldset>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+
+
+                        <h6> Have the following questions been discussed by the surgeon with the other team members? </h6>
+
+                        <div class="row">
+                            <div class="col-md-4 mx-auto mt-auto">
+                                <div class="d-flex flex-column">
+
+
+                                    <div class="p-2">
+                                        <fieldset class="steps">
+                                            {{ form.steps.label }}
+                                            <div class="align-self-start">
+                                                {{ form.steps }}
+                                            </div>
+                                            {% if form.steps.errors %}
+                                            <ul class="errors">
+                                                {% for error in form.steps.errors %}
+                                                <li>{{ error }}</li>{% endfor %}
+                                            </ul>
+                                            {% endif %}
+                                        </fieldset>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 mx-auto mt-auto">
+                                <div class="d-flex flex-column">
+
+
+                                    <div class="p-2">
+                                        <fieldset class="time">
+                                            {{ form.time.label }}
+                                            <div class="align-self-start">
+                                                {{ form.time }}
+                                            </div>
+                                            {% if form.time.errors %}
+                                            <ul class="errors">
+                                                {% for error in form.time.errors %}
+                                                <li>{{ error }}</li>{% endfor %}
+                                            </ul>
+                                            {% endif %}
+                                        </fieldset>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 mx-auto mt-auto">
+                                <div class="d-flex flex-column">
+
+
+                                    <div class="p-2">
+                                        <fieldset class="bloodloss">
+                                            {{ form.bloodloss.label }}
+                                            <div class="align-self-start">
+                                                {{ form.bloodloss }}
+                                            </div>
+                                            {% if form.bloodloss.errors %}
+                                            <ul class="errors">
+                                                {% for error in form.bloodloss.errors %}
+                                                <li>{{ error }}</li>{% endfor %}
+                                            </ul>
+                                            {% endif %}
+                                        </fieldset>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <h6> Have the following questions been discussed by the indicated team members with the other team members? </h6>
+
+                        <div class="row">
+                            <div class="col-md-4 mx-auto mt-auto">
+                                <div class="d-flex flex-column">
+
+
+                                    <div class="p-2">
+                                        <fieldset class="steps">
+                                            {{ form.speccons.label }}
+                                            <div class="align-self-start">
+                                                {{ form.speccons }}
+                                            </div>
+                                            {% if form.speccons.errors %}
+                                            <ul class="errors">
+                                                {% for error in form.speccons.errors %}
+                                                <li>{{ error }}</li>{% endfor %}
+                                            </ul>
+                                            {% endif %}
+                                        </fieldset>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 mx-auto mt-auto">
+                                <div class="d-flex flex-column">
+
+
+                                    <div class="p-2">
+                                        <fieldset class="sterile">
+                                            {{ form.sterile.label }}
+                                            <div class="align-self-start">
+                                                {{ form.sterile }}
+                                            </div>
+                                            {% if form.sterile.errors %}
+                                            <ul class="errors">
+                                                {% for error in form.sterile.errors %}
+                                                <li>{{ error }}</li>{% endfor %}
+                                            </ul>
+                                            {% endif %}
+                                        </fieldset>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 mx-auto mt-auto">
+                                <div class="d-flex flex-column">
+
+
+                                    <div class="p-2">
+                                        <fieldset class="equipment">
+                                            {{ form.equipment.label }}
+                                            <div class="align-self-start">
+                                                {{ form.equipment }}
+                                            </div>
+                                            {% if form.equipment.errors %}
+                                            <ul class="errors">
+                                                {% for error in form.equipment.errors %}
+                                                <li>{{ error }}</li>{% endfor %}
+                                            </ul>
+                                            {% endif %}
+                                        </fieldset>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                        <h3>Before the Patient leaves the OP-room </h3>
+
+
+
+                        <h6> To be discussed by at least surgeon, nurse and anaethesiologist</h6>
+
+                        <br />
+                        <h6> Has the nurse verbally confirmed: </h6>
+
+
+                        <div class="row">
+                            <div class="col-md-4 mx-auto mt-auto">
+                                <div class="d-flex flex-column">
+
+
+                                    <div class="p-2">
+                                        <fieldset class="procname">
+                                            {{ form.procname.label }}
+                                            <div class="align-self-start">
+                                                {{ form.procname }}
+                                            </div>
+                                            {% if form.procname.errors %}
+                                            <ul class="errors">
+                                                {% for error in form.procname.errors %}
+                                                <li>{{ error }}</li>{% endfor %}
+                                            </ul>
+                                            {% endif %}
+                                        </fieldset>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 mx-auto mt-auto">
+                                <div class="d-flex flex-column">
+
+
+                                    <div class="p-2">
+                                        <fieldset class="instruments">
+                                            {{ form.instruments.label }}
+                                            <div class="align-self-start">
+                                                {{ form.instruments }}
+                                            </div>
+                                            {% if form.instruments.errors %}
+                                            <ul class="errors">
+                                                {% for error in form.patient.errors %}
+                                                <li>{{ error }}</li>{% endfor %}
+                                            </ul>
+                                            {% endif %}
+                                        </fieldset>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 mx-auto mt-auto">
+                                <div class="d-flex flex-column">
+
+
+                                    <div class="p-2">
+                                        <fieldset class="specimen">
+                                            {{ form.specimen.label }}
+                                            <div class="align-self-start">
+                                                {{ form.specimen }}
+                                            </div>
+                                            {% if form.specimen.errors %}
+                                            <ul class="errors">
+                                                {% for error in form.specimen.errors %}
+                                                <li>{{ error }}</li>{% endfor %}
+                                            </ul>
+                                            {% endif %}
+                                        </fieldset>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 mx-auto mt-auto">
+                                <div class="d-flex flex-column">
+
+
+                                    <div class="p-2">
+                                        <fieldset class="equipment">
+                                            {{ form.equipment.label }}
+                                            <div class="align-self-start">
+                                                {{ form.equipment }}
+                                            </div>
+                                            {% if form.equipment.errors %}
+                                            <ul class="errors">
+                                                {% for error in form.equipment.errors %}
+                                                <li>{{ error }}</li>{% endfor %}
+                                            </ul>
+                                            {% endif %}
+                                        </fieldset>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <h6> Have surgeon, anasethesist and nurse team discussed the following: </h6>
+                        <div class="row">
+                            <div class="col-md-4 mx-auto mt-auto">
+                                <div class="d-flex flex-column">
+
+
+                                    <div class="p-2">
+                                        <fieldset class="concerns">
+                                            {{ form.concerns.label }}
+                                            <div class="align-self-start">
+                                                {{ form.concerns }}
+                                            </div>
+                                            {% if form.concerns.errors %}
+                                            <ul class="errors">
+                                                {% for error in form.concerns.errors %}
+                                                <li>{{ error }}</li>{% endfor %}
+                                            </ul>
+                                            {% endif %}
+                                        </fieldset>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12 ">
+                                <div class="d-flex flex-column">
+
+
+                                    <div class="p-2">
+                                        <div class="submit-button">
+                                            {{ form.submit }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                    </form>
                 </div>
+
+                {% endblock %}
+
             </div>
+
+
+            <br />
+            <h6> If you want to skip the WHO Surgical Safety Checklist on your own responsibility, press <br />
+            <a href=" {{url_for('add_optakenplace1')}}"> Skip here </a>
+            </h6>
+
+
+        </div>
         
     </section>
 
