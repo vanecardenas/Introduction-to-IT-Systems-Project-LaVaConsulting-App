@@ -96,7 +96,7 @@
                     <br />
                     <h4 class="mb-5">
                         Dear {{d_title}} {{doc_name}}, please go through the WHO Checklist Procedure in the indicated order before, during and after the surgery! <br />
-                        If you do not want to use this functionality, press "Skip Checklist" on the bottom of the page. Skipping the WHO Checklist will be noted and is in the responsibility of the treating physician. <br /><i class="fa fa-plus-circle" aria-hidden="true" style="font-size:62px;color:rgb(101, 209, 191);"></i><br>
+                        If you do not want to use this functionality, press "Proceed" on the bottom of the page without filling out anything. Skipping the WHO Checklist will be noted and is in the responsibility of the treating physician. <br /><i class="fa fa-plus-circle" aria-hidden="true" style="font-size:62px;color:rgb(101, 209, 191);"></i><br>
 
 
 
@@ -607,14 +607,14 @@
 
 
                                     <div class="p-2">
-                                        <fieldset class="equipment">
-                                            {{ form.equipment.label }}
+                                        <fieldset class="equipment1">
+                                            {{ form.equipment1.label }}
                                             <div class="align-self-start">
-                                                {{ form.equipment }}
+                                                {{ form.equipment1 }}
                                             </div>
-                                            {% if form.equipment.errors %}
+                                            {% if form.equipment1.errors %}
                                             <ul class="errors">
-                                                {% for error in form.equipment.errors %}
+                                                {% for error in form.equipment1.errors %}
                                                 <li>{{ error }}</li>{% endfor %}
                                             </ul>
                                             {% endif %}
@@ -672,11 +672,6 @@
             </div>
 
 
-            <br />
-            <h6>
-                If you want to skip the WHO Surgical Safety Checklist on your own responsibility, press <br />
-                <a href=" {{url_for('add_optakenplace1')}}"> Skip here </a>
-            </h6>
 
 
         </div>

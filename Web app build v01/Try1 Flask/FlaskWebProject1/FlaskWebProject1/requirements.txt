@@ -15,3 +15,5 @@ wtforms
 flask_login
 werkzeug
 flask_table
+flask_uploads
+base64image

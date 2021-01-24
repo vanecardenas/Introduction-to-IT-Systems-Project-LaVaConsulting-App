@@ -1,9 +1,10 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, TextField, SubmitField, PasswordField, SelectField, BooleanField
+from wtforms import StringField, TextField, SubmitField, PasswordField, SelectField, BooleanField, TextAreaField, FileField
 from wtforms.fields.html5 import DateField
 from wtforms.validators  import (DataRequired, Length, Optional, EqualTo, InputRequired, Regexp)
 from wtforms.ext.sqlalchemy.fields import QuerySelectField, QuerySelectMultipleField
-from .models import db, Doctor, Department, Insurance, SurgeryProcedure, Patient, Side
+from wtforms.widgets import TextArea
+from .models import db, Doctor, Department, Insurance, SurgeryProcedure, Patient, Side, PostopProcedure
 from sqlalchemy.sql.expression import func
 from flask_sqlalchemy import SQLAlchemy
 from flask import session
@@ -165,6 +166,8 @@ class OpTakenPlaceAddForm(FlaskForm):
     snomed_code = QuerySelectField('Select the performed Surgical Procedure. Only Procedures of your department are displayed here.', query_factory=lambda:SurgeryProcedure.query.filter_by(typical_dpt_id = session["id_dep"][0]).order_by(SurgeryProcedure.name), get_label="name", allow_blank = False)
    
     id_side = QuerySelectField('Which side was operated on?', query_factory=lambda:Side.query, get_label="name_side", allow_blank = False)
+
+    
     
       
     submit = SubmitField('Proceed')
@@ -225,7 +228,7 @@ class WHOChecklistForm(FlaskForm):
 
     specimen = BooleanField("Specimen labelling (read specimen labels aloud, including patient name)")
 
-    equipment = BooleanField("Whether there are any equipment problems to be addressed")
+    equipment1 = BooleanField("Whether there are any equipment problems to be addressed")
 
 
     # Among surgeon, anesthesist and nurse:
@@ -238,5 +241,24 @@ class WHOChecklistForm(FlaskForm):
 
           
     submit = SubmitField('Proceed to post-OP documentation')
+
+
+
+class PostOpDocForm(FlaskForm):
+    """Operations Taken Place Form."""
+
+    outcome = QuerySelectField('What was the outcome of the Surgery? Where was the patient transferred to?', query_factory=lambda:PostopProcedure.query.order_by(PostopProcedure.id_outcome.desc()),get_label="outcome", allow_blank = False)
+
+    comment = TextAreaField('If you want you can already write your Surgery comment or report now. You can also do that anytime later.', widget = TextArea())
+
+    date = DateField('What day was the surgery finished?', 
+        validators=[DataRequired()]    )
+
+    image = FileField("You can upload additional pictures of your surgery here")
+   
+    
+      
+    submit = SubmitField('Add surgery')
+
 
 

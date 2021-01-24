@@ -1,0 +1,367 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/static/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/static/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/static/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/static/favicon/site.webmanifest">
+    <link rel="mask-icon" href="favicon/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+
+    <title>Safe&Surg - Add an Operation -  Safe&Surg </title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom fonts for this template -->
+    <link href="/static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+    <link href="/static/vendor/simple-line-icons/css/simple-line-icons.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+
+    <!-- Custom styles for this template -->
+    <link href="/static/css/user_patients.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="{{ url_for('exploring_page') }} l">Safe&Surg</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('exploring_page') }}">Home </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('user_patients') }}">My Patients  </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('user_surgeries') }}">My Surgeries</a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link" href="{{ url_for('user_dpt') }}">My Department <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link active" href="{{ url_for('add_new') }}">Add Patient/Procedure</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Lava Consultans
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{{ url_for('contact') }}">Contact us </a>
+                        <a class="dropdown-item" href="{{ url_for('about') }}">About us and our mission </a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{{ url_for('impressum') }}"> Legal notice / Disclaimer </a>
+                    </div>
+                </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
+            <li class="nav navbar-nav navbar-right px-2">
+
+                <div>
+                    <a class="navbar-brand" href="{{ url_for('logout') }}">Logout</a>
+                </div>
+            </li>
+        </div>
+    </nav>
+
+    <!-- Masthead -->
+    <header class="masthead text-white text-center">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-9 mx-auto">
+                    <h1 class="mb-5">
+                        Welcome <br>{{d_title}} {{doc_name}} <br><br>
+                        <i class="fa fa-user-md" aria-hidden="true" style="font-size:100px;color:rgb(101, 209, 191);"></i><br>
+                        <br> Add a new Operation
+                    </h1>
+                    <br />
+                    <h4 class="mb-5">
+                        Dear {{d_title}} {{doc_name}}, almost there! As a last step please document the outcome of the operation and add a comment/report and pictures if wanted. <br />
+                        <i class="fa fa-plus-circle" aria-hidden="true" style="font-size:62px;color:rgb(101, 209, 191);"></i>
+
+
+
+                    </h4>
+                </div>
+            </div>
+        </div>
+        </div>
+    </header>
+
+    <!-- Header -->
+    <section class="features-icons bg-light text-center">
+        <div class="container">
+
+
+
+
+                {% block content %}
+                <div class="form-wrapper">
+
+
+                    {% for message in get_flashed_messages() %}
+                    <div class="alert alert-warning">
+                        <button type="button"
+                                class="close"
+                                data-dismiss="alert">
+                            x
+                        </button>
+                        {{ message }}
+                    </div>
+                    {% endfor %}
+
+
+
+                    <form method="POST" action="/add_optakenplace3">
+                        {{ form.csrf_token }}
+
+                        <div class="col-md-12 mx-auto">
+                            <div class="d-flex flex-column">
+
+
+                                <div class="p-2">
+                                    <fieldset class="date">
+                                        {{ form.date.label }}
+                                        <div class="align-self-start">
+                                            {{ form.date }}
+                                        </div>
+                                        {% if form.date.errors %}
+                                        <ul class="errors">
+                                            {% for error in form.date.errors %}
+                                            <li>{{ error }}</li>{% endfor %}
+                                        </ul>
+                                        {% endif %}
+                                    </fieldset>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-12 mx-auto">
+                            <div class="d-flex flex-column">
+
+
+                                <div class="p-2">
+                                    <fieldset class="outcome">
+                                        {{ form.outcome.label }}
+                                        <div class="align-self-start">
+                                            {{ form.outcome }}
+                                        </div>
+                                        {% if form.outcome.errors %}
+                                        <ul class="errors">
+                                            {% for error in form.outcome.errors %}
+                                            <li>{{ error }}</li>{% endfor %}
+                                        </ul>
+                                        {% endif %}
+                                    </fieldset>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12 mx-auto mt-auto">
+                            <div class="d-flex flex-column">
+
+                                <div class="p-2">
+                                    <fieldset class="comment">
+                                        {{ form.comment.label }}
+                                        <div class="align-self-start">
+                                            {{ form.comment(cols ="95", rows ="20" )}}
+                                        </div>
+                                        {% if form.comment.errors %}
+                                        <ul class="errors">
+                                            {% for error in form.comment.errors %}
+                                            <li>{{ error }}</li>{% endfor %}
+                                        </ul>
+                                        {% endif %}
+                                    </fieldset>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12 mx-auto mt-auto">
+                            <div class="d-flex flex-column">
+
+                                <div class="p-2">
+                                    <fieldset class="image">
+                                        {{ form.image.label }}
+                                        <div class="align-self-start">
+                                            {{ form.image}}
+                                        </div>
+                                        {% if form.image.errors %}
+                                        <ul class="errors">
+                                            {% for error in form.image.errors %}
+                                            <li>{{ error }}</li>{% endfor %}
+                                        </ul>
+                                        {% endif %}
+                                    </fieldset>
+                                </div>
+
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-12 ">
+                            <div class="d-flex flex-column">
+
+
+                                <div class="p-2">
+                                    <div class="submit-button">
+                                        {{ form.submit }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    </form>
+                </div>
+
+                {% endblock %}
+
+            </div>
+
+
+
+        </div>
+
+    </section>
+
+
+
+
+    <!-- Testimonials -->
+    <section class="testimonials text-center bg-light">
+        <div class="container">
+            <h2 class="mb-5">Our Partners</h2>
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="testimonial-item mx-auto mb-5 mb-lg-0">
+                        <a href="https://www.who.int/">
+                            <img src="/static/img/partners-3.jpg" alt="World Health Organization">
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="testimonial-item mx-auto mb-5 mb-lg-0">
+                        <a href="https://www.rki.de/DE/Home/homepage_node.html">
+                            <img src="/static/img/partners-2.jpg" alt="Robert Koch-Institut">
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="testimonial-item mx-auto mb-5 mb-lg-0">
+                        <a href="https://www.mountsinai.org/">
+                            <img src="/static/img/partners-4.jpg" alt="Mount Sinai">
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="testimonial-item mx-auto mb-5 mb-lg-0">
+                        <a href="https://hpi.de/">
+                            <img src="/static/img/partners-5.jpg" alt="HPI">
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <br /> <br />
+            <div class="container mx-auto">
+                <div class="row mb-4 mx-auto">
+
+                    <div class="col-md-3 p-1 mx-auto">
+                        <img src="/static/img/logo2.png" class="img-fluid mx-auto d-block" alt="Responsive image">
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Call to Action -->
+    <section class="call-to-action text-white text-center">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-9 mx-auto">
+                </div>
+                <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
+                    <form>
+                        <div class="form-row">
+                            <div class="col-12 col-md-9 mb-2 mb-md-0">
+                            </div>
+                            <div class="col-12 col-md-3">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer bg-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 h-100 text-center text-lg-left my-auto">
+                    <ul class="list-inline mb-2">
+                        <li class="list-inline-item">
+                            <a href="{{ url_for('about') }}">About</a>
+                        </li>
+                        <li class="list-inline-item">&sdot;</li>
+                        <li class="list-inline-item">
+                            <a href="{{ url_for('contact') }}">Contact</a>
+                        </li>
+                        <li class="list-inline-item">&sdot;</li>
+                        <li class="list-inline-item">
+                            <a href="{{ url_for('impressum') }}">Disclaimer</a>
+                        </li>
+                    </ul>
+                    <p class="text-muted small mb-4 mb-lg-0">&copy; LaVa Consulting 2021. All Rights Reserved.</p>
+                </div>
+                <div class="col-lg-6 h-100 text-center text-lg-right my-auto">
+                    <ul class="list-inline mb-0">
+                        <li class="list-inline-item mr-3">
+                            <a href="https://www.facebook.com/ConsultingLaVa/">
+                                <i class="fab fa-facebook fa-2x fa-fw"></i>
+                            </a>
+                        </li>
+                        <li class="list-inline-item mr-3">
+                            <a href="https://twitter.com/ConsultingLava">
+                                <i class="fab fa-twitter-square fa-2x fa-fw"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="/static/vendor/jquery/jquery.min.js"></script>
+    <script src="/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>

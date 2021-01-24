@@ -28,6 +28,10 @@ class Config:
     SQLALCHEMY_DATABASE_URI =  "mysql://root:vanessa@127.0.0.1/surgeries_db"
     SQLALCHEMY_ECHO = True
 
+    ####UPLOAD CONFIG ###
+    UPLOADED_IMAGES_DEST = "uploads/images"
+
+
 
 #class ProdConfig(Config):
    # FLASK_ENV = 'production'

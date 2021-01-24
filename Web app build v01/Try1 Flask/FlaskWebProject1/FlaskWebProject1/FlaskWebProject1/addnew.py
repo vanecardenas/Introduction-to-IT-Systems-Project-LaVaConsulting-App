@@ -1,11 +1,15 @@
 from flask import Blueprint, redirect, render_template, flash, request, session, url_for
-from .forms import PatientAddForm, InsuranceAddForm, SurgProcAddForm, OpTakenPlaceAddForm, OpTakenPlaceSearchForm, WHOChecklistForm
-from .models import db, Doctor, Department, Patient, Insurance, SurgeryProcedure, Side
+from .forms import PatientAddForm, InsuranceAddForm, SurgProcAddForm, OpTakenPlaceAddForm, OpTakenPlaceSearchForm, WHOChecklistForm, PostOpDocForm
+from .models import db, Doctor, Department, Patient, Insurance, SurgeryProcedure, Side, OperationsTakenPlace
 from . import login_manager
 from FlaskWebProject1 import app
 from flask_login import current_user, login_required
 from sqlalchemy.sql.expression import func
 from datetime import datetime
+import werkzeug
+from flask_uploads import configure_uploads, IMAGES, UploadSet
+import base64
+import base64image
 
 
 #Authentification page: This is the module for all funcionality related to adding patients and procedures to the database. For signing up and adding a user see auth.py.
@@ -224,9 +228,11 @@ def add_optakenplace1():
         flash("No input - all patients are shown!")
 
     if form.validate_on_submit():
-        session["newop_last_name"] = form.last_name.data.last_name
+        session["newop_patient_id"] = form.last_name.data.id_patient
         session["newop_snomed_code"] = form.snomed_code.data.snomed_code
         session["newop_id_side"] = form.id_side.data.id_side
+        #session["op_date"] = form.date.data
+        
         session.pop('_flashes', None)
 
 
@@ -258,16 +264,103 @@ def add_optakenplace2():
     
 
     if form.validate_on_submit():
+        if form.ident.data == True and form.medcheck.data == True and form.pulsoxy.data == True and form.intro.data == True and form.patient.data == True and form.steps.data == True \
+            and form.time.data == True and form.bloodloss.data == True and form.speccons.data == True and form.sterile.data == True and form.equipment.data == True \
+            and form.imaging.data == True and form.procname.data == True and form.instruments.data == True and form.specimen.data == True and form.equipment1.data == True \
+            and form.concerns.data == True:
+
+            session["state_checklist"] = 1
+            flash("Checklist complete!")
+
+        else:
+            session["state_checklist"] = 0
+            flash("Checklist was incomplete! This has been saved.")
+
+
+        #This is the place where we can implement a saving of the checklist results. Could be saved to the database as a list maybe? Or as a dict? Need a new database column for this though.
 
 
 
 
-        return redirect(url_for('add_optakenplace2', **request.args))
+
+        return redirect(url_for('add_optakenplace3', **request.args))
         
     
         
     return render_template(
         'add_op2.html',
+        current_user=current_user,
+        doc_dept =   session["depname"][0],
+        d_title = session["title"][0] ,
+        doc_name = session["last_name"][0],
+        title='Create an Account.',
+        form=form,
+    )
+
+
+
+images = UploadSet('images', IMAGES)
+configure_uploads(app, images)
+
+@app.route('/add_optakenplace3', methods=['GET', 'POST'])
+@login_required
+def add_optakenplace3():
+    """
+    Page for documenting the outcome, comments and possibly already pictures. Since the picture stuff is more complicated I might first try this on yet another page. The database commit will happen here though. 
+
+      """
+
+    form = PostOpDocForm()
+
+    
+
+    if form.validate_on_submit():
+
+        #filename = images.save(form.image.data)
+        #form.image.data.stream.seek(0)
+        #image_string = base64.b64encode(form.image.data.read())
+
+
+
+
+
+        new_surgery = OperationsTakenPlace(
+            id_patient=  session["newop_patient_id"],
+            snomed_code = session["newop_snomed_code"],
+            id_side = session["newop_id_side"],
+            id_doctor = session["id_doc"],
+            date = form.date.data,
+            check_list = session["state_checklist"],
+            id_outcome= form.outcome.data.id_outcome,
+            comments = form.comment.data,
+            
+           
+            )
+
+        db.session.add(new_surgery)
+        db.session.commit()
+
+        flash("Surgery was added!")
+
+
+               
+
+
+
+           
+
+
+
+
+
+
+
+        return redirect(url_for('add_new', **request.args))
+        
+    
+        
+    return render_template(
+        'add_op3.html',
         current_user=current_user,
         doc_dept =   session["depname"][0],
         d_title = session["title"][0] ,
