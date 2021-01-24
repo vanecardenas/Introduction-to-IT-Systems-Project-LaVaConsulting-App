@@ -80,9 +80,9 @@
 
                     {% endfor %}
                     <div class="col-12 col-md-9 mx-auto">
-                    <form method="POST" action="/login">
-                        {{ form.csrf_token }}
-                        
+                        <form method="POST" action="/login">
+                            {{ form.csrf_token }}
+
                             <fieldset class="username">
                                 {{ form.username.label }}
                                 {{ form.username(placeholder='chirurguwe') }}
@@ -93,7 +93,7 @@
                                 </ul>
                                 {% endif %}
                             </fieldset>
-                        
+
 
                             <fieldset class="password">
                                 {{ form.password.label }}
@@ -115,30 +115,30 @@
                                 <a href="{{ url_for('signup') }}">Request a sign up.</a>
                             </div>
 
-                    </form>
+                        </form>
+                    </div>
                 </div>
-            </div>
                 <!--<div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
-            <form action="{{ url_for('exploring_page') }}" enctype="application/x-www-form-urlencoded" method="post">
-                <div class="form-row">
-                    <div class="col-12 col-md-9 mx-auto">
-                        <label for="inputEmail" class="sr-only">Username</label>
-                        <input type="username" name="username" id="inputEmail" class="form-control form-control-lg" placeholder="Username" required autofocus>
+                    <form action="{{ url_for('exploring_page') }}" enctype="application/x-www-form-urlencoded" method="post">
+                        <div class="form-row">
+                            <div class="col-12 col-md-9 mx-auto">
+                                <label for="inputEmail" class="sr-only">Username</label>
+                                <input type="username" name="username" id="inputEmail" class="form-control form-control-lg" placeholder="Username" required autofocus>
 
-                    </div>
-                    <div class="col-12 col-md-9 mx-auto">
-                        <label for="inputPassword" class="sr-only">Password</label>
-                        <input type="password" name="password" id="inputPassword" class="form-control form-control-lg" placeholder="Password" required>
-                    </div>
-                    <br>
-                    <br>
-                    <br>
-                    <div class="col-12 col-md-4 mx-auto">
-                        <button type="submit" class="btn btn-block btn-lg btn-primary">Log in</button>
-                    </div>
-                </div>
-            </form>
-        </div>-->
+                            </div>
+                            <div class="col-12 col-md-9 mx-auto">
+                                <label for="inputPassword" class="sr-only">Password</label>
+                                <input type="password" name="password" id="inputPassword" class="form-control form-control-lg" placeholder="Password" required>
+                            </div>
+                            <br>
+                            <br>
+                            <br>
+                            <div class="col-12 col-md-4 mx-auto">
+                                <button type="submit" class="btn btn-block btn-lg btn-primary">Log in</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>-->
 
             </div>
         </div>
@@ -251,15 +251,15 @@
                 <div class="col-lg-6 h-100 text-center text-lg-left my-auto">
                     <ul class="list-inline mb-2">
                         <li class="list-inline-item">
-                            <a href="{{ url_for('logout_about') }}">About</a>
+                            <a href="{{ url_for('about') }}">About</a>
                         </li>
                         <li class="list-inline-item">&sdot;</li>
                         <li class="list-inline-item">
-                            <a href="{{ url_for('logout_contact') }}">Contact</a>
+                            <a href="{{ url_for('contact') }}">Contact</a>
                         </li>
                         <li class="list-inline-item">&sdot;</li>
                         <li class="list-inline-item">
-                            <a href="{{ url_for('logout_impressum') }}">Disclaimer</a>
+                            <a href="{{ url_for('impressum') }}">Disclaimer</a>
                         </li>
                     </ul>
                     <p class="text-muted small mb-4 mb-lg-0">&copy; LaVa Consulting 2021. All Rights Reserved.</p>
@@ -267,12 +267,12 @@
                 <div class="col-lg-6 h-100 text-center text-lg-right my-auto">
                     <ul class="list-inline mb-0">
                         <li class="list-inline-item mr-3">
-                            <a href="#">
+                            <a href="https://www.facebook.com/ConsultingLaVa/">
                                 <i class="fab fa-facebook fa-2x fa-fw"></i>
                             </a>
                         </li>
                         <li class="list-inline-item mr-3">
-                            <a href="#">
+                            <a href="https://twitter.com/ConsultingLava">
                                 <i class="fab fa-twitter-square fa-2x fa-fw"></i>
                             </a>
                         </li>
