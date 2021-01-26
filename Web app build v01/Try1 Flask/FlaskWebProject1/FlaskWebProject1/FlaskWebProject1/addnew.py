@@ -389,6 +389,7 @@ def add_pic():
         db.session.commit()
 
         flash("Picture was added!")
+        session.pop("curr_id_surg")
 
 
 

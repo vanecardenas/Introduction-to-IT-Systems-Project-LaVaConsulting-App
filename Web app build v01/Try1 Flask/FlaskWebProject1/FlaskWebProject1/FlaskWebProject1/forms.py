@@ -253,9 +253,6 @@ class PostOpDocForm(FlaskForm):
 
     date = DateField('What day was the surgery finished?', 
         validators=[DataRequired()]    )
-
-    image = FileField("You can upload additional pictures of your surgery here")
-   
     
       
     submit = SubmitField('Add surgery')
