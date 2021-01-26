@@ -261,4 +261,13 @@ class PostOpDocForm(FlaskForm):
     submit = SubmitField('Add surgery')
 
 
+class AddPicForm(FlaskForm):
+    """Operations Taken Place Form."""
+
+    image = FileField("You can upload additional pictures of your surgery here")
+   
+      
+    submit = SubmitField('Add picture')
+
+
 

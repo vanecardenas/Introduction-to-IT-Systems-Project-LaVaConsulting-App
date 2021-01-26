@@ -1,5 +1,5 @@
 from flask import Blueprint, redirect, render_template, flash, request, session, url_for
-from .forms import PatientAddForm, InsuranceAddForm, SurgProcAddForm, OpTakenPlaceAddForm, OpTakenPlaceSearchForm, WHOChecklistForm, PostOpDocForm
+from .forms import PatientAddForm, InsuranceAddForm, SurgProcAddForm, OpTakenPlaceAddForm, OpTakenPlaceSearchForm, WHOChecklistForm, PostOpDocForm, AddPicForm
 from .models import db, Doctor, Department, Patient, Insurance, SurgeryProcedure, Side, OperationsTakenPlace
 from . import login_manager
 from FlaskWebProject1 import app
@@ -321,10 +321,11 @@ def add_optakenplace3():
         #image_string = base64.b64encode(form.image.data.read())
 
 
-
-
+        id_surg = db.session.query(func.max(OperationsTakenPlace.id_operation)).scalar() +1
+        session["curr_id_surg"] = id_surg
 
         new_surgery = OperationsTakenPlace(
+            id_operation= id_surg,
             id_patient=  session["newop_patient_id"],
             snomed_code = session["newop_snomed_code"],
             id_side = session["newop_id_side"],
@@ -343,14 +344,51 @@ def add_optakenplace3():
         flash("Surgery was added!")
 
 
-               
+
+
+        return redirect(url_for('add_pic', **request.args))
+        
+    
+        
+    return render_template(
+        'add_op3.html',
+        current_user=current_user,
+        doc_dept =   session["depname"][0],
+        d_title = session["title"][0] ,
+        doc_name = session["last_name"][0],
+        title='Create an Account.',
+        form=form,
+    )
+
+
+@app.route('/add_pic', methods=['GET', 'POST'])
+@login_required
+def add_pic():
+    """
+   Page for adding pictures 
+
+      """
+
+    form = AddPicForm()
+
+    
+
+    if form.validate_on_submit():
+
+        filename = images.save(form.image.data)
+        form.image.data.stream.seek(0)
+        image_string = base64.b64encode(form.image.data.read())
 
 
 
-           
+        
+        surgery = OperationsTakenPlace.query.get(session["curr_id_surg"])
+        surgery.pictures = image_string
 
+        
+        db.session.commit()
 
-
+        flash("Picture was added!")
 
 
 
@@ -360,7 +398,7 @@ def add_optakenplace3():
     
         
     return render_template(
-        'add_op3.html',
+        'add_op4.html',
         current_user=current_user,
         doc_dept =   session["depname"][0],
         d_title = session["title"][0] ,
