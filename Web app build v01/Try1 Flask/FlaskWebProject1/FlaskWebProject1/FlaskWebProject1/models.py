@@ -41,7 +41,7 @@ class Insurance(db.Model):
 
 
     def __repr__(self):
-        return '<Insurance %r>' % self.insurance
+        return '<Insurance %r>' % self.name
 
 
 class PostopProcedure(db.Model):
@@ -61,7 +61,7 @@ class Side(db.Model):
     name_side = db.Column(db.String(45))
 
     def __repr__(self):
-        return '<Side %r>' % self.side
+        return '<Side %r>' % self.name_side
 
 
 class Doctor(UserMixin, db.Model):
@@ -142,8 +142,8 @@ class OperationsTakenPlace(db.Model):
     date = db.Column(db.Date)
     check_list = db.Column(db.Integer)
     id_outcome = db.Column(db.ForeignKey('postop_procedure.id_outcome'), index=True)
-    comments = db.Column(sqlalchemy.dialects.mysql.LONGTEXT)
-    pictures = db.Column(sqlalchemy.dialects.mysql.LONGBLOB)
+    comments = db.Column(sqlalchemy.dialects.mysql.TEXT)
+    pictures = db.Column(sqlalchemy.dialects.mysql.BLOB)
 
     doctor = db.relationship('Doctor')
     postop_procedure = db.relationship('PostopProcedure')

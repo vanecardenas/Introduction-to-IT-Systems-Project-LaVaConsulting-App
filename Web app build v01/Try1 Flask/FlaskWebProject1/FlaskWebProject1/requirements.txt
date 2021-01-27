@@ -17,3 +17,4 @@ werkzeug
 flask_table
 flask_uploads
 base64image
+config

@@ -7,7 +7,16 @@ from flask import render_template, flash, redirect, request, session, url_for
 from FlaskWebProject1 import app
 from flask_login import current_user, login_required 
 from FlaskWebProject1.tables import ResultsDep, ResultsDepItems, ResultsDoc, ResultsDocItems  
-from FlaskWebProject1.models import OperationsTakenPlace
+from FlaskWebProject1.models import (
+    OperationsTakenPlace,
+    Patient,
+    Insurance,
+    Doctor,
+    Department,
+    SurgeryProcedure,
+    PostopProcedure,
+    Side
+)
 from flask_sqlalchemy import SQLAlchemy
 from . import db
 #from .forms import LoginForm
@@ -112,7 +121,27 @@ def logout_impressum():
 @login_required
 def user_dpt():
     """Renders the department page."""
-    #items = db.session.query(OperationsTakenPlace).all()
+    department_operations = db.session.query(
+            Doctor,
+            OperationsTakenPlace,
+            Patient,
+            SurgeryProcedure
+        ).join(
+            Department,
+            Department.id_department == Doctor.id_department
+        ).join(
+            OperationsTakenPlace,
+            OperationsTakenPlace.id_doctor == Doctor.id_doctor
+        ).join(
+            Patient,
+            Patient.id_patient == OperationsTakenPlace.id_patient
+        ).join(
+            SurgeryProcedure,
+            SurgeryProcedure.snomed_code == OperationsTakenPlace.snomed_code
+        ).filter(
+            Department.id_department == session["id_dep"][0]
+        ).all()
+#items = db.session.query(OperationsTakenPlace).all()
     #table = ResultsDep(items)
 
     return render_template(
@@ -120,7 +149,7 @@ def user_dpt():
         doc_dept =   session["depname"][0],
         d_title = session["title"][0] ,
         doc_name = session["last_name"][0],
-        #table=table,
+        department_operations=department_operations,
         current_user=current_user,
         title='User Department',
         year=datetime.now().year,
@@ -132,10 +161,17 @@ def user_dpt():
 @login_required
 def user_patients():
     #Builds table#
-    items = db.session.query(OperationsTakenPlace).filter_by(id_doctor = session["id_doc"][0]).all()
+    patients = db.session.query(
+            Patient,
+            Insurance,
+        ).join(
+            OperationsTakenPlace
+        ).join(
+            Insurance
+        ).filter(
+            OperationsTakenPlace.id_doctor == session["id_doc"][0]
+        ).all()
 
-    table = ResultsDoc(items)
-    #table = ResultsDep(items)
     """Renders the My Patients page."""
     return render_template(
         'user_patients.html',
@@ -144,7 +180,7 @@ def user_patients():
         d_title = session["title"][0] ,
         doc_name = session["last_name"][0],
         title='My Patients',
-        table=table,
+        patients=patients,
         year=datetime.now().year,
     )
 
@@ -154,6 +190,34 @@ def user_patients():
 @login_required
 def user_surgeries():
     """Renders the My Surgerires page."""
+    operations = db.session.query(
+            OperationsTakenPlace,
+            Patient,
+            SurgeryProcedure,
+            PostopProcedure,
+            Side
+        ).select_from(Doctor).join(
+            Department,
+            Department.id_department == Doctor.id_department
+        ).join(
+            OperationsTakenPlace,
+            OperationsTakenPlace.id_doctor == Doctor.id_doctor
+        ).join(
+            Patient,
+            Patient.id_patient == OperationsTakenPlace.id_patient
+        ).join(
+            SurgeryProcedure,
+            SurgeryProcedure.snomed_code == OperationsTakenPlace.snomed_code
+        ).join(
+            PostopProcedure,
+            PostopProcedure.id_outcome == OperationsTakenPlace.id_outcome
+        ).join(
+            Side,
+            Side.id_side == OperationsTakenPlace.id_side
+        ).filter(
+            Doctor.id_doctor == session["id_doc"][0]
+        ).all()   
+        
     return render_template(
         'user_surgeries.html',
         current_user=current_user,
@@ -161,6 +225,7 @@ def user_surgeries():
         d_title = session["title"][0] ,
         doc_name = session["last_name"][0],
         title='My Surgeries',
+        operations=operations,
         year=datetime.now().year,
     )
 

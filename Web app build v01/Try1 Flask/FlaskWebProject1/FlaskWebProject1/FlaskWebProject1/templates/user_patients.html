@@ -121,37 +121,34 @@
     </section>
 
 
-    <!-- Table " My Patients (yet to be build) -->
+    <!-- Table " My Patients -->
     <div class="container">
 
         <link rel="stylesheet" type="text/css" href="/static/style_tables_test.css" />
-        {{table}}
-        <div class="scoreboard" style="display: block;">
+        <div class="scoreboard" style="display: block;"></div>
             <table class="scoreboardTable">
                 <thead class="scoreboardTableHead">
                     <tr class="scoreboardTableHeaderRow">
                         <th>Patient ID</th>
-                        <th>Name</th>
-                        <th>Procedure</th>
-                        <th>Snomed Code</th>
-                        <th>Check List</th>
+                        <th>Firstname</th>
+                        <th>Lastname</th>
+                        <th>Date of Birth</th>
+                        <th>Gender</th>
+                        <th>Insurance</th>
                     </tr>
                 </thead>
                 <tbody class="scoreboardTable-Body"></tbody>
-                <tr class="scoreboardTableBodyColumn">
-                    <td>1</td>
-                    <td>Dennis Kipping</td>
-                    <td>Trauma cx1</td>
-                    <td>123456</td>
-                    <td>Available</td>
-                </tr>
-                <tr class="scoreboardTableBody">
-                    <td>2</td>
-                    <td>Connie Cardenas</td>
-                    <td>Trauma cx2</td>
-                    <td>678910</td>
-                    <td>Not Available</td>
-                </tr>
+                    {% for patient in patients %}
+                    <tr class="scoreboardTableBodyRow">
+                        <td>{{patient.Patient.id_patient}}</td>
+                        <td>{{patient.Patient.first_name}}</td>
+                        <td>{{patient.Patient.last_name}}</td>
+                        <td>{{patient.Patient.date_birth}}</td>
+                        <td>{{patient.Patient.gender}}</td>
+                        <td>{{patient.Insurance.name}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
             </table>
         </div>
     </div>

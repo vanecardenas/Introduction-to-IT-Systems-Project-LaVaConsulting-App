@@ -121,38 +121,37 @@
     </section>
 
 
-    <!-- Table " My Department (yet to be build) -->
-    {{table}}
-
+    <!-- Table " My Department -->
     <link rel="stylesheet" type="text/css" href="/static/style_tables_test.css" />
     <div class="scoreboard" style="display: block;">
+        <h2>Operations in your Department</h2>
         <table class="scoreboardTable">
             <thead class="scoreboardTableHead">
                 <tr class="scoreboardTableHeaderRow">
-                    <th>Patient ID</th>
-                    <th>Name</th>
+                    <th>Operation ID</th>
                     <th>Procedure</th>
                     <th>Snomed Code</th>
+                    <th>Patient</th>
+                    <th>Doctor</th>
                     <th>Check List</th>
                 </tr>
             </thead>
+
             <tbody class="scoreboardTable-Body"></tbody>
+            {% for op in department_operations %}
             <tr class="scoreboardTableBodyRow">
-                <td>1</td>
-                <td>Dennis Kipping</td>
-                <td>Trauma cx1</td>
-                <td>123456</td>
-                <td>Available</td>
+                <td>{{op.OperationsTakenPlace.id_operation}}</td>
+                <td>{{op.SurgeryProcedure.name}}</td>
+                <td>{{op.OperationsTakenPlace.snomed_code}}</td>
+                <td>{{op.Patient.first_name + ' ' + op.Patient.last_name}}</td>
+                <td>{{op.Doctor.first_name + ' ' + op.Doctor.last_name}}</td>
+                <td>{{op.OperationsTakenPlace.check_list}}</td>
             </tr>
-            <tr class="scoreboardTableBodyRow">
-                <td>2</td>
-                <td>Connie Cardenas</td>
-                <td>Trauma cx2</td>
-                <td>678910</td>
-                <td>Not Available</td>
-            </tr>
+            {% endfor %}
         </table>
     </div>
+
+
 
 
     <!-- Testimonials -->

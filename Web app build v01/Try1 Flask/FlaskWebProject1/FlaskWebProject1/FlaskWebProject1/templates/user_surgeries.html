@@ -122,36 +122,222 @@
     </section>
 
 
-    <!-- Table " My Surgeries (yet to be build) -->
+    <!-- Table " My Surgeries -->
     <link rel="stylesheet" type="text/css" href="/static/style_tables_test.css" />
+    <link rel="stylesheet" type="text/css" href="/static/image_modal.css" />
     <div class="scoreboard" style="display: block;">
         <table class="scoreboardTable">
             <thead class="scoreboardTableHead">
                 <tr class="scoreboardTableHeaderRow">
+                    <th>Operation ID</th>
                     <th>Patient ID</th>
-                    <th>Name</th>
-                    <th>Procedure</th>
+                    <th>Patient Name</th>
                     <th>Snomed Code</th>
-                    <th>Check List</th>
+                    <th>Procedure Name</th>
+                    <th>Side</th>
+                    <th>Checklist</th>
+                    <th>Outcome</th>
+                    <th>Comment</th>
+                    <th>Picture</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody class="scoreboardTable-Body"></tbody>
+            {% for surgery in operations %}
             <tr class="scoreboardTableBodyRow">
-                <td>1</td>
-                <td>Dennis Kipping</td>
-                <td>Trauma cx1</td>
-                <td>123456</td>
-                <td>Available</td>
+                <td>{{surgery.OperationsTakenPlace.id_operation}}</td>
+                <td>{{surgery.Patient.id_patient}}</td>
+                <td>{{surgery.Patient.first_name + ' ' + surgery.Patient.last_name}}</td>
+                <td>{{surgery.OperationsTakenPlace.snomed_code}}</td>
+                <td>{{surgery.SurgeryProcedure.name}}</td>
+                <td>{{surgery.Side.name_side}}</td>
+                <td>{{surgery.OperationsTakenPlace.check_list}}</td>
+                <td>{{surgery.PostopProcedure.outcome}}</td>
+                {% if surgery.OperationsTakenPlace.comments %}
+                <td class="truncate table-hover" id="tableComment{{surgery.OperationsTakenPlace.id_operation}}">
+                    {{surgery.OperationsTakenPlace.comments}}
+                </td>
+                {% else %}
+                <td>None</td>
+                {% endif %}
+                {% if surgery.OperationsTakenPlace.pictures %}
+                <td><img 
+                        class="table-image table-hover"
+                        id="tableImage{{surgery.OperationsTakenPlace.id_operation}}"
+                        src="data:image/jpeg;base64,{{surgery.OperationsTakenPlace.pictures.decode('utf8')}}"
+                /></td>
+                {% else %}
+                <td>None</td>
+                {% endif %}
+                <td>
+                    <button id="editButton{{surgery.OperationsTakenPlace.id_operation}}" class="btn add-image-button">Edit</button>
+                </td>
             </tr>
-            <tr class="scoreboardTableBodyRow">
-                <td>2</td>
-                <td>Connie Cardenas</td>
-                <td>Trauma cx2</td>
-                <td>678910</td>
-                <td>Not Available</td>
-            </tr>
+            {% endfor %}
         </table>
     </div>
+
+    <!-- Modal for Editing -->
+    <div id="editModal" class="modal">
+        <!-- The Close Button -->
+        <span id="closeEdit" class="close">&times;</span>
+        <!-- Modal Content -->
+        <div class="modal-content">
+            <form method="UPDATE" action="/edit_surgery" class="form-inline my-2 my-lg-0"></form>
+                <div class="d-flex flex-column">
+                    <h2 id="editModalTitle"></h2>
+                    <strong>Patient</strong>
+                    <span id="editModalPatient"></span>
+                    <strong>SNOMED Code</strong>
+                    <span id="editModalSnomed"></span>
+                    <strong>Surgery Procedure</strong>
+                    <span id="editModalProcedure"></span>
+                    <strong>Side</strong>
+                    <span id="editModalSide"></span>
+                    <strong>Checklist</strong>
+                    <span id="editModalChecklist"></span>
+                    <strong>Outcome</strong>
+                    <span id="editModalOutcome"></span>
+                    <strong>Comments - edit</strong>
+                    <textarea id="editModalComments"></textarea>
+                    <strong>Image - edit</strong>
+                    <img id="editModalImage" alt="No Image to display"/>
+                    <label for="editModalImageInput" class="btn add-image-button">Add/Replace Image</label>
+                    <input 
+                        type="file"
+                        id="editModalImageInput"
+                        style="display:none;"
+                        name="file"
+                        accept="image/*"
+                        onchange="displayImage(event)"
+                    />
+                </div>
+                <br/>
+                <button class="btn add-image-button">
+                    Update Surgery
+                </button>
+            </form>
+        </div>
+        <!-- Modal Caption (Image Text) -->
+        <!-- <div class="modal-caption"></div> -->
+    </div>
+    <!-- Modal for Images -->
+    <div id="imageModal" class="modal">
+        <!-- The Close Button -->
+        <span id="closeImage" class="close">&times;</span>
+        <!-- Modal Content (The Image) -->
+        <img class="modal-content" id="modalImage">
+        <!-- Modal Caption (Image Text) -->
+        <!-- <div class="modal-caption"></div> -->
+    </div>
+    <!-- Modal for Comments -->
+    <div id="commentModal" class="modal">
+        <!-- The Close Button -->
+        <span id="closeComment" class="close">&times;</span>
+        <!-- Modal Content (The Comment) -->
+        <div class="modal-content modal-comment" id="modalComment"></div>
+    </div>
+
+    <!-- JAVA SCRIPT -->
+    {% for surgery in operations %}
+    <script>
+        // Link Images to Modal via Click
+        // Get the modal
+        var imgModal = document.getElementById("imageModal");
+
+        // Get the image and insert it inside the modal - use its "alt" text as a caption
+        var img = document.getElementById("tableImage{{surgery.OperationsTakenPlace.id_operation}}");
+        var modalImg = document.getElementById("modalImage");
+        // var captionText = document.getElementById("caption");
+        img.onclick = function(){
+            imgModal.style.display = "block";
+            modalImg.src = this.src;
+            // captionText.innerHTML = this.alt;
+        }
+
+        // Get the <span> element that closes the modal
+        var span = document.getElementById("closeImage");
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function() {
+            imgModal.style.display = "none";
+        }
+        // Link Comments to Modal via Click
+        // Get the modal
+        var commentModal = document.getElementById("commentModal");
+
+        // Get the image and insert it inside the modal - use its "alt" text as a caption
+        var comment = document.getElementById("tableComment{{surgery.OperationsTakenPlace.id_operation}}");
+        var modalComment = document.getElementById("modalComment");
+            comment.onclick = function(){
+            commentModal.style.display = "block";
+            modalComment.innerText = this.innerText
+        }
+
+        // Get the <span> element that closes the modal
+        var span = document.getElementById("closeComment");
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function() {
+            commentModal.style.display = "none";
+        }
+    </script>
+    {% endfor %}
+
+    {% for surgery in operations %}
+    <script>
+        // Link Images to Modal via Click
+        // Get the modal
+        var editModal = document.getElementById("editModal");
+
+        // Get the image and insert it inside the modal - use its "alt" text as a caption
+        var editButton = document.getElementById("editButton{{surgery.OperationsTakenPlace.id_operation}}");
+        var editModalTitle = document.getElementById("editModalTitle");
+        var editModalPatient = document.getElementById("editModalPatient");
+        var editModalSnomed = document.getElementById("editModalSnomed");
+        var editModalProcedure = document.getElementById("editModalProcedure");
+        var editModalSide = document.getElementById("editModalSide");
+        var editModalChecklist = document.getElementById("editModalChecklist");
+        var editModalOutcome = document.getElementById("editModalOutcome");
+        var editModalComments = document.getElementById("editModalComments");
+        var editModalImage = document.getElementById("editModalImage");
+        editButton.onclick = function(){
+            editModalTitle.innerText = "Edit Surgery {{surgery.OperationsTakenPlace.id_operation}}"
+            editModalPatient.innerText = "{{surgery.Patient.first_name + ' ' + surgery.Patient.last_name}}"
+            editModalSnomed.innerText = "{{surgery.OperationsTakenPlace.snomed_code}}"
+            editModalProcedure.innerText = "{{surgery.SurgeryProcedure.name}}"
+            editModalSide.innerText = "{{surgery.Side.name_side}}"
+            editModalChecklist.innerText = "{{surgery.OperationsTakenPlace.check_list}}"
+            editModalOutcome.innerText = "{{surgery.PostopProcedure.outcome}}"
+            editModalComments.innerText = `{{surgery.OperationsTakenPlace.comments}}` // backticks for multiline string
+            {% if surgery.OperationsTakenPlace.pictures %}
+                editModalImage.src = "data:image/jpeg;base64,{{surgery.OperationsTakenPlace.pictures.decode('utf8')}}";
+            {% endif %}
+            editModal.style.display = "block";
+        }
+
+        // display new image on update/replace click
+        var displayImage = function(event) {
+            var reader = new FileReader();
+            reader.onload = function(){
+                editModalImage.src = reader.result;
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        };
+
+        // Get the <span> element that closes the modal
+        var span = document.getElementById("closeEdit");
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function() {
+            editModalImage.src = "";
+            editModal.style.display = "none";
+        }
+    </script>
+    {% endfor %}
+
+
+    <!-- END JAVA SCRIPT.... -->
 
     <!-- Testimonials -->
     <section class="testimonials text-center bg-light">
