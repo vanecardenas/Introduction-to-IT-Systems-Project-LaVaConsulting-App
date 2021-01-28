@@ -99,10 +99,8 @@
     <section class="features-icons bg-light text-center">
         <div class="container">
             <div class="row">
-                <div class="col-lg-4">
-                </div>
-                <div class="col-lg-4">
-                    <a href="{{ url_for('user_patients') }}">
+                <div class="col-lg-6">
+                    <a class="text-decoration-none" :hover href="{{ url_for('user_patients') }}">
                         <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
                             <div class="features-icons-icon d-flex">
                                 <i class="fa fa-user-circle m-auto text-primary"></i>
@@ -111,7 +109,9 @@
                             <p class="text-decoration-none">Here you will find all the information about your patients</p>
                         </div>
                     </a>
-                    <a href="{{ url_for('user_surgeries') }}">
+                </div>
+                <div class="col-lg-6">
+                    <a class="text-decoration-none" :hover href="{{ url_for('user_surgeries') }}">
                         <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
                             <div class="features-icons-icon d-flex">
                                 <i class="fa fa-procedures m-auto text-primary"></i>
@@ -120,7 +120,9 @@
                             <p class="text-decoration-none">Here you will find all the information about your surgical procedures</p>
                         </div>
                     </a>
-                    <a href="{{ url_for('user_dpt') }}">
+                </div>
+                <div class="col-lg-6">
+                    <a class="text-decoration-none" :hover href="{{ url_for('user_dpt') }}">
                         <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
                             <div class="features-icons-icon d-flex">
                                 <i class="fa fa-hospital m-auto text-primary"></i>
@@ -129,7 +131,9 @@
                             <p class="text-decoration-none">Here you see what's been going on in your Department</p>
                         </div>
                     </a>
-                    <a href="{{ url_for('add_new') }}">
+                </div>
+                <div class="col-lg-6">
+                    <a class="text-decoration-none" :hover href="{{ url_for('add_new') }}">
                         <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
                             <div class="features-icons-icon d-flex">
                                 <i class="fa fa-plus-circle m-auto text-primary"></i>
