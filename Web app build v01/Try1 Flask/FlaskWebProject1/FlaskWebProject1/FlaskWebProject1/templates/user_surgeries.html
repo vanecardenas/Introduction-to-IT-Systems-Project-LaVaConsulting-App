@@ -69,10 +69,6 @@
                     </div>
                 </li>
             </ul>
-            <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-            </form>
             <li class="nav navbar-nav navbar-right px-2">
 
                 <div>
@@ -112,7 +108,7 @@
                             <i class="fa fa-procedures m-auto text-primary"></i>
                         </div>
                         <h3>Your Surgeries</h3>
-                        <p class="lead mb-0">Here you will find all the information about your surgical procedures in the {{doc_dept}} and other departments  </p>
+                        <p class="text-decoration-none">Here you will find all the information about your surgical procedures in the {{doc_dept}} and other departments  </p>
                     </div>
                 </div>
                 <div class="col-lg-4">
@@ -128,6 +124,43 @@
     <div class="scoreboard" style="display: block;">
         <table class="scoreboardTable">
             <thead class="scoreboardTableHead">
+                <tr id="filters" class="filters">
+                    <th><input id="filterOperationID" type="text" class="form-control" placeholder="Operation ID"></th>
+                    <th><input id="filterPatientID" type="text" class="form-control" placeholder="Patient ID"></th>
+                    <th><input id="filterPatientName" type="text" class="form-control" placeholder="Patient Name"></th>
+                    <th><input id="filterSnomedCode" type="text" class="form-control" placeholder="Snomed Code"></th>
+                    <th><input id="filterProcedureName" type="text" class="form-control" placeholder="Procedure Name"></th>
+                    <th><input id="filterSide" type="text" class="form-control" placeholder="Side"></th>
+                    <th><input id="filterChecklist" type="text" class="form-control" placeholder="Checklist"></th>
+                    <th><input id="filterOutcome" type="text" class="form-control" placeholder="Outcome"></th>
+                    <th><button onclick="filterSurgeries()" class="btn add-image-button">Apply Filter</button></th>
+                </tr>
+                <script>
+                    filterSurgeries = function() {
+                        let rows = document.getElementsByClassName("scoreboardTableBodyRow")
+                        let filters = document.getElementById("filters")
+                        for (let row of rows) {
+                            cells = row.getElementsByTagName("td");
+                            cell[0].innerText === filters.getElementById("filterOperationID").innerText
+                            cell[0].innerText === filters.getElementById("filterPatientID").innerText
+                            cell[0].innerText === filters.getElementById("filterPatientName").innerText
+                            cell[0].innerText === filters.getElementById("filterSnomedCode").innerText
+                            cell[0].innerText === filters.getElementById("filterProcedureName").innerText
+                            cell[0].innerText === filters.getElementById("filterSide").innerText
+                            cell[0].innerText === filters.getElementById("filterChecklist").innerText
+                            cell[0].innerText === filters.getElementById("filterOutcome").innerText
+                            
+                            country = cells[1] || null; // gets the 2nd `td` or nothing
+                            // if the filter is set to 'All', or this is the header row, or 2nd `td` text matches filter
+                            if (filter === "All" || !country || (filter === country.textContent)) {
+                                row.style.display = ""; // shows this row
+                            }
+                            else {
+                                row.style.display = "none"; // hides this row
+                            }
+                        }
+                    }
+                </script>
                 <tr class="scoreboardTableHeaderRow">
                     <th>Operation ID</th>
                     <th>Patient ID</th>
@@ -175,8 +208,10 @@
             </tr>
             {% endfor %}
         </table>
+        <p> No.of Rows : <span id="rowcount"></span></p>
     </div>
 
+ 
     <!-- Modal for Editing -->
     <div id="editModal" class="modal">
         <!-- The Close Button -->
