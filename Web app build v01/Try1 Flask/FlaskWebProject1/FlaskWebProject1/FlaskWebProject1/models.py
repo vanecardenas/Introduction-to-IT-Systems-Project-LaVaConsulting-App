@@ -140,7 +140,7 @@ class OperationsTakenPlace(db.Model):
     id_side = db.Column(db.ForeignKey('sides.id_side'), index=True)
     id_doctor = db.Column(db.ForeignKey('doctors.id_doctor'), index=True)
     date = db.Column(db.Date)
-    check_list = db.Column(db.Integer)
+    check_list = db.Column(db.String(45))
     id_outcome = db.Column(db.ForeignKey('postop_procedure.id_outcome'), index=True)
     comments = db.Column(sqlalchemy.dialects.mysql.TEXT)
     pictures = db.Column(sqlalchemy.dialects.mysql.BLOB)

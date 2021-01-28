@@ -1,4 +1,4 @@
-# Copyright (c) 2014, 2019, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2014, 2020, Oracle and/or its affiliates.
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License, version 2.0, as
@@ -46,6 +46,8 @@ from .cursor import (
     RE_SQL_ON_DUPLICATE, RE_SQL_COMMENT, RE_SQL_INSERT_VALUES,
     RE_SQL_SPLIT_STMTS, RE_SQL_FIND_PARAM
 )
+
+ERR_NO_RESULT_TO_FETCH = "No result set to fetch from"
 
 
 class _ParamSubstitutor(object):
@@ -113,11 +115,19 @@ class CMySQLCursor(MySQLCursorAbstract):
         self._warnings = None
         self._warning_count = 0
         self._description = None
-        self._executed = None
         self._executed_list = []
         if free and self._cnx:
             self._cnx.free_result()
         super(CMySQLCursor, self).reset()
+
+
+    def _check_executed(self):
+        """Check if the statement has been executed.
+
+        Raises an error if the statement has not been executed.
+        """
+        if self._executed is None:
+            raise errors.InterfaceError(ERR_NO_RESULT_TO_FETCH)
 
     def _fetch_warnings(self):
         """Fetch warnings
@@ -229,8 +239,8 @@ class CMySQLCursor(MySQLCursorAbstract):
         if not operation:
             return None
 
-        if not self._cnx:
-            raise errors.ProgrammingError("Cursor is not connected")
+        if not self._cnx or self._cnx.is_closed():
+            raise errors.ProgrammingError("Cursor is not connected", 2055)
         self._cnx.handle_unread_result()
 
         stmt = ''
@@ -349,6 +359,7 @@ class CMySQLCursor(MySQLCursorAbstract):
                 return None
             stmt = self._batch_insert(operation, seq_params)
             if stmt is not None:
+                self._executed = stmt
                 return self.execute(stmt)
 
         rowcnt = 0
@@ -439,10 +450,17 @@ class CMySQLCursor(MySQLCursorAbstract):
             while self._cnx.result_set_available:
                 result = self._cnx.fetch_eof_columns()
                 # pylint: disable=W0212
-                if self._raw:
-                    cur = CMySQLCursorBufferedRaw(self._cnx._get_self())
+                if isinstance(self, (CMySQLCursorDict,
+                                     CMySQLCursorBufferedDict)):
+                    cursor_class = CMySQLCursorBufferedDict
+                elif isinstance(self, (CMySQLCursorNamedTuple,
+                                       CMySQLCursorBufferedNamedTuple)):
+                    cursor_class = CMySQLCursorBufferedNamedTuple
+                elif self._raw:
+                    cursor_class = CMySQLCursorBufferedRaw
                 else:
-                    cur = CMySQLCursorBuffered(self._cnx._get_self())
+                    cursor_class = CMySQLCursorBuffered
+                cur = cursor_class(self._cnx._get_self())
                 cur._executed = "(a result of {0})".format(call)
                 cur._handle_result(result)
                 # pylint: enable=W0212
@@ -453,7 +471,12 @@ class CMySQLCursor(MySQLCursorAbstract):
 
             if argnames:
                 self.reset()
-                select = "SELECT {0}".format(','.join(argtypes))
+                # Create names aliases to be compatible with namedtuples
+                args = [
+                    "{} AS {}".format(name, alias) for name, alias in
+                    zip(argtypes, [arg.lstrip("@_") for arg in argnames])
+                ]
+                select = "SELECT {}".format(",".join(args))
                 self.execute(select)
 
                 return self.fetchone()
@@ -485,8 +508,10 @@ class CMySQLCursor(MySQLCursorAbstract):
 
         Returns a list of tuples.
         """
+        self._check_executed()
         if not self._cnx.unread_result:
-            raise errors.InterfaceError("No result set to fetch from.")
+            return []
+
         rows = self._cnx.get_rows()
         if self._nextrow and self._nextrow[0]:
             rows[0].insert(0, self._nextrow[0])
@@ -502,6 +527,7 @@ class CMySQLCursor(MySQLCursorAbstract):
 
     def fetchmany(self, size=1):
         """Returns the next set of rows of a result set"""
+        self._check_executed()
         if self._nextrow and self._nextrow[0]:
             rows = [self._nextrow[0]]
             size -= 1
@@ -529,6 +555,7 @@ class CMySQLCursor(MySQLCursorAbstract):
 
     def fetchone(self):
         """Returns next row of a query result set"""
+        self._check_executed()
         row = self._nextrow
         if not row and self._cnx.unread_result:
             row = self._cnx.get_row()
@@ -678,13 +705,13 @@ class CMySQLCursorBuffered(CMySQLCursor):
         return row
 
     def fetchall(self):
-        if self._rows is None:
-            raise errors.InterfaceError("No result set to fetch from.")
+        self._check_executed()
         res = self._rows[self._next_row:]
         self._next_row = len(self._rows)
         return res
 
     def fetchmany(self, size=1):
+        self._check_executed()
         res = []
         cnt = size or self.arraysize
         while cnt > 0:
@@ -697,6 +724,7 @@ class CMySQLCursorBuffered(CMySQLCursor):
         return res
 
     def fetchone(self):
+        self._check_executed()
         return self._fetch_row()
 
 
@@ -783,6 +811,8 @@ class CMySQLCursorNamedTuple(CMySQLCursor):
     def fetchmany(self, size=1):
         """Returns next set of rows as list of named tuples"""
         res = super(CMySQLCursorNamedTuple, self).fetchmany(size=size)
+        if not res:
+            return []
         return [self.named_tuple(*res[0])]
 
     def fetchall(self):
@@ -903,8 +933,8 @@ class CMySQLCursorPrepared(CMySQLCursor):
         if not operation:
             return
 
-        if not self._cnx:
-            raise errors.ProgrammingError("Cursor is not connected")
+        if not self._cnx or self._cnx.is_closed():
+            raise errors.ProgrammingError("Cursor is not connected", 2055)
 
         self._cnx.handle_unread_result(prepared=True)
 
@@ -929,7 +959,8 @@ class CMySQLCursorPrepared(CMySQLCursor):
 
             try:
                 self._stmt = self._cnx.cmd_stmt_prepare(operation)
-            except (errors.Error, errors.ProgrammingError):
+            except errors.Error:
+                self._executed = None
                 self._stmt = None
                 raise
 
@@ -974,6 +1005,7 @@ class CMySQLCursorPrepared(CMySQLCursor):
 
         Returns a tuple or None.
         """
+        self._check_executed()
         return self._fetch_row() or None
 
     def fetchmany(self, size=None):
@@ -981,6 +1013,7 @@ class CMySQLCursorPrepared(CMySQLCursor):
 
         Returns a list of tuples.
         """
+        self._check_executed()
         res = []
         cnt = size or self.arraysize
         while cnt > 0 and self._stmt.have_result_set:
@@ -995,8 +1028,10 @@ class CMySQLCursorPrepared(CMySQLCursor):
 
         Returns a list of tuples.
         """
+        self._check_executed()
         if not self._stmt.have_result_set:
-            raise errors.InterfaceError("No result set to fetch from.")
+            return []
+
         rows = self._cnx.get_rows(prep_stmt=self._stmt)
         if self._nextrow and self._nextrow[0]:
             rows[0].insert(0, self._nextrow[0])

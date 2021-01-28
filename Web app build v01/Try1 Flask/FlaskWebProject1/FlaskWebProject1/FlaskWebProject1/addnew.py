@@ -269,11 +269,11 @@ def add_optakenplace2():
             and form.imaging.data == True and form.procname.data == True and form.instruments.data == True and form.specimen.data == True and form.equipment1.data == True \
             and form.concerns.data == True:
 
-            session["state_checklist"] = 1
+            session["state_checklist"] = "complete"
             flash("Checklist complete!")
 
         else:
-            session["state_checklist"] = 0
+            session["state_checklist"] = "incomplete"
             flash("Checklist was incomplete! This has been saved.")
 
 

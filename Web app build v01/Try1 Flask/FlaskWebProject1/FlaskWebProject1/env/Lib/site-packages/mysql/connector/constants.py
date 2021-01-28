@@ -1,4 +1,4 @@
-# Copyright (c) 2009, 2019, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2009, 2020, Oracle and/or its affiliates. All rights reserved.
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License, version 2.0, as
@@ -30,7 +30,9 @@
 """
 
 import ssl
+import warnings
 
+from .catch23 import make_abc
 from .errors import ProgrammingError
 from .charsets import MYSQL_CHARACTER_SETS
 
@@ -79,7 +81,8 @@ DEFAULT_CONFIGURATION = {
     'consume_results': False,
     'conn_attrs': None,
     'dns_srv': False,
-    'use_pure': False
+    'use_pure': False,
+    'krb_service_principal': None
 }
 
 CNX_POOL_ARGS = ('pool_name', 'pool_size', 'pool_reset_session')
@@ -94,6 +97,12 @@ def flag_is_set(flag, flags):
     if (flags & flag) > 0:
         return True
     return False
+
+
+def _obsolete_option(name, new_name, value):
+    warnings.warn('The option "{}" has been deprecated, use "{}" instead.'
+                  ''.format(name, new_name), category=DeprecationWarning)
+    return value
 
 
 class _Constants(object):
@@ -337,7 +346,7 @@ class ServerCmd(_Constants):
     BINLOG_DUMP = 18
     TABLE_DUMP = 19
     CONNECT_OUT = 20
-    REGISTER_SLAVE = 21
+    REGISTER_REPLICA = 21
     STMT_PREPARE = 22
     STMT_EXECUTE = 23
     STMT_SEND_LONG_DATA = 24
@@ -371,7 +380,7 @@ class ServerCmd(_Constants):
         'BINLOG_DUMP': (18, 'BINLOG_DUMP'),
         'TABLE_DUMP': (19, 'TABLE_DUMP'),
         'CONNECT_OUT': (20, 'CONNECT_OUT'),
-        'REGISTER_SLAVE': (21, 'REGISTER_SLAVE'),
+        'REGISTER_REPLICA': (21, 'REGISTER_REPLICA'),
         'STMT_PREPARE': (22, 'STMT_PREPARE'),
         'STMT_EXECUTE': (23, 'STMT_EXECUTE'),
         'STMT_SEND_LONG_DATA': (24, 'STMT_SEND_LONG_DATA'),
@@ -531,6 +540,13 @@ class ServerFlag(_Flags):
     }
 
 
+class RefreshOption_meta(type):
+    @property
+    def SLAVE(self):
+        return _obsolete_option("RefreshOption.SLAVE", "RefreshOption.REPLICA",
+                                RefreshOption.REPLICA)
+
+@make_abc(RefreshOption_meta)
 class RefreshOption(_Constants):
     """MySQL Refresh command options
 
@@ -543,16 +559,17 @@ class RefreshOption(_Constants):
     HOST = 1 << 3
     STATUS = 1 << 4
     THREADS = 1 << 5
-    SLAVE = 1 << 6
+    REPLICA = 1 << 6
 
     desc = {
         'GRANT': (1 << 0, 'Refresh grant tables'),
         'LOG': (1 << 1, 'Start on new log file'),
         'TABLES': (1 << 2, 'close all tables'),
-        'HOSTS': (1 << 3, 'Flush host cache'),
+        'HOST': (1 << 3, 'Flush host cache'),
         'STATUS': (1 << 4, 'Flush status variables'),
         'THREADS': (1 << 5, 'Flush thread cache'),
-        'SLAVE': (1 << 6, 'Reset master info and restart slave thread'),
+        'REPLICA': (1 << 6, 'Reset source info and restart replica thread'),
+        'SLAVE': (1 << 6, 'Deprecated option; use REPLICA instead.'),
     }
 
 
