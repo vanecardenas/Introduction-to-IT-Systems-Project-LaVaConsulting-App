@@ -10165,6 +10165,10 @@ a.text-dark:hover, a.text-dark:focus {
   text-decoration: none !important;
 }
 
+.non-hover-link:hover {
+  text-decoration: none;
+}
+
 .text-break {
   word-break: break-word !important;
   word-wrap: break-word !important;
