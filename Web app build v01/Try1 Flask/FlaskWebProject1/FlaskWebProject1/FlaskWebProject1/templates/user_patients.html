@@ -121,9 +121,63 @@
     <div class="container">
 
         <link rel="stylesheet" type="text/css" href="/static/style_tables_test.css" />
-        <div class="scoreboard" style="display: block;"></div>
+        <link rel="stylesheet" type="text/css" href="/static/image_modal.css" />
+        <div class="scoreboard" style="display: block;">
             <table class="scoreboardTable">
                 <thead class="scoreboardTableHead">
+
+                <tr id="filters" class="filters">
+                    <th><input type="text" class="form-control" placeholder="Patient ID"></th>
+                    <th><input type="text" class="form-control" placeholder="First Name"></th>
+                    <th><input type="text" class="form-control" placeholder="Last Name"></th>
+                    <th><input type="date" class="form-control"></th>
+                    <th><input type="text" class="form-control" placeholder="Gender"></th>
+                    <th><input type="text" class="form-control" placeholder="Insurance"></th>
+                    <th><button onclick="filterPatients()" class="btn blue-button">Apply Filters</button></th>
+                    <th><button onclick="clearFilters()" class="btn grey-background">Clear Filters</button></th>
+                </tr>
+                <script>
+                    filter_match = function(cell, filter) {
+                        // filter is either not set or we look for matching cells in the table
+                        if (filter.type === "date") {
+                            return filter.value.length == 0 || cell.innerText === filter.value
+                        } else {
+                            return filter.value.length == 0 || cell.innerText.toLowerCase().includes(filter.value.toLowerCase())
+                        }
+                    }
+
+                    all_filters_match = function(cells, filters) {
+                        matches_all_filters = true
+                        for (let i = 0; i < filters.length; i++) {
+                            matches_all_filters = matches_all_filters && filter_match(cells[i], filters[i]);
+                        }
+                        return matches_all_filters
+                    }
+
+                    filterPatients = function() {
+                        let rows = document.getElementsByClassName("scoreboardTableBodyRow")
+                        for (let row of rows) {
+                            let cells = row.getElementsByTagName("td");
+                            let filters = document.getElementById("filters").getElementsByTagName("input")
+                            if (all_filters_match(cells, filters)) {
+                                row.style.display = ""; // shows this row
+                            } else {
+                                row.style.display = "none"; // hides this row
+                            }
+                        }
+                    }
+
+                    clearFilters = function() {
+                        filters = document.getElementById("filters").getElementsByTagName("input")
+                        for (let i = 0; i < filters.length; i++) {
+                            filters[i].value = ""
+                        }
+                        filterPatients()
+                    }
+                </script>
+        </div>
+    <!--End of Filters for table--> 
+
                     <tr class="scoreboardTableHeaderRow">
                         <th>Patient ID</th>
                         <th>Firstname</th>

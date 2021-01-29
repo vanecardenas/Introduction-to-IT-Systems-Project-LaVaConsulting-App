@@ -3203,10 +3203,8 @@ input[type="button"].btn-block {
 .dropdown-menu {
   position: absolute;
   top: 100%;
-  left: 0;
   z-index: 1000;
   display: none;
-  float: left;
   min-width: 10rem;
   padding: 0.5rem 0;
   margin: 0.125rem 0 0;
@@ -3222,7 +3220,6 @@ input[type="button"].btn-block {
 
 .dropdown-menu-left {
   right: auto;
-  left: 0;
 }
 
 .dropdown-menu-right {
@@ -3299,7 +3296,6 @@ input[type="button"].btn-block {
 .dropright .dropdown-menu {
   top: 0;
   right: auto;
-  left: 100%;
   margin-top: 0;
   margin-left: 0.125rem;
 }
@@ -3383,6 +3379,7 @@ input[type="button"].btn-block {
   white-space: nowrap;
   background-color: transparent;
   border: 0;
+  left: 0;
 }
 
 .dropdown-item:hover, .dropdown-item:focus {
