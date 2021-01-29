@@ -119,54 +119,74 @@
 
 
     <!-- Table " My Surgeries -->
+
+    <!--Filters for table-->
     <link rel="stylesheet" type="text/css" href="/static/style_tables_test.css" />
     <link rel="stylesheet" type="text/css" href="/static/image_modal.css" />
     <div class="scoreboard" style="display: block;">
         <table class="scoreboardTable">
             <thead class="scoreboardTableHead">
                 <tr id="filters" class="filters">
-                    <th><input id="filterOperationID" type="text" class="form-control" placeholder="Operation ID"></th>
-                    <th><input id="filterPatientID" type="text" class="form-control" placeholder="Patient ID"></th>
-                    <th><input id="filterPatientName" type="text" class="form-control" placeholder="Patient Name"></th>
-                    <th><input id="filterSnomedCode" type="text" class="form-control" placeholder="Snomed Code"></th>
-                    <th><input id="filterProcedureName" type="text" class="form-control" placeholder="Procedure Name"></th>
-                    <th><input id="filterSide" type="text" class="form-control" placeholder="Side"></th>
-                    <th><input id="filterChecklist" type="text" class="form-control" placeholder="Checklist"></th>
-                    <th><input id="filterOutcome" type="text" class="form-control" placeholder="Outcome"></th>
-                    <th><button onclick="filterSurgeries()" class="btn add-image-button">Apply Filter</button></th>
+                    <th><input type="text" class="form-control" placeholder="Operation ID"></th>
+                    <th><input type="text" class="form-control" placeholder="Patient ID"></th>
+                    <th><input type="text" class="form-control" placeholder="Patient Name"></th>
+                    <th><input type="text" class="form-control" placeholder="Snomed Code"></th>
+                    <th><input type="text" class="form-control" placeholder="Procedure Name"></th>
+                    <th><input type="date" class="form-control"></th>
+                    <th><input type="text" class="form-control" placeholder="Side"></th>
+                    <th><input type="text" class="form-control" placeholder="Checklist"></th>
+                    <th><input type="text" class="form-control" placeholder="Outcome"></th>
+                    <th><button onclick="filterSurgeries()" class="btn blue-button">Apply Filters</button></th>
+                    <th><button onclick="clearFilters()" class="btn grey-background">Clear Filters</button></th>
                 </tr>
                 <script>
+                    filter_match = function(cell, filter) {
+                        // filter is either not set or we look for matching cells in the table
+                        if (filter.type === "date") {
+                            return filter.value.length == 0 || cell.innerText === filter.value
+                        } else {
+                            return filter.value.length == 0 || cell.innerText.toLowerCase().includes(filter.value.toLowerCase())
+                        }
+                    }
+
+                    all_filters_match = function(cells, filters) {
+                        matches_all_filters = true
+                        for (let i = 0; i < filters.length; i++) {
+                            matches_all_filters = matches_all_filters && filter_match(cells[i], filters[i]);
+                        }
+                        return matches_all_filters
+                    }
+
                     filterSurgeries = function() {
                         let rows = document.getElementsByClassName("scoreboardTableBodyRow")
-                        let filters = document.getElementById("filters")
                         for (let row of rows) {
-                            cells = row.getElementsByTagName("td");
-                            cell[0].innerText === filters.getElementById("filterOperationID").innerText
-                            cell[0].innerText === filters.getElementById("filterPatientID").innerText
-                            cell[0].innerText === filters.getElementById("filterPatientName").innerText
-                            cell[0].innerText === filters.getElementById("filterSnomedCode").innerText
-                            cell[0].innerText === filters.getElementById("filterProcedureName").innerText
-                            cell[0].innerText === filters.getElementById("filterSide").innerText
-                            cell[0].innerText === filters.getElementById("filterChecklist").innerText
-                            cell[0].innerText === filters.getElementById("filterOutcome").innerText
-                            
-                            country = cells[1] || null; // gets the 2nd `td` or nothing
-                            // if the filter is set to 'All', or this is the header row, or 2nd `td` text matches filter
-                            if (filter === "All" || !country || (filter === country.textContent)) {
+                            let cells = row.getElementsByTagName("td");
+                            let filters = document.getElementById("filters").getElementsByTagName("input")
+                            if (all_filters_match(cells, filters)) {
                                 row.style.display = ""; // shows this row
-                            }
-                            else {
+                            } else {
                                 row.style.display = "none"; // hides this row
                             }
                         }
                     }
+
+                    clearFilters = function() {
+                        filters = document.getElementById("filters").getElementsByTagName("input")
+                        for (let i = 0; i < filters.length; i++) {
+                            filters[i].value = ""
+                        }
+                        filterSurgeries()
+                    }
                 </script>
+    <!--End of Filters for table--> 
+
                 <tr class="scoreboardTableHeaderRow">
                     <th>Operation ID</th>
                     <th>Patient ID</th>
                     <th>Patient Name</th>
                     <th>Snomed Code</th>
                     <th>Procedure Name</th>
+                    <th>Date</th>
                     <th>Side</th>
                     <th>Checklist</th>
                     <th>Outcome</th>
@@ -183,6 +203,7 @@
                 <td>{{surgery.Patient.first_name + ' ' + surgery.Patient.last_name}}</td>
                 <td>{{surgery.OperationsTakenPlace.snomed_code}}</td>
                 <td>{{surgery.SurgeryProcedure.name}}</td>
+                <td>{{surgery.OperationsTakenPlace.date}}</td>
                 <td>{{surgery.Side.name_side}}</td>
                 <td>{{surgery.OperationsTakenPlace.check_list}}</td>
                 <td>{{surgery.PostopProcedure.outcome}}</td>
@@ -203,7 +224,7 @@
                 <td>None</td>
                 {% endif %}
                 <td>
-                    <button id="editButton{{surgery.OperationsTakenPlace.id_operation}}" class="btn add-image-button">Edit</button>
+                    <button id="editButton{{surgery.OperationsTakenPlace.id_operation}}" class="btn blue-button">Edit</button>
                 </td>
             </tr>
             {% endfor %}
@@ -237,7 +258,7 @@
                     <textarea id="editModalComments"></textarea>
                     <strong>Image - edit</strong>
                     <img id="editModalImage" alt="No Image to display"/>
-                    <label for="editModalImageInput" class="btn add-image-button">Add/Replace Image</label>
+                    <label for="editModalImageInput" class="btn blue-button">Add/Replace Image</label>
                     <input 
                         type="file"
                         id="editModalImageInput"
@@ -248,7 +269,7 @@
                     />
                 </div>
                 <br/>
-                <button class="btn add-image-button">
+                <button class="btn blue-button">
                     Update Surgery
                 </button>
             </form>

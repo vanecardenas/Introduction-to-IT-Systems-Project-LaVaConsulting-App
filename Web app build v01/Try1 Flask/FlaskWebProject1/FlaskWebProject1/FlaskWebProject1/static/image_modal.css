@@ -49,16 +49,20 @@
     overflow: scroll;
   }
   
-  .add-image-button {
+  .blue-button {
     background: #5A7FE4;
     color: white;
     transition: 0.3s;
     transition-property: background;
   }
   
-  .add-image-button:hover {
+  .blue-button:hover {
     background: #8ba2e0;
     color: white;
+  }
+
+  .grey-background {
+    background: lightgrey;
   }
   
   /* Caption of Modal Image (Image Text) - Same Width as the Image
