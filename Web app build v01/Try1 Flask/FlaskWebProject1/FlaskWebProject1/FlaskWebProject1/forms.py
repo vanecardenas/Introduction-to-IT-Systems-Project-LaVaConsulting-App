@@ -101,7 +101,7 @@ class PatientAddForm(FlaskForm):
 class InsuranceAddForm(FlaskForm):
     """Add Insurnaces Form."""
     
-    id_insurance=QuerySelectField('Here you can check again whether Insurance is in the system',query_factory=lambda:Insurance.query.order_by(Insurance.name),get_label="name", allow_blank = True)
+    id_insurance=QuerySelectField('Here you can check again whether Insurance is already in the system',query_factory=lambda:Insurance.query.order_by(Insurance.name),get_label="name", allow_blank = True)
    
     name = StringField(
         'Enter a new Insurance',
@@ -215,7 +215,7 @@ class WHOChecklistForm(FlaskForm):
 
     equipment = BooleanField("Nursing Team: \n Are there equipment issues or any concerns?")
 
-    imaging = BooleanField("Is essential imaging displayed?")
+    imaging = BooleanField("Is essential imaging displayed? Also check if not applicable.")
 
 
     ###Before patient leaves operating room###
