@@ -78,7 +78,7 @@ class PatientAddForm(FlaskForm):
     )
 
     gender = SelectField(
-        "Gender", choices=[("male","Male"),("female","Female")],
+        "Gender", choices=[("male","Male"),("female","Female"), ("divers", "Diverse")],
        validators=[InputRequired()]
        )
     
