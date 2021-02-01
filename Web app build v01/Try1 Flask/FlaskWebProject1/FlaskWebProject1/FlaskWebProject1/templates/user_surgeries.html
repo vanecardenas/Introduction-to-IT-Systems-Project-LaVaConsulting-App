@@ -229,7 +229,6 @@
             </tr>
             {% endfor %}
         </table>
-        <p> No.of Rows : <span id="rowcount"></span></p>
     </div>
 
  
@@ -303,12 +302,14 @@
 
         // Get the image and insert it inside the modal - use its "alt" text as a caption
         var img = document.getElementById("tableImage{{surgery.OperationsTakenPlace.id_operation}}");
-        var modalImg = document.getElementById("modalImage");
-        // var captionText = document.getElementById("caption");
-        img.onclick = function(){
-            imgModal.style.display = "block";
-            modalImg.src = this.src;
-            // captionText.innerHTML = this.alt;
+        if (img) {
+            var modalImg = document.getElementById("modalImage");
+            // var captionText = document.getElementById("caption");
+            img.onclick = function(){
+                imgModal.style.display = "block";
+                modalImg.src = this.src;
+                // captionText.innerHTML = this.alt;
+            }
         }
 
         // Get the <span> element that closes the modal
@@ -324,10 +325,12 @@
 
         // Get the image and insert it inside the modal - use its "alt" text as a caption
         var comment = document.getElementById("tableComment{{surgery.OperationsTakenPlace.id_operation}}");
-        var modalComment = document.getElementById("modalComment");
-            comment.onclick = function(){
-            commentModal.style.display = "block";
-            modalComment.innerText = this.innerText
+        if (comment) {
+            var modalComment = document.getElementById("modalComment");
+                comment.onclick = function(){
+                commentModal.style.display = "block";
+                modalComment.innerText = this.innerText
+            }
         }
 
         // Get the <span> element that closes the modal
