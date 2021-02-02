@@ -201,12 +201,14 @@ def user_surgeries():
     if form.validate_on_submit():
         print('DID THIS')
         operation = OperationsTakenPlace.query.filter_by(id_operation=int(form.id_operation.data)).first()
-        operation.comments = form.comments.data
+        if form.comments.data:
+            operation.comments = form.comments.data
 
-        filename = images.save(form.pictures.data)
-        form.pictures.data.stream.seek(0)
-        image_string = base64.b64encode(form.pictures.data.read())
-        operation.pictures = image_string
+        if form.pictures.data:
+            filename = images.save(form.pictures.data)
+            form.pictures.data.stream.seek(0)
+            image_string = base64.b64encode(form.pictures.data.read())
+            operation.pictures = image_string
 
         db.session.commit() 
         flash('Surgery was updated')

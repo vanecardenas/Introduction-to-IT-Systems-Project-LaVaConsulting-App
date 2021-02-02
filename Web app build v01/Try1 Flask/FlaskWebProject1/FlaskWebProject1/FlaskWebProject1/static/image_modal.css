@@ -61,6 +61,11 @@
     color: white;
   }
 
+  .image-button {
+    margin: 10px 0px;
+    max-width: 170px;
+  }
+
   .grey-background {
     background: lightgrey;
   }

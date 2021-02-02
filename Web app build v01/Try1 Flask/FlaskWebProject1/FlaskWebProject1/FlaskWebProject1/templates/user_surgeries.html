@@ -252,36 +252,20 @@
                     <span id="editModalChecklist"></span>
                     <strong>Outcome</strong>
                     <span id="editModalOutcome"></span>
-                    <strong>Comments - edit</strong>
-                    <textarea id="editModalComments"></textarea>
-                    <strong>Image - edit</strong>
-                    <img id="editModalImage" alt="No Image to display"/>
-                    <label for="editModalImageInput" class="btn blue-button">Add/Replace Image</label>
-                    <input 
-                        type="file"
-                        id="editModalImageInput"
-                        style="display:none;"
-                        name="file"
-                        accept="image/*"
-                        onchange="displayImage(event)"
-                    />
                 </div>
-                <br/>
-                <button class="btn blue-button">
-                    Update Surgery
-                </button>
             <br/>
             <br/>
                 <form method="POST" action="/user_surgeries"  enctype="multipart/form-data" class="form-inline my-2 my-lg-0">
                     {{ form.csrf_token }}
-                    <div>
+                    <div style="display: none;">
                         {{form.id_operation}}
                     </div>
-                    <div class="p-2">
-                        <fieldset class="comment">
-                            {{ form.comments.label }}
+                    <div style="width: 100%;" class="p-2">
+                        <strong>Comments - edit</strong>
+                        <fieldset>
+                            {{ form.comments.label(id="editModalCommentLabel", style="justify-content: left;") }}
                             <div class="align-self-start">
-                                {{ form.comments(cols ="95", rows ="20" )}}
+                                {{ form.comments(style="width: 100%;",id="editModalComments")}}
                             </div>
                             {% if form.comments.errors %}
                             <ul class="errors">
@@ -292,11 +276,12 @@
                         </fieldset>
                     </div>
                     <div class="p-2">
+                        <strong>Image - edit</strong>
+                        {{ form.pictures.label(style="justify-content: left;") }}
+                        <img id="editModalImage" style="max-width: 100%;" alt="No Image to display"/>
+                        <label for="editModalImageInput" class="btn blue-button image-button">Add/Replace Image</label>
                         <fieldset class="image">
-                            {{ form.pictures.label }}
-                            <div class="align-self-start">
-                                {{ form.pictures}}
-                            </div>
+                            {{ form.pictures(id="editModalImageInput", onchange="displayImage(event)", style="display:none;")}}
                             {% if form.pictures.errors %}
                             <ul class="errors">
                                 {% for error in form.pictures.errors %}
@@ -307,7 +292,7 @@
                     </div>
                     <div class="p-2">
                         <div class="submit-button">
-                            {{ form.submit }}
+                            {{ form.submit(class="btn blue-button") }}
                         </div>
                     </div>
                 </form>
@@ -418,6 +403,13 @@
             editModalChecklist.innerText = "{{surgery.OperationsTakenPlace.check_list}}"
             editModalOutcome.innerText = "{{surgery.PostopProcedure.outcome}}"
             editModalComments.innerText = `{{surgery.OperationsTakenPlace.comments}}` // backticks for multiline string
+            {% if surgery.OperationsTakenPlace.comments %}
+                document.getElementById('editModalCommentLabel').style.display === "none"
+                editModalComments.disabled = false
+            {% else %}
+                document.getElementById('editModalCommentLabel').style.display === "block"
+                editModalComments.disabled = false
+            {% endif %}
             {% if surgery.OperationsTakenPlace.pictures %}
                 editModalImage.src = "data:image/jpeg;base64,{{surgery.OperationsTakenPlace.pictures.decode('utf8')}}";
             {% endif %}
