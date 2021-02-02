@@ -216,7 +216,7 @@ def user_surgeries():
             Side.id_side == OperationsTakenPlace.id_side
         ).filter(
             Doctor.id_doctor == session["id_doc"][0]
-        ).all()   
+        ).order_by(OperationsTakenPlace.date).all()   
         
     return render_template(
         'user_surgeries.html',
