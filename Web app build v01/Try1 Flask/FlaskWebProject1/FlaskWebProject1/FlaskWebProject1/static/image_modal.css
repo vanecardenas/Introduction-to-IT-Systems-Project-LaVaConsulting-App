@@ -37,10 +37,10 @@
     width: 80%;
     max-width: 700px;
     max-height: 90%;
+    padding: 20px;
   }
   
   .modal-comment {
-    padding: 20px;
     font-size: 24px;
     text-align: justify;
     top: 40%;

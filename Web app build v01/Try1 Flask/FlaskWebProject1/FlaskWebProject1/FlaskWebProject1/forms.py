@@ -267,4 +267,14 @@ class AddPicForm(FlaskForm):
     submit = SubmitField('Add picture')
 
 
+class OpTakenPlaceEditForm(FlaskForm):
+    """Edit Operations Taken Place Form."""
 
+    id_operation = StringField()
+
+    comments = TextAreaField('You can add comments here.', widget = TextArea())
+
+    pictures = FileField("You can upload additional pictures of your surgery here.")
+    
+      
+    submit = SubmitField('Update Surgery')

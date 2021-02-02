@@ -5,7 +5,10 @@ Routes and views for the flask application.
 from datetime import datetime
 from flask import render_template, flash, redirect, request, session, url_for
 from FlaskWebProject1 import app
-from flask_login import current_user, login_required 
+from flask_login import current_user, login_required
+from .forms import OpTakenPlaceEditForm
+from flask_uploads import configure_uploads, IMAGES, UploadSet
+import base64
 from FlaskWebProject1.tables import ResultsDep, ResultsDepItems, ResultsDoc, ResultsDocItems  
 from FlaskWebProject1.models import (
     OperationsTakenPlace,
@@ -185,11 +188,31 @@ def user_patients():
     )
 
 
-
-@app.route('/user_surgeries')
+images = UploadSet('images', IMAGES)
+configure_uploads(app, images)
+@app.route('/user_surgeries', methods=['GET', 'POST'])
 @login_required
 def user_surgeries():
-    """Renders the My Surgerires page."""
+    """Renders the My Surgeries page."""
+    form = OpTakenPlaceEditForm()
+
+    print('GOT HERE')
+
+    if form.validate_on_submit():
+        print('DID THIS')
+        operation = OperationsTakenPlace.query.filter_by(id_operation=int(form.id_operation.data)).first()
+        operation.comments = form.comments.data
+
+        filename = images.save(form.pictures.data)
+        form.pictures.data.stream.seek(0)
+        image_string = base64.b64encode(form.pictures.data.read())
+        operation.pictures = image_string
+
+        db.session.commit() 
+        flash('Insurance was successfully added!')
+    else:
+        print('NOT VALID')
+
     operations = db.session.query(
             OperationsTakenPlace,
             Patient,
@@ -225,6 +248,7 @@ def user_surgeries():
         d_title = session["title"][0] ,
         doc_name = session["last_name"][0],
         title='My Surgeries',
+        form=form,
         operations=operations,
         year=datetime.now().year,
     )

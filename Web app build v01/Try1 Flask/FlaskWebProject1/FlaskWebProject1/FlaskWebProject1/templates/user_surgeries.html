@@ -237,8 +237,7 @@
         <!-- The Close Button -->
         <span id="closeEdit" class="close">&times;</span>
         <!-- Modal Content -->
-        <div class="modal-content">
-            <form method="UPDATE" action="/edit_surgery" class="form-inline my-2 my-lg-0"></form>
+        <div class="modal-content modal-comment">
                 <div class="d-flex flex-column">
                     <h2 id="editModalTitle"></h2>
                     <strong>Patient</strong>
@@ -271,7 +270,55 @@
                 <button class="btn blue-button">
                     Update Surgery
                 </button>
-            </form>
+                <form method="POST" action="/user_surgeries"  enctype="multipart/form-data" class="form-inline my-2 my-lg-0"></form>
+                    {{ form.csrf_token }}
+                    <div>
+                        {{form.id_operation}}
+                    </div>
+                    <div class="p-2">
+                        <fieldset class="comment">
+                            {{ form.comments.label }}
+                            <div class="align-self-start">
+                                {{ form.comments(cols ="95", rows ="20" )}}
+                            </div>
+                            {% if form.comments.errors %}
+                            <ul class="errors">
+                                {% for error in form.comments.errors %}
+                                <li>{{ error }}</li>{% endfor %}
+                            </ul>
+                            {% endif %}
+                        </fieldset>
+                    </div>
+                    <div class="p-2">
+                        <fieldset class="image">
+                            {{ form.pictures.label }}
+                            <div class="align-self-start">
+                                {{ form.pictures}}
+                            </div>
+                            {% if form.pictures.errors %}
+                            <ul class="errors">
+                                {% for error in form.pictures.errors %}
+                                <li>{{ error }}</li>{% endfor %}
+                            </ul>
+                            {% endif %}
+                        </fieldset>
+                    </div>
+                    <div class="p-2">
+                        <div class="submit-button">
+                            {{ form.submit }}
+                        </div>
+                    </div>
+                </form>
+            {% for message in get_flashed_messages() %}
+            <div class="alert alert-warning">
+                <button type="button"
+                        class="close"
+                        data-dismiss="alert">
+                    x
+                </button>
+                {{ message }}
+            </div>
+            {% endfor %}
         </div>
         <!-- Modal Caption (Image Text) -->
         <!-- <div class="modal-caption"></div> -->
@@ -372,6 +419,7 @@
             {% if surgery.OperationsTakenPlace.pictures %}
                 editModalImage.src = "data:image/jpeg;base64,{{surgery.OperationsTakenPlace.pictures.decode('utf8')}}";
             {% endif %}
+            document.getElementById('id_operation').value = {{surgery.OperationsTakenPlace.id_operation}}
             editModal.style.display = "block";
         }
 
