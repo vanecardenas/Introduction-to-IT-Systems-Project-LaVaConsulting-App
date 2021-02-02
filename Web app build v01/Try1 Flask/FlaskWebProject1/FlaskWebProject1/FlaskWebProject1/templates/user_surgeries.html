@@ -404,11 +404,11 @@
             editModalOutcome.innerText = "{{surgery.PostopProcedure.outcome}}"
             editModalComments.innerText = `{{surgery.OperationsTakenPlace.comments}}` // backticks for multiline string
             {% if surgery.OperationsTakenPlace.comments %}
-                document.getElementById('editModalCommentLabel').style.display === "none"
-                editModalComments.disabled = false
+                //document.getElementById('editModalCommentLabel').style.display === "none"
+                //editModalComments.disabled = true
             {% else %}
-                document.getElementById('editModalCommentLabel').style.display === "block"
-                editModalComments.disabled = false
+                //document.getElementById('editModalCommentLabel').style.display === "block"
+                //editModalComments.disabled = false
             {% endif %}
             {% if surgery.OperationsTakenPlace.pictures %}
                 editModalImage.src = "data:image/jpeg;base64,{{surgery.OperationsTakenPlace.pictures.decode('utf8')}}";
