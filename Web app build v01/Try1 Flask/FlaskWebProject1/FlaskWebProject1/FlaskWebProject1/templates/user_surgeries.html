@@ -270,7 +270,9 @@
                 <button class="btn blue-button">
                     Update Surgery
                 </button>
-                <form method="POST" action="/user_surgeries"  enctype="multipart/form-data" class="form-inline my-2 my-lg-0"></form>
+            <br/>
+            <br/>
+                <form method="POST" action="/user_surgeries"  enctype="multipart/form-data" class="form-inline my-2 my-lg-0">
                     {{ form.csrf_token }}
                     <div>
                         {{form.id_operation}}

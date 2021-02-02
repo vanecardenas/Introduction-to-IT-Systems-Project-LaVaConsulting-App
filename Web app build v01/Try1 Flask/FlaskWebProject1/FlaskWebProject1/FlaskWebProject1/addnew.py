@@ -386,7 +386,7 @@ def add_pic():
         surgery.pictures = image_string
 
         
-        db.session.commit()
+        db.session.update()
 
         flash("Picture was added!")
         session.pop("curr_id_surg")

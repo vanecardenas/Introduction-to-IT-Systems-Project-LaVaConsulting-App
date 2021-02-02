@@ -209,7 +209,8 @@ def user_surgeries():
         operation.pictures = image_string
 
         db.session.commit() 
-        flash('Insurance was successfully added!')
+        flash('Surgery was updated')
+        return redirect(url_for('user_surgeries', **request.args))
     else:
         print('NOT VALID')
 
