@@ -12,7 +12,6 @@ import base64
 import base64image
 
 
-#Authentification page: This is the module for all funcionality related to adding patients and procedures to the database. For signing up and adding a user see auth.py.
 
 
 
